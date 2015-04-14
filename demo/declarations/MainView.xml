@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JWindow xmlns="org.aswing" xmlns:chart="jive.chart" xmlns:geom="org.aswing.geom" xmlns:e="empty" xmlns:haxe="http://haxe.org/">
+    <haxe:Implements><![CDATA[jive.DataContextControllable<MainViewModel>]]></haxe:Implements>
+    <content>
+        <JPanel>
+            <layout>
+                <BorderLayout hgap="50" vgap="50"/>
+            </layout>
+            <JList selectedIndex="{Binding menuSelectedIndex mode=twoway}" constraints="org.aswing.BorderLayout.WEST">
+                <background>
+                    <ASColor rgb="0xe1e1e1"/>
+                </background>
+                <selectionBackground>
+                    <ASColor rgb="0x34495e"/>
+                </selectionBackground>
+                <preferredSize>
+                    <geom:IntDimension width="200" height="-1"/>
+                </preferredSize>
+                <model>
+                    <VectorListModel>
+                        <e:String>'Gold'</e:String>
+                        <e:String>'Oil Brent'</e:String>
+                        <e:String>'Progress bar and Slider'</e:String>
+                        <e:String>'Combo Box'</e:String>
+                    </VectorListModel>
+                </model>
+            </JList>
+            <chart:Chart id="chart1" constraints="org.aswing.BorderLayout.CENTER" data="{Binding chartData mode=oneway}">
+                <foreground>
+                    <ASColor rgb="0x000000"/>
+                </foreground>
+                <ui><chart:ChartUI/></ui>
+                <preferredSize>
+                    <geom:IntDimension width="350" height="300"/>
+                </preferredSize>
+            </chart:Chart>
+        </JPanel>
+    </content>
+</JWindow>

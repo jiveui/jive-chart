@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    <meta title="Jive Chart Demo" package="jive-chart" version="0.0.1" company="" />
+
+    <!-- output -->
+    <app main="Main" file="chart" path="bin" />
+
+    <window width="0" height="0" background="0xFFFFFF" fps="60" if="html5 || flash"/>
+    <window width="800" height="600" background="0xFFFFFF" fps="125" unless="html5 || flash" />
+
+    <!-- classpath, haxe libs -->
+    <source path="src" />
+    <source path="gen" />
+
+    <set name="html5-backend" value="openfl-snapsvg"/>
+
+    <haxelib name="openfl" />
+    <haxelib name="jive"/>
+    <haxelib name="jive-chart"/>
+    <haxelib name="bindx"/>
+
+    <template path="templates" />
+
+</project>

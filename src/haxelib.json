@@ -1,0 +1,11 @@
+{
+  "name": "jive-chart",
+  "url": "https://github.com/ngrebenshikov/jive-chart",
+  "license": "MIT",
+  "tags": [ "GUI", "UI", "AsWing", "Swing"],
+  "description": "A chart library for Jive UI",
+  "version": "0.0.1",
+  "releasenote": "Initial release",
+  "contributors": [ "ngrebenshikov", "vaseel1ch", "Deenchik" ],
+  "dependencies": { }
+}

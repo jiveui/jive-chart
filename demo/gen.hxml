@@ -1,0 +1,12 @@
+-lib jive
+-lib hml
+-lib openfl
+-lib lime
+-lib jive-chart
+-cp src/
+-swf bin/empty.swf
+-swf-version 10.1
+--no-output
+-main GenHx
+--macro allowPackage('flash')
+#-D hml_debug

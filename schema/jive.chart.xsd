@@ -1,0 +1,171 @@
+<xs:schema targetNamespace="jive.chart" xmlns="jive.chart" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:org-aswing="org.aswing"
+xmlns:org-aswing-plaf="org.aswing.plaf"
+xmlns:empty="empty"
+>
+<xs:import namespace="org.aswing" schemaLocation="org.aswing.xsd" />
+<xs:import namespace="org.aswing.plaf" schemaLocation="org.aswing.plaf.xsd" />
+<xs:import namespace="empty" schemaLocation="empty.xsd" />
+<xs:complexType name="AxisSchemaTypeValue">
+<xs:all><xs:element ref="Axis"/></xs:all></xs:complexType>
+
+<xs:complexType name="ChartValueSchemaTypeValue">
+<xs:choice>
+<xs:element ref="IntValue" />
+<xs:element ref="DateValue" />
+</xs:choice>
+</xs:complexType>
+
+<xs:complexType name="IntValueSchemaTypeValue">
+<xs:all><xs:element ref="IntValue"/></xs:all></xs:complexType>
+
+<xs:complexType name="ChartUISchemaTypeValue">
+<xs:all><xs:element ref="ChartUI"/></xs:all></xs:complexType>
+
+<xs:complexType name="PointSchemaTypeValue">
+<xs:all><xs:element ref="Point"/></xs:all></xs:complexType>
+
+<xs:complexType name="DateValueSchemaTypeValue">
+<xs:all><xs:element ref="DateValue"/></xs:all></xs:complexType>
+
+<xs:complexType name="ChartSchemaTypeValue">
+<xs:all><xs:element ref="Chart"/></xs:all></xs:complexType>
+
+<xs:complexType name="AxisSchemaType">
+<xs:complexContent>
+<xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="axisName" type="xs:string"/>
+</xs:all>
+<xs:attribute name="axisName" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="ChartValueSchemaType">
+<xs:complexContent>
+<xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="floatValue" type="xs:double"/>
+<xs:element minOccurs="0" name="caption" type="xs:string"/>
+</xs:all>
+<xs:attribute name="floatValue" type="xs:double"/>
+<xs:attribute name="caption" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="IntValueSchemaType">
+<xs:complexContent>
+<xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="floatValue" type="xs:double"/>
+<xs:element minOccurs="0" name="caption" type="xs:string"/>
+</xs:all>
+<xs:attribute name="floatValue" type="xs:double"/>
+<xs:attribute name="caption" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="ChartUISchemaType">
+<xs:complexContent>
+<xs:extension base="org-aswing-plaf:BaseComponentUISchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="tf" type="empty:ArraySchemaTypeValue"/>
+<xs:element minOccurs="0" name="minPointX" type="xs:double"/>
+<xs:element minOccurs="0" name="minPointY" type="xs:double"/>
+<xs:element minOccurs="0" name="maxPointX" type="xs:double"/>
+<xs:element minOccurs="0" name="maxPointY" type="xs:double"/>
+<xs:element minOccurs="0" name="maxPoint" type="xs:double"/>
+<xs:element minOccurs="0" name="minPoint" type="xs:double"/>
+<xs:element minOccurs="0" name="scalePointX" type="xs:double"/>
+<xs:element minOccurs="0" name="scalePointY" type="xs:double"/>
+<xs:element minOccurs="0" name="windowIndentX" type="xs:double"/>
+<xs:element minOccurs="0" name="arrowIndentX" type="xs:double"/>
+<xs:element minOccurs="0" name="windowIndentY" type="xs:double"/>
+<xs:element minOccurs="0" name="arrowIndentY" type="xs:double"/>
+<xs:element minOccurs="0" name="lengthWidth" type="xs:double"/>
+<xs:element minOccurs="0" name="lengthHeight" type="xs:double"/>
+<xs:element minOccurs="0" name="textMargin" type="xs:int"/>
+<xs:element minOccurs="0" name="textWidth" type="xs:int"/>
+<xs:element minOccurs="0" name="maxDate" type="empty:DateSchemaTypeValue"/>
+</xs:all>
+<xs:attribute name="tf" type="xs:string"/>
+<xs:attribute name="minPointX" type="xs:double"/>
+<xs:attribute name="minPointY" type="xs:double"/>
+<xs:attribute name="maxPointX" type="xs:double"/>
+<xs:attribute name="maxPointY" type="xs:double"/>
+<xs:attribute name="maxPoint" type="xs:double"/>
+<xs:attribute name="minPoint" type="xs:double"/>
+<xs:attribute name="scalePointX" type="xs:double"/>
+<xs:attribute name="scalePointY" type="xs:double"/>
+<xs:attribute name="windowIndentX" type="xs:double"/>
+<xs:attribute name="arrowIndentX" type="xs:double"/>
+<xs:attribute name="windowIndentY" type="xs:double"/>
+<xs:attribute name="arrowIndentY" type="xs:double"/>
+<xs:attribute name="lengthWidth" type="xs:double"/>
+<xs:attribute name="lengthHeight" type="xs:double"/>
+<xs:attribute name="textMargin" type="xs:int"/>
+<xs:attribute name="textWidth" type="xs:int"/>
+<xs:attribute name="maxDate" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="PointSchemaType">
+<xs:complexContent>
+<xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="x" type="xs:double"/>
+<xs:element minOccurs="0" name="y" type="xs:double"/>
+<xs:element minOccurs="0" name="xCaption" type="xs:string"/>
+<xs:element minOccurs="0" name="yCaption" type="xs:string"/>
+<xs:element minOccurs="0" name="xValue" type="ChartValueSchemaTypeValue"/>
+<xs:element minOccurs="0" name="yValue" type="ChartValueSchemaTypeValue"/>
+</xs:all>
+<xs:attribute name="x" type="xs:double"/>
+<xs:attribute name="y" type="xs:double"/>
+<xs:attribute name="xCaption" type="xs:string"/>
+<xs:attribute name="yCaption" type="xs:string"/>
+<xs:attribute name="xValue" type="xs:string"/>
+<xs:attribute name="yValue" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="DateValueSchemaType">
+<xs:complexContent>
+<xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="floatValue" type="xs:double"/>
+<xs:element minOccurs="0" name="caption" type="xs:string"/>
+</xs:all>
+<xs:attribute name="floatValue" type="xs:double"/>
+<xs:attribute name="caption" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="ChartSchemaType">
+<xs:complexContent>
+<xs:extension base="org-aswing:ContainerSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="title" type="xs:string"/>
+<xs:element minOccurs="0" name="data" type="empty:ArraySchemaTypeValue"/>
+</xs:all>
+<xs:attribute name="title" type="xs:string"/>
+<xs:attribute name="data" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+
+<xs:element name="Axis" type="AxisSchemaType"/>
+<xs:element name="ChartValue" type="ChartValueSchemaType"/>
+<xs:element name="IntValue" type="IntValueSchemaType"/>
+<xs:element name="ChartUI" type="ChartUISchemaType"/>
+<xs:element name="Point" type="PointSchemaType"/>
+<xs:element name="DateValue" type="DateValueSchemaType"/>
+<xs:element name="Chart" type="ChartSchemaType"/>
+</xs:schema>
