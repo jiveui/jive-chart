@@ -19,9 +19,9 @@
                 <model>
                     <VectorListModel>
                         <e:String>'Gold'</e:String>
-                        <e:String>'Oil Brent'</e:String>
-                        <e:String>'Progress bar and Slider'</e:String>
-                        <e:String>'Combo Box'</e:String>
+                        <e:String>'Russia:Population, total'</e:String>
+                        <e:String>'USD/BITCOIN'</e:String>
+                        <e:String>'Europe Brent Crude Oil'</e:String>
                     </VectorListModel>
                 </model>
             </JList>

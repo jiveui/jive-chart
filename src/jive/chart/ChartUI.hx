@@ -1,5 +1,6 @@
 package jive.chart;
 
+import flash.display.Graphics;
 import flash.display.Shape;
 import org.aswing.geom.IntPoint;
 import org.aswing.JTextField;
@@ -12,7 +13,7 @@ import org.aswing.plaf.BaseComponentUI;
 
 class ChartUI extends BaseComponentUI {
 
-    public var tf:Array<JTextField>;
+    public var textfields:Array<JTextField>;
     private var shape:Shape;
     private var chart: Chart;
     private var widthWindow: Int;
@@ -44,7 +45,7 @@ class ChartUI extends BaseComponentUI {
         shape = new Shape();
         chart.addChild(shape);
 
-        tf = [];
+        textfields = [];
 
         widthWindow = b.width;
         heightWindow = b.height;
@@ -64,12 +65,6 @@ class ChartUI extends BaseComponentUI {
     public var maxPointX:Float = 0;
     public var maxPointY:Float = 0;
 
-    /**
-    * Greatest and lowest points.
-    **/
-    public var maxPoint:Float = 0;
-    public var minPoint:Float = 0;
-
     public var scalePointX:Float = 0;
     public var scalePointY:Float = 0;
 
@@ -81,18 +76,14 @@ class ChartUI extends BaseComponentUI {
     public var windowIndentY:Float = 20;
     public var arrowIndentY:Float = 3;
 
-// sticks text field
-    public var lengthWidth:Float = 0;
-    public var lengthHeight:Float = 0;
+    // sticks text field
+    public var xValueSize:Float = 0;
+    public var yValueSize:Float = 0;
 
-    public var textMargin:Int = 3;
-    public var textWidth:Int = 0;
-
-    public var maxDate:Date = Date.now();
-
-    public function calculateMinDate(){
-
-    }
+    public var textMargin:Int = 10;
+    public var textWidthX:Int = 0;
+    public var textWidthY:Int = 0;
+    public var textHeightX:Int = 0;
 
 
 /**
@@ -104,16 +95,15 @@ class ChartUI extends BaseComponentUI {
             if (minPointX > point.x)
                 minPointX = point.x;
         }
-        trace("minX " + minPointX);
         return minPointX;
     }
 
     public function  calculateMaximumX(){
+        maxPointX = chart.data[0].x;
         for (point in chart.data){
             if (maxPointX < point.x)
                 maxPointX = point.x;
         }
-        trace("maxX " + maxPointX);
         return maxPointX;
     }
 
@@ -128,6 +118,7 @@ class ChartUI extends BaseComponentUI {
     }
 
     public function calculateMaximumY(){
+        maxPointY = chart.data[0].y;
         for (point in chart.data){
             if (maxPointY < point.y)
                 maxPointY = point.y;
@@ -135,65 +126,43 @@ class ChartUI extends BaseComponentUI {
         trace("maxY " + maxPointY);
         return maxPointY;
     }
+
     /**
-    * Finding greatest and lowest points
-    **/
-    public function calculateMaximumPoint(){
-        calculateMaximumX();
-        calculateMaximumY();
-        if (maxPointX > maxPointY)
-            maxPoint = maxPointX;
-        else
-            maxPoint = maxPointY;
-        trace("max " + maxPoint);
-        return maxPoint;
-    }
-
-    public function calculateMinimumPoint(){
-        calculateMinimumX();
-        calculateMinimumY();
-        if (minPointX < minPointY)
-            minPoint = minPointX;
-        else
-            minPoint = minPointY;
-        trace("min " + minPoint);
-        return minPoint;
-    }
-
-/**
     * The scaling factor points x and y.
     **/
     public function calculateScalePointX(){
         calculateMaximumX();
         calculateMinimumX();
-        lengthWidth = maxPointX - minPointX;
-        scalePointX = (widthWindow - windowIndentX) / lengthWidth;
+        xValueSize = maxPointX - minPointX;
+        scalePointX = (widthWindow - windowIndentX) / xValueSize;
         return scalePointX;
     }
 
     public function calculateScalePointY(){
         calculateMaximumY();
         calculateMinimumY();
-        lengthHeight = maxPointY - minPointY;
-        scalePointY = (heightWindow - windowIndentY) / lengthHeight;
+        yValueSize = maxPointY - minPointY;
+        scalePointY = (heightWindow - windowIndentY) / yValueSize;
         return scalePointY;
     }
     /**
     * Finding text width
     **/
-    public function calculateMaxTextWidth(){
+    public function calculateMaxTextWidthX(){
         calculateMinimumX();
         calculateMaximumX();
-        if (minPointX < 0){
-            var tf = new JTextField(chart.data[0].xValue.getCaptionByFloatValue(minPointX));
-            textWidth = Std.int(tf.preferredSize.width);
-        }
-        else if (minPointX >= 0){
-            var tf = new JTextField(chart.data[0].xValue.getCaptionByFloatValue(maxPointX));
-            textWidth = Std.int(tf.preferredSize.width);
-        }
-        trace(textWidth);
-        return textWidth;
+        var tf: JTextField = new JTextField(chart.data[0].xValue.getCaptionByFloatValue( if (minPointX < 0) minPointX else maxPointX));
+        textWidthX = Std.int(tf.preferredSize.width);
+        textHeightX = Std.int(tf.preferredSize.height);
+        return textWidthX;
+    }
+
+    public function calculateMaxTextWidthY(){
+        calculateMinimumY();
+        calculateMaximumY();
+        var tf: JTextField = new JTextField(chart.data[0].yValue.getCaptionByFloatValue( if (minPointY < 0) minPointY else maxPointY));
+        textWidthY = Std.int(tf.preferredSize.width);
+        return textWidthY;
     }
 
     public function lineStyleAxises(){
@@ -229,133 +198,92 @@ class ChartUI extends BaseComponentUI {
         return g;
     }
 
-/**
+    /**
     * Draw axises x and y;
     * draw text value axises.
     **/
     public function drawAxises():Void{
         calculateMaximumX();
         calculateMaximumY();
-        calculateMaximumPoint();
-        calculateMinimumPoint();
         calculateScalePointX();
         calculateScalePointY();
-        calculateMaxTextWidth();
-        var g = shape.graphics;
-//line style
-        lineStyleAxises();
-        windowIndentX = textWidth;
+        calculateMaxTextWidthX();
+        calculateMaxTextWidthY();
 
-//axises
+        windowIndentX = textWidthY;
+        windowIndentY = textHeightX + arrowIndentY;
+
+        var g = shape.graphics;
+
+        //axises
+        lineStyleAxises();
         g.moveTo(windowIndentX, heightWindow - windowIndentY);
         g.lineTo(windowIndentX, 0);
         g.moveTo(windowIndentX, heightWindow - windowIndentY);
         g.lineTo(widthWindow, heightWindow - windowIndentY);
 
-// arrows oy
-        g.moveTo(windowIndentX, 0);
-        g.lineTo(windowIndentX - 2, 3);
-        g.moveTo(windowIndentX, 0);
-        g.lineTo(windowIndentX + 2, 3);
+        drawGridVerticalLinesAndCaptions(g);
+        drawGridHorizontalLinesAndCaptions(g);
+        drawGridBorderLines(g);
+    }
 
-// arrows ox
-        g.moveTo(widthWindow, heightWindow - windowIndentY);
-        g.lineTo(widthWindow - 3, heightWindow - windowIndentY - 2);
-        g.moveTo(widthWindow, heightWindow - windowIndentY);
-        g.lineTo(widthWindow - 3, heightWindow - windowIndentY + 2);
-
-
-//      draw sticks and text value
-        var stick: Int = Std.int((widthWindow - windowIndentX) / (textMargin + textWidth));
-        trace("stick:" + stick);
-        trace("textWidth:" + textWidth);
-        var ox:Int = 0;
-/*var plength = Std.int(data.length);
-        var nn1 = Std.int((widthWindow - windowIndentX) / (plength));
-        trace(plength);
-        if (plength < stick)
-            while (ox <= plength){
-                var t = new JTextField(Std.string(Std.int(ox * ((maxPointX - minPointX) / plength) + minPointX)));
-                tf.push(t);
-                var stopStickX: Int = Std.int(ox * nn1);
-                if (stopStickX < widthWindow - windowIndentX - arrowIndentX){
-                    g.moveTo((ox * nn1) + windowIndentX, heightWindow - windowIndentY);
-                    g.lineTo((ox * nn1) + windowIndentX, heightWindow - windowIndentY + arrowIndentY);
-                }
-                else if (stopStickX >= widthWindow - windowIndentX) break;
-                if (ox < plength){
-                    var xx = Std.int(windowIndentX +arrowIndentX + (ox * nn1) - t.preferredSize.width / 2);
-                    var yy = Std.int(heightWindow - windowIndentY + arrowIndentY);
-                    t.location = new IntPoint(xx, yy);
-                }
-                else if (ox == plength){
-                    var xx = Std.int(windowIndentX + (ox * nn1) - t.preferredSize.width + 2 * arrowIndentX);
-                    var yy = Std.int(heightWindow - windowIndentY + arrowIndentY);
-                    t.location = new IntPoint(xx, yy);
-                }
-
-                append(t);
-                ox += 2;
-                *//*lineStyleGrid();
-                g.moveTo((ox * (textMargin + textWidth)) + windowIndentX, heightWindow - windowIndentY);
-                g.lineTo((ox * (textMargin + textWidth)) + windowIndentX, 0);*//*
-                lineStyleAxises();
-            }
-
-        else*/
-        while (ox <= stick){
-            var t = new JTextField(chart.data[0].xValue.getCaptionByFloatValue(ox * ((maxPointX - minPointX) / stick) + minPointX));
-            tf.push(t);
-            var stopStickX: Int = Std.int(ox * (textMargin + textWidth));
-            if (stopStickX >= widthWindow - windowIndentX){break;}
-            g.moveTo((ox * (textMargin + textWidth)) + windowIndentX, heightWindow - windowIndentY);
-            g.lineTo((ox * (textMargin + textWidth)) + windowIndentX, heightWindow - windowIndentY + arrowIndentY);
-/*var xx = 0;
-            var yy = 0;
-            if (ox < stick){
-                xx = Std.int(windowIndentX + arrowIndentX + (ox * (textMargin + textWidth)) - t.preferredSize.width / 2);
-                yy = Std.int(heightWindow - windowIndentY + arrowIndentY);
-                }
-            else if (ox == stick){
-                xx = Std.int(windowIndentX + (ox * (textMargin + textWidth)) - t.preferredSize.width / 2);
-                yy = Std.int(heightWindow - windowIndentY + arrowIndentY);
-            }*/
-            var xx = Std.int(windowIndentX + arrowIndentX + (ox * (textMargin + textWidth)) - t.preferredSize.width / 2);
-            trace(t.preferredSize.width);
-            var yy = Std.int(heightWindow - windowIndentY + arrowIndentY);
-            t.location = new IntPoint(xx, yy);
-            chart.append(t);
-            ox += 1;
-            lineStyleGrid();
-            g.moveTo((ox * (textMargin + textWidth)) + windowIndentX, heightWindow - windowIndentY);
-            g.lineTo((ox * (textMargin + textWidth)) + windowIndentX, 0);
-            lineStyleAxises();
-
-        }
-
+    private function drawGridVerticalLinesAndCaptions(g: Graphics) {
         lineStyleAxises();
-        var stick: Int = Std.int((heightWindow - windowIndentY) / (textMargin + textWidth));
-        trace("stick:" + stick);
-        trace("textWidth:" + textWidth);
-        var oy:Int = 0;
-        while (oy <= stick){
-            var t = new JTextField(chart.data[0].yValue.getCaptionByFloatValue(oy * ((maxPointY - minPointY) / stick) + minPointY));
-            tf.push(t);
-            var stopStickY: Int = Std.int(oy * (textMargin + textWidth));
-            if (stopStickY >= heightWindow - windowIndentY){break;}
-            g.moveTo(windowIndentX, heightWindow - windowIndentY - (oy * (textMargin + textWidth)));
-            g.lineTo(windowIndentX - arrowIndentX, heightWindow - windowIndentY - (oy * (textMargin + textWidth)));
-            var xx = Std.int(0);
-            var yy = Std.int(heightWindow - windowIndentY - (oy * (textMargin + textWidth)) - (t.preferredSize.height / 2) );
-            t.location = new IntPoint(xx, yy);
+        var captionWidthWithMargin = textMargin + textWidthX;
+        var areaWidth = widthWindow - windowIndentX;
+        var sticksAmount = Std.int(areaWidth/captionWidthWithMargin) + 1;
+        var y = heightWindow - windowIndentY;
+        var stickSize = arrowIndentY;
+        var x0 = windowIndentX;
+        for (i in 0...sticksAmount) {
+            var t = new JTextField(chart.data[0].xValue.getCaptionByFloatValue(interpolateValue(i, sticksAmount, minPointX, maxPointX)));
+            var insets = t.getInsets();
+            textfields.push(t);
+
+            var x = x0 + i * captionWidthWithMargin;
+            g.moveTo(x, y);
+            g.lineTo(x, y + stickSize);
+
+            trace(t.preferredSize);
+
+            t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + stickSize) + insets.top);
             chart.append(t);
-            oy += 1;
+
             lineStyleGrid();
-            g.moveTo(windowIndentX, heightWindow - windowIndentY - (oy * (textMargin + textWidth)));
-            g.lineTo(widthWindow, heightWindow - windowIndentY - (oy * (textMargin + textWidth)));
+            g.moveTo(x, y);
+            g.lineTo(x, 0);
             lineStyleAxises();
         }
+    }
 
+    private function drawGridHorizontalLinesAndCaptions(g: Graphics) {
+        lineStyleAxises();
+        var captionHeightWithMargin = textMargin + textWidthY;
+        var areaHeight = heightWindow - windowIndentY;
+        var sticksAmount = Std.int(areaHeight/captionHeightWithMargin) + 1;
+        var x = windowIndentX;
+        var stickSize = arrowIndentX;
+        var y0 = heightWindow - windowIndentY;
+        for (i in 0...sticksAmount) {
+            var t = new JTextField(chart.data[0].yValue.getCaptionByFloatValue(interpolateValue(i, sticksAmount, minPointY, maxPointY)));
+            var insets = t.getInsets();
+            textfields.push(t);
+
+            var y = y0 - i * captionHeightWithMargin;
+            g.moveTo(x, y);
+            g.lineTo(x - stickSize, y);
+
+            t.location = new IntPoint(insets.left, Std.int(y - t.preferredSize.height/2) + insets.top);
+            chart.append(t);
+
+            lineStyleGrid();
+            g.moveTo(x, y);
+            g.lineTo(widthWindow, y);
+            lineStyleAxises();
+        }
+    }
+
+    private function drawGridBorderLines(g: Graphics) {
         lineStyleGrid();
         g.moveTo(windowIndentX, 0);
         g.lineTo(widthWindow, 0);
@@ -363,7 +291,12 @@ class ChartUI extends BaseComponentUI {
         g.lineTo(widthWindow, 0);
     }
 
-/**
+
+    private function interpolateValue(index: Int, length: Int, min: Float, max: Float): Float {
+        return index * ((max - min) / length) + min;
+    }
+
+    /**
     * Draw graph at points at axises X and Y;
     * If points y have negative value, then axis x is positive, axis y is negative;
     * If points x haxe negative valuse, then axis x is negatime, axis y is positive;
@@ -374,42 +307,41 @@ class ChartUI extends BaseComponentUI {
         var data = chart.data;
 
         var g = shape.graphics;
-        calculateMaximumPoint();
         calculateScalePointX();
         calculateScalePointY();
         lineStyleGraph();
         if (((maxPointX > widthWindow) || (maxPointY > heightWindow)) || ((maxPointX < widthWindow) || (maxPointY < heightWindow))){
             g.moveTo(windowIndentX + (data[0].x - minPointX) * scalePointX, heightWindow - windowIndentY - (data[0].y - minPointY)  * scalePointY);
             for (point in data){
-                trace(point);
+
                 g.lineTo(windowIndentX + (point.x - minPointX)  * scalePointX, heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY);
             }
         }
         else if ((minPointX < 0) && (minPointY < 0)){
             g.moveTo(windowIndentX + (data[0].x + minPointX) * scalePointX, heightWindow - windowIndentY - (data[0].y - minPointY)  * scalePointY);
             for (point in data){
-                trace(point);
+
                 g.lineTo(windowIndentX + (point.x + minPointX)  * scalePointX, heightWindow - windowIndentY - (point.y + minPointY)  * scalePointY);
             }
         }
         else if ((minPointX > 0) && (minPointY < 0)){
             g.moveTo(windowIndentX + (data[0].x - minPointX) * scalePointX, heightWindow - windowIndentY - (data[0].y + minPointY)  * scalePointY);
             for (point in data){
-                trace(point);
+
                 g.lineTo(windowIndentX + (point.x - minPointX)  * scalePointX, heightWindow - windowIndentY - (point.y + minPointY)  * scalePointY);
             }
         }
         else if ((minPointX < 0) && (minPointY > 0)){
             g.moveTo(windowIndentX + (data[0].x + minPointX) * scalePointX, heightWindow - windowIndentY - (data[0].y - minPointY)  * scalePointY);
             for (point in data){
-                trace(point);
+
                 g.lineTo(windowIndentX + (point.x + minPointX)  * scalePointX, heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY);
             }
         }
         else if((maxPointX == widthWindow) && (maxPointY == heightWindow)){
             g.moveTo(data[0].x + windowIndentX, heightWindow - data[0].y - windowIndentY);
             for (point in data){
-                trace(point);
+
                 g.lineTo(point.x + windowIndentX, heightWindow - point.y - windowIndentY);
             }
         }

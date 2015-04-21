@@ -263,7 +263,7 @@ xmlns:flash-events="flash.events"
 <xs:complexContent>
 <xs:extension base="flash-events:EventDispatcherSchemaType">
 <xs:all minOccurs='0'>
-<xs:element minOccurs="0" name="bytesLoaded" type="xs:int"/>
+<xs:element minOccurs="0" name="bytesLoaded" type="xs:string"/>
 <xs:element minOccurs="0" name="bytesTotal" type="xs:int"/>
 <xs:element minOccurs="0" name="id3" type="ID3InfoSchemaTypeValue"/>
 <xs:element minOccurs="0" name="isBuffering" type="xs:boolean"/>
@@ -271,7 +271,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" name="length" type="xs:double"/>
 <xs:element minOccurs="0" name="url" type="xs:string"/>
 </xs:all>
-<xs:attribute name="bytesLoaded" type="xs:int"/>
+<xs:attribute name="bytesLoaded" type="xs:string"/>
 <xs:attribute name="bytesTotal" type="xs:int"/>
 <xs:attribute name="id3" type="xs:string"/>
 <xs:attribute name="isBuffering" type="xs:boolean"/>

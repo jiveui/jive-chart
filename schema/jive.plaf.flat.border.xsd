@@ -14,6 +14,8 @@ xmlns:empty="empty"
 <xs:complexType name="TextCellComponentBorderSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:BorderSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -23,6 +25,8 @@ xmlns:empty="empty"
 <xs:complexType name="FlatPopupMenuBorderSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:BorderSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -32,6 +36,8 @@ xmlns:empty="empty"
 <xs:complexType name="FlatComboBoxPopupBorderSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:BorderSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>

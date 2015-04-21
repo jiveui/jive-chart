@@ -67,6 +67,7 @@ xmlns:empty="empty"
 <xs:complexType name="BaseCommandSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="CommandSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>

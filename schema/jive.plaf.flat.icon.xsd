@@ -22,6 +22,8 @@ xmlns:empty="empty"
 <xs:complexType name="FlatCheckBoxIconSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:IconSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -31,6 +33,7 @@ xmlns:empty="empty"
 <xs:complexType name="FlatMenuArrowIconSchemaType">
 <xs:complexContent>
 <xs:extension base="org-aswing-plaf-basic-icon:SolidArrowIconSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -40,6 +43,8 @@ xmlns:empty="empty"
 <xs:complexType name="FlatRadioButtonIconSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:IconSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -49,6 +54,7 @@ xmlns:empty="empty"
 <xs:complexType name="FlatComboBoxArrowIconSchemaType">
 <xs:complexContent>
 <xs:extension base="org-aswing-plaf-basic-icon:SolidArrowIconSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -58,6 +64,8 @@ xmlns:empty="empty"
 <xs:complexType name="FlatSliderThumbIconSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:IconSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>

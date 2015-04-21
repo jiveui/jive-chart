@@ -15,25 +15,28 @@ import org.aswing.ASColor;
 class Chart extends Container {
 
     public var title:String;
-    public var data:Array<Point>;
 
+    public var data(get, set):Array<Point>;
+    private var _data: Array<Point>;
+    private function get_data(): Array<Point> { return _data; }
+    private function set_data(v: Array<Point>): Array<Point> {
+        _data = v;
+        repaint();
+        return _data;
+    }
 
     public function new(title = ""){
         super();
         data = [];
-        trace("chart");
-        trace(ui);
     }
 
     @:dox(hide)
     override public function updateUI():Void{
         setUI(UIManager.getUI(this));
-        trace(ui);
     }
 
     @:dox(hide)
     override public function getDefaultBasicUIClass():Class<Dynamic> {
-        trace("getDefaultBasicUIClass");
         return jive.chart.ChartUI;
     }
 

@@ -55,19 +55,19 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
 
     inline function get_string__1():String {
         /* declarations/MainView.xml:22 characters: 25-33 */
-        var res = 'Oil Brent';
+        var res = 'Russia:Population, total';
         return res;
     }
 
     inline function get_string__2():String {
         /* declarations/MainView.xml:23 characters: 25-33 */
-        var res = 'Progress bar and Slider';
+        var res = 'USD/BITCOIN';
         return res;
     }
 
     inline function get_string__3():String {
         /* declarations/MainView.xml:24 characters: 25-33 */
-        var res = 'Combo Box';
+        var res = 'Europe Brent Crude Oil';
         return res;
     }
 

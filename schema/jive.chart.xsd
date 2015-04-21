@@ -6,12 +6,16 @@ xmlns:empty="empty"
 <xs:import namespace="org.aswing" schemaLocation="org.aswing.xsd" />
 <xs:import namespace="org.aswing.plaf" schemaLocation="org.aswing.plaf.xsd" />
 <xs:import namespace="empty" schemaLocation="empty.xsd" />
+<xs:complexType name="FloatValueSchemaTypeValue">
+<xs:all><xs:element ref="FloatValue"/></xs:all></xs:complexType>
+
 <xs:complexType name="AxisSchemaTypeValue">
 <xs:all><xs:element ref="Axis"/></xs:all></xs:complexType>
 
 <xs:complexType name="ChartValueSchemaTypeValue">
 <xs:choice>
 <xs:element ref="IntValue" />
+<xs:element ref="FloatValue" />
 <xs:element ref="DateValue" />
 </xs:choice>
 </xs:complexType>
@@ -30,6 +34,20 @@ xmlns:empty="empty"
 
 <xs:complexType name="ChartSchemaTypeValue">
 <xs:all><xs:element ref="Chart"/></xs:all></xs:complexType>
+
+<xs:complexType name="FloatValueSchemaType">
+<xs:complexContent>
+<xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="ChartValueSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="floatValue" type="xs:double"/>
+<xs:element minOccurs="0" name="caption" type="xs:string"/>
+</xs:all>
+<xs:attribute name="floatValue" type="xs:double"/>
+<xs:attribute name="caption" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
 
 <xs:complexType name="AxisSchemaType">
 <xs:complexContent>
@@ -58,6 +76,7 @@ xmlns:empty="empty"
 <xs:complexType name="IntValueSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="ChartValueSchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="floatValue" type="xs:double"/>
 <xs:element minOccurs="0" name="caption" type="xs:string"/>
@@ -137,6 +156,7 @@ xmlns:empty="empty"
 <xs:complexType name="DateValueSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="ChartValueSchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="floatValue" type="xs:double"/>
 <xs:element minOccurs="0" name="caption" type="xs:string"/>
@@ -161,6 +181,7 @@ xmlns:empty="empty"
 </xs:complexType>
 
 
+<xs:element name="FloatValue" type="FloatValueSchemaType"/>
 <xs:element name="Axis" type="AxisSchemaType"/>
 <xs:element name="ChartValue" type="ChartValueSchemaType"/>
 <xs:element name="IntValue" type="IntValueSchemaType"/>

@@ -61,6 +61,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="ProgressBarBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -70,6 +72,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="ProgressBarIconSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -79,6 +83,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="ListBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -88,6 +94,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="FrameBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -106,6 +114,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="TextComponentBackBroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -124,6 +134,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="PanelBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -133,6 +145,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="ScrollBarThumbSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -142,6 +156,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="ToolTipBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -151,6 +167,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="ButtonBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -160,6 +178,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="ScrollBarBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -169,6 +189,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="TableHeaderBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -178,6 +200,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="TableBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -187,6 +211,8 @@ xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 <xs:complexType name="ToggleButtonBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>

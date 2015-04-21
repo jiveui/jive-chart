@@ -25,6 +25,7 @@ xmlns:empty="empty"
 <xs:complexType name="StringMapSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="empty:IMapSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -34,6 +35,7 @@ xmlns:empty="empty"
 <xs:complexType name="WeakMapSchemaType">
 <xs:complexContent>
 <xs:extension base="flash-utils:DictionarySchemaType">
+<xs:extension base="empty:IMapSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -43,6 +45,7 @@ xmlns:empty="empty"
 <xs:complexType name="IntMapSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="empty:IMapSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -52,6 +55,7 @@ xmlns:empty="empty"
 <xs:complexType name="ObjectMapSchemaType">
 <xs:complexContent>
 <xs:extension base="flash-utils:DictionarySchemaType">
+<xs:extension base="empty:IMapSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>

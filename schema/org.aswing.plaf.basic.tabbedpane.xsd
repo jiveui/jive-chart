@@ -41,6 +41,8 @@ xmlns:org-aswing-plaf-basic-accordion="org.aswing.plaf.basic.accordion"
 <xs:complexType name="TabBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -59,6 +61,9 @@ xmlns:org-aswing-plaf-basic-accordion="org.aswing.plaf.basic.accordion"
 <xs:complexType name="BasicClosableTabbedPaneTabSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:GroundDecoratorSchemaType">
+<xs:extension base="ClosableTabSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -77,6 +82,8 @@ xmlns:org-aswing-plaf-basic-accordion="org.aswing.plaf.basic.accordion"
 <xs:complexType name="CloseIconSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
+<xs:extension base="org-aswing:IconSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -86,6 +93,7 @@ xmlns:org-aswing-plaf-basic-accordion="org.aswing.plaf.basic.accordion"
 <xs:complexType name="BasicTabbedPaneTabSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:extension base="TabSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
