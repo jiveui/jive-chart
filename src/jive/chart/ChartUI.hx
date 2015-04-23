@@ -28,11 +28,7 @@ class ChartUI extends BaseComponentUI {
     }
 
     override public function paint(c:Component, g:Graphics2D, b:IntRectangle):Void {
-        trace("paint");
-
         super.paint(c, g, b);
-
-        trace("paint");
 
         chart = AsWingUtils.as(c, Chart);
         if (null == chart) return;
@@ -41,6 +37,8 @@ class ChartUI extends BaseComponentUI {
         if (null != shape) {
             chart.removeChild(shape);
         }
+
+        if (null == chart.data || chart.data.length <= 0) return;
 
         shape = new Shape();
         chart.addChild(shape);
@@ -89,7 +87,8 @@ class ChartUI extends BaseComponentUI {
 /**
     * Methods of finding the minimum and maximum points of the x and y
     **/
-    public function calculateMinimumX(){
+    public function calculateMinimumX(): Float{
+        if (null == chart.data || chart.data.length <= 0) return 0;
         minPointX = chart.data[0].x;
         for (point in chart.data){
             if (minPointX > point.x)
@@ -98,7 +97,8 @@ class ChartUI extends BaseComponentUI {
         return minPointX;
     }
 
-    public function  calculateMaximumX(){
+    public function  calculateMaximumX(): Float{
+        if (null == chart.data || chart.data.length <= 0) return 0;
         maxPointX = chart.data[0].x;
         for (point in chart.data){
             if (maxPointX < point.x)
@@ -107,7 +107,8 @@ class ChartUI extends BaseComponentUI {
         return maxPointX;
     }
 
-    public function calculateMinimumY(){
+    public function calculateMinimumY(): Float{
+        if (null == chart.data || chart.data.length <= 0) return 0;
         minPointY = chart.data[0].y;
         for (point in chart.data){
             if (minPointY > point.y)
@@ -117,7 +118,8 @@ class ChartUI extends BaseComponentUI {
         return minPointY;
     }
 
-    public function calculateMaximumY(){
+    public function calculateMaximumY(): Float{
+        if (null == chart.data || chart.data.length <= 0) return 0;
         maxPointY = chart.data[0].y;
         for (point in chart.data){
             if (maxPointY < point.y)
@@ -130,7 +132,7 @@ class ChartUI extends BaseComponentUI {
     /**
     * The scaling factor points x and y.
     **/
-    public function calculateScalePointX(){
+    public function calculateScalePointX(): Float{
         calculateMaximumX();
         calculateMinimumX();
         xValueSize = maxPointX - minPointX;
@@ -138,7 +140,7 @@ class ChartUI extends BaseComponentUI {
         return scalePointX;
     }
 
-    public function calculateScalePointY(){
+    public function calculateScalePointY(): Float {
         calculateMaximumY();
         calculateMinimumY();
         yValueSize = maxPointY - minPointY;
@@ -148,7 +150,8 @@ class ChartUI extends BaseComponentUI {
     /**
     * Finding text width
     **/
-    public function calculateMaxTextWidthX(){
+    public function calculateMaxTextWidthX(): Float {
+        if (null == chart.data || chart.data.length <= 0) return 0;
         calculateMinimumX();
         calculateMaximumX();
         var tf: JTextField = new JTextField(chart.data[0].xValue.getCaptionByFloatValue( if (minPointX < 0) minPointX else maxPointX));
@@ -157,7 +160,8 @@ class ChartUI extends BaseComponentUI {
         return textWidthX;
     }
 
-    public function calculateMaxTextWidthY(){
+    public function calculateMaxTextWidthY(): Float {
+        if (null == chart.data || chart.data.length <= 0) return 0;
         calculateMinimumY();
         calculateMaximumY();
         var tf: JTextField = new JTextField(chart.data[0].yValue.getCaptionByFloatValue( if (minPointY < 0) minPointY else maxPointY));
