@@ -25,7 +25,7 @@ class MainViewModel implements IBindable {
     "http://www.quandl.com/api/v1/datasets/BAVERAGE/USD.json",
     "http://www.quandl.com/api/v1/datasets/DOE/RBRTE.json"];
 
-    var cache = [ Assets.getText("gold.json"), Assets.getText("population.json"), Assets.getText("usd_bitcoin.json"), Assets.getText("oil.json")];
+    var cache = [ Assets.getText("gold.json"), Assets.getText("ru_population.json"), Assets.getText("usd_bitcoin.json"), Assets.getText("oil.json")];
 
     @bindable public var menuSelectedIndex(default, set): Int;
     private function set_menuSelectedIndex(v: Int): Int {
