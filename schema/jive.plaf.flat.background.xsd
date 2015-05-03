@@ -25,11 +25,12 @@ xmlns:empty="empty"
 <xs:complexType name="FlatButtonBackgroundSchemaTypeValue">
 <xs:all><xs:element ref="FlatButtonBackground"/></xs:all></xs:complexType>
 
+<xs:complexType name="FlatPanelBackgroundSchemaTypeValue">
+<xs:all><xs:element ref="FlatPanelBackground"/></xs:all></xs:complexType>
+
 <xs:complexType name="FlatScrollBarBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
-<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -39,8 +40,6 @@ xmlns:empty="empty"
 <xs:complexType name="FlatProgressBarBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
-<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -50,8 +49,6 @@ xmlns:empty="empty"
 <xs:complexType name="FlatInputBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
-<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -61,8 +58,6 @@ xmlns:empty="empty"
 <xs:complexType name="FlatTextComponentBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
-<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -81,8 +76,6 @@ xmlns:empty="empty"
 <xs:complexType name="FlatProgressBarIconSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
-<xs:extension base="org-aswing:GroundDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -92,8 +85,15 @@ xmlns:empty="empty"
 <xs:complexType name="FlatButtonBackgroundSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="org-aswing-plaf:UIResourceSchemaType">
-<xs:extension base="org-aswing:GroundDecoratorSchemaType">
+<xs:all minOccurs='0'>
+</xs:all>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="FlatPanelBackgroundSchemaType">
+<xs:complexContent>
+<xs:extension base="empty:RootObjectTypeSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -108,4 +108,5 @@ xmlns:empty="empty"
 <xs:element name="FlatScrollBarThumb" type="FlatScrollBarThumbSchemaType"/>
 <xs:element name="FlatProgressBarIcon" type="FlatProgressBarIconSchemaType"/>
 <xs:element name="FlatButtonBackground" type="FlatButtonBackgroundSchemaType"/>
+<xs:element name="FlatPanelBackground" type="FlatPanelBackgroundSchemaType"/>
 </xs:schema>

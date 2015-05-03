@@ -21,11 +21,11 @@ import haxe.Json;
 class MainViewModel implements IBindable {
 
     var urls = ["http://www.quandl.com/api/v1/datasets/OFDP/GOLD_1.json?trim_start=1971-02-05",
-    "https://www.quandl.com/api/v1/datasets/WORLDBANK/RUS_SP_POP_TOTL.json?trim_start=1971-01-01",
-    "https://www.quandl.com/api/v1/datasets/BAVERAGE/USD.json",
-    "https://www.quandl.com/api/v1/datasets/DOE/RBRTE.json"];
+    "http://www.quandl.com/api/v1/datasets/WORLDBANK/RUS_SP_POP_TOTL.json?trim_start=1971-01-01",
+    "http://www.quandl.com/api/v1/datasets/BAVERAGE/USD.json",
+    "http://www.quandl.com/api/v1/datasets/DOE/RBRTE.json"];
 
-    var cache = [ Assets.getText("gold.json"), Assets.getText("gold.json"), Assets.getText("gold.json"), Assets.getText("gold.json")];
+    var cache = [ Assets.getText("gold.json"), Assets.getText("population.json"), Assets.getText("usd_bitcoin.json"), Assets.getText("oil.json")];
 
     @bindable public var menuSelectedIndex(default, set): Int;
     private function set_menuSelectedIndex(v: Int): Int {

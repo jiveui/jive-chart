@@ -82,7 +82,6 @@ xmlns:empty="empty"
 <xs:complexType name="RotationPathSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="IComponentPathSchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="end" type="xs:double"/>
 <xs:element minOccurs="0" name="offset" type="xs:double"/>
@@ -111,7 +110,6 @@ xmlns:empty="empty"
 <xs:complexType name="ComponentPathSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="IComponentPathSchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="start" type="xs:double"/>
 <xs:element minOccurs="0" name="end" type="xs:double"/>

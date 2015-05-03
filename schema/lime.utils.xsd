@@ -62,7 +62,6 @@ xmlns:empty="empty"
 <xs:complexType name="ArrayBufferViewSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="IMemoryRangeSchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="buffer" type="xs:string"/>
 <xs:element minOccurs="0" name="byteOffset" type="xs:int"/>

@@ -273,6 +273,7 @@ xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
 <xs:element ref="org-aswing:JFrameTitleBar" />
 <xs:element ref="org-aswing-plaf-basic-background:ToolTipBackground" />
 <xs:element ref="org-aswing-plaf-basic-border:PopupMenuBorder" />
+<xs:element ref="jive-plaf-flat-background:FlatPanelBackground" />
 <xs:element ref="org-aswing-resizer:DefaultResizer" />
 <xs:element ref="org-aswing-plaf-basic-border:TextAreaBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:ProgressBarBorder" />
@@ -365,7 +366,6 @@ xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
 <xs:complexType name="EmptyLayoutUIResourseSchemaType">
 <xs:complexContent>
 <xs:extension base="org-aswing:EmptyLayoutSchemaType">
-<xs:extension base="UIResourceSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -411,7 +411,6 @@ xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
 <xs:complexType name="UIStyleTuneSchemaType">
 <xs:complexContent>
 <xs:extension base="org-aswing:StyleTuneSchemaType">
-<xs:extension base="UIResourceSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -421,7 +420,6 @@ xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
 <xs:complexType name="ASColorUIResourceSchemaType">
 <xs:complexContent>
 <xs:extension base="org-aswing:ASColorSchemaType">
-<xs:extension base="UIResourceSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -449,7 +447,6 @@ xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
 <xs:complexType name="ASFontUIResourceSchemaType">
 <xs:complexContent>
 <xs:extension base="org-aswing:ASFontSchemaType">
-<xs:extension base="UIResourceSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -486,7 +483,6 @@ xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
 <xs:complexType name="DefaultsDecoratorBaseSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="DefaultsDecoratorSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -496,7 +492,6 @@ xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
 <xs:complexType name="BaseComponentUISchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="ComponentUISchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -515,7 +510,6 @@ xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
 <xs:complexType name="InsetsUIResourceSchemaType">
 <xs:complexContent>
 <xs:extension base="org-aswing:InsetsSchemaType">
-<xs:extension base="UIResourceSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
@@ -534,10 +528,6 @@ xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
 <xs:complexType name="DefaultEmptyDecoraterResourceSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="UIResourceSchemaType">
-<xs:extension base="org-aswing:GroundDecoratorSchemaType">
-<xs:extension base="org-aswing:BorderSchemaType">
-<xs:extension base="org-aswing:IconSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>

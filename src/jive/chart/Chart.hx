@@ -1,16 +1,8 @@
 package jive.chart;
 
 import org.aswing.UIManager;
-import Date;
-import flash.display.Shape;
-import flash.display.Graphics;
-import org.aswing.JTextField;
 import org.aswing.Container;
-import org.aswing.geom.IntPoint;
-import org.aswing.geom.IntDimension;
 import Array;
-import Date;
-import org.aswing.ASColor;
 
 class Chart extends Container {
 

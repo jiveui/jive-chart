@@ -1,5 +1,6 @@
 package jive.chart;
 
+
 import flash.display.Graphics;
 import flash.display.Shape;
 import org.aswing.geom.IntPoint;
@@ -13,7 +14,7 @@ import org.aswing.plaf.BaseComponentUI;
 
 class ChartUI extends BaseComponentUI {
 
-    public var textfields:Array<JTextField>;
+    public var TextFields:Array<JTextField>;
     private var shape:Shape;
     private var chart: Chart;
     private var widthWindow: Int;
@@ -43,7 +44,7 @@ class ChartUI extends BaseComponentUI {
         shape = new Shape();
         chart.addChild(shape);
 
-        textfields = [];
+        TextFields = [];
 
         widthWindow = b.width;
         heightWindow = b.height;
@@ -171,7 +172,7 @@ class ChartUI extends BaseComponentUI {
 
     public function lineStyleAxises(){
         var g = shape.graphics;
-        var thickness = 1.2;
+        var thickness = 1.5;
         var color:ASColor = ASColor.BLACK;
         var alpha = 1;
         var pixelHinting = true;
@@ -193,7 +194,7 @@ class ChartUI extends BaseComponentUI {
 
     public function lineStyleGraph(){
         var g = shape.graphics;
-        var thickness = 2;
+        var thickness = 0.5;
         var color = ASColor.RED;
         var alpha = 1;
         var pixelHinting = true;
@@ -242,7 +243,7 @@ class ChartUI extends BaseComponentUI {
         for (i in 0...sticksAmount) {
             var t = new JTextField(chart.data[0].xValue.getCaptionByFloatValue(interpolateValue(i, sticksAmount, minPointX, maxPointX)));
             var insets = t.getInsets();
-            textfields.push(t);
+            TextFields.push(t);
 
             var x = x0 + i * captionWidthWithMargin;
             g.moveTo(x, y);
@@ -271,7 +272,7 @@ class ChartUI extends BaseComponentUI {
         for (i in 0...sticksAmount) {
             var t = new JTextField(chart.data[0].yValue.getCaptionByFloatValue(interpolateValue(i, sticksAmount, minPointY, maxPointY)));
             var insets = t.getInsets();
-            textfields.push(t);
+            TextFields.push(t);
 
             var y = y0 - i * captionHeightWithMargin;
             g.moveTo(x, y);
@@ -314,39 +315,17 @@ class ChartUI extends BaseComponentUI {
         calculateScalePointX();
         calculateScalePointY();
         lineStyleGraph();
-        if (((maxPointX > widthWindow) || (maxPointY > heightWindow)) || ((maxPointX < widthWindow) || (maxPointY < heightWindow))){
-            g.moveTo(windowIndentX + (data[0].x - minPointX) * scalePointX, heightWindow - windowIndentY - (data[0].y - minPointY)  * scalePointY);
-            for (point in data){
 
-                g.lineTo(windowIndentX + (point.x - minPointX)  * scalePointX, heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY);
-            }
-        }
-        else if ((minPointX < 0) && (minPointY < 0)){
-            g.moveTo(windowIndentX + (data[0].x + minPointX) * scalePointX, heightWindow - windowIndentY - (data[0].y - minPointY)  * scalePointY);
-            for (point in data){
-
-                g.lineTo(windowIndentX + (point.x + minPointX)  * scalePointX, heightWindow - windowIndentY - (point.y + minPointY)  * scalePointY);
-            }
-        }
-        else if ((minPointX > 0) && (minPointY < 0)){
-            g.moveTo(windowIndentX + (data[0].x - minPointX) * scalePointX, heightWindow - windowIndentY - (data[0].y + minPointY)  * scalePointY);
-            for (point in data){
-
-                g.lineTo(windowIndentX + (point.x - minPointX)  * scalePointX, heightWindow - windowIndentY - (point.y + minPointY)  * scalePointY);
-            }
-        }
-        else if ((minPointX < 0) && (minPointY > 0)){
-            g.moveTo(windowIndentX + (data[0].x + minPointX) * scalePointX, heightWindow - windowIndentY - (data[0].y - minPointY)  * scalePointY);
-            for (point in data){
-
-                g.lineTo(windowIndentX + (point.x + minPointX)  * scalePointX, heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY);
-            }
-        }
-        else if((maxPointX == widthWindow) && (maxPointY == heightWindow)){
-            g.moveTo(data[0].x + windowIndentX, heightWindow - data[0].y - windowIndentY);
-            for (point in data){
-
-                g.lineTo(point.x + windowIndentX, heightWindow - point.y - windowIndentY);
+        var x = windowIndentX + (data[0].x - minPointX) * scalePointX;
+        var y = heightWindow - windowIndentY - (data[0].y - minPointY) * scalePointY;
+        g.moveTo(x, y);
+        for (point in data){
+            var newX = windowIndentX + (point.x - minPointX)  * scalePointX;
+            var newY = heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY;
+            if (Math.abs(newX - x) >= 5) {
+                y = newY;
+                x = newX;
+                g.lineTo(x, y);
             }
         }
     }

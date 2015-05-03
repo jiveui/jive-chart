@@ -119,14 +119,14 @@ xmlns:flash-media="flash.media"
 <xs:element minOccurs="0" name="bitsPerSample" type="xs:int"/>
 <xs:element minOccurs="0" name="channels" type="xs:int"/>
 <xs:element minOccurs="0" name="data" type="xs:string"/>
-<xs:element minOccurs="0" name="id" type="xs:string"/>
+<xs:element minOccurs="0" name="id" type="xs:int"/>
 <xs:element minOccurs="0" name="sampleRate" type="xs:int"/>
 <xs:element minOccurs="0" name="src" type="flash-media:SoundSchemaTypeValue"/>
 </xs:all>
 <xs:attribute name="bitsPerSample" type="xs:int"/>
 <xs:attribute name="channels" type="xs:int"/>
 <xs:attribute name="data" type="xs:string"/>
-<xs:attribute name="id" type="xs:string"/>
+<xs:attribute name="id" type="xs:int"/>
 <xs:attribute name="sampleRate" type="xs:int"/>
 <xs:attribute name="src" type="xs:string"/>
 </xs:extension>

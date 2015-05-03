@@ -177,11 +177,17 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:complexType name="ERegSchemaTypeValue">
 <xs:all><xs:element ref="EReg"/></xs:all></xs:complexType>
 
+<xs:complexType name="UIntSchemaTypeValue">
+<xs:all><xs:element ref="UInt"/></xs:all></xs:complexType>
+
 <xs:complexType name="TypeSchemaTypeValue">
 <xs:all><xs:element ref="Type"/></xs:all></xs:complexType>
 
 <xs:complexType name="DateToolsSchemaTypeValue">
 <xs:all><xs:element ref="DateTools"/></xs:all></xs:complexType>
+
+<xs:complexType name="BoolSchemaTypeValue">
+<xs:all><xs:element ref="Bool"/></xs:all></xs:complexType>
 
 <xs:complexType name="ArrayAccessSchemaTypeValue">
 <xs:all><xs:element ref="ArrayAccess"/></xs:all></xs:complexType>
@@ -204,6 +210,9 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="haxe-ds:ObjectMap" />
 </xs:choice>
 </xs:complexType>
+
+<xs:complexType name="IntSchemaTypeValue">
+<xs:all><xs:element ref="Int"/></xs:all></xs:complexType>
 
 <xs:complexType name="RootObjectTypeSchemaTypeValue">
 <xs:choice>
@@ -572,6 +581,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-plaf-basic-cursor:HV_ResizeCursor" />
 <xs:element ref="org-aswing:LoadIcon" />
 <xs:element ref="org-aswing-tree:TreeLeafIcon" />
+<xs:element ref="jive:OpenLinkCommand" />
 <xs:element ref="org-aswing:DefaultSingleSelectionModel" />
 <xs:element ref="org-aswing:KeyStroke" />
 <xs:element ref="org-aswing:AsWingManager" />
@@ -858,6 +868,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-table:TableCell" />
 <xs:element ref="flash-text:TextLineMetrics" />
 <xs:element ref="haxe-crypto:BaseCode" />
+<xs:element ref="jive-plaf-flat-background:FlatPanelBackground" />
 <xs:element ref="org-aswing:GeneralListCellFactory" />
 <xs:element ref="org-aswing-plaf-basic:BasicRadioButtonMenuItemUI" />
 <xs:element ref="org-aswing-ext:GridListCellFactory" />
@@ -965,6 +976,9 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:complexType name="StringBufSchemaTypeValue">
 <xs:all><xs:element ref="StringBuf"/></xs:all></xs:complexType>
 
+<xs:complexType name="FloatSchemaTypeValue">
+<xs:all><xs:element ref="Float"/></xs:all></xs:complexType>
+
 <xs:complexType name="DateSchemaTypeValue">
 <xs:all><xs:element ref="Date"/></xs:all></xs:complexType>
 
@@ -983,6 +997,11 @@ xmlns:flash-accessibility="flash.accessibility"
 </xs:complexContent>
 </xs:complexType>
 
+<xs:complexType name="UIntSchemaType">
+<xs:all minOccurs='0'>
+</xs:all>
+</xs:complexType>
+
 <xs:complexType name="TypeSchemaType">
 <xs:complexContent>
 <xs:extension base="RootObjectTypeSchemaType">
@@ -999,6 +1018,11 @@ xmlns:flash-accessibility="flash.accessibility"
 </xs:all>
 </xs:extension>
 </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="BoolSchemaType">
+<xs:all minOccurs='0'>
+</xs:all>
 </xs:complexType>
 
 <xs:complexType name="ArrayAccessSchemaType">
@@ -1048,7 +1072,12 @@ xmlns:flash-accessibility="flash.accessibility"
 </xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="RootObjectTypeSchemaType"><xs:attribute name="id" type="xs:int"/>
+<xs:complexType name="IntSchemaType">
+<xs:all minOccurs='0'>
+</xs:all>
+</xs:complexType>
+
+<xs:complexType name="RootObjectTypeSchemaType">
 </xs:complexType>
 <xs:complexType name="ReflectSchemaType">
 <xs:complexContent>
@@ -1077,6 +1106,11 @@ xmlns:flash-accessibility="flash.accessibility"
 </xs:all>
 </xs:extension>
 </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="FloatSchemaType">
+<xs:all minOccurs='0'>
+</xs:all>
 </xs:complexType>
 
 <xs:complexType name="DateSchemaType">
@@ -1108,16 +1142,21 @@ xmlns:flash-accessibility="flash.accessibility"
 
 
 <xs:element name="EReg" type="ERegSchemaType"/>
+<xs:element name="UInt" type="UIntSchemaType"/>
 <xs:element name="Type" type="TypeSchemaType"/>
 <xs:element name="DateTools" type="DateToolsSchemaType"/>
+<xs:element name="Bool" type="BoolSchemaType"/>
 <xs:element name="ArrayAccess" type="ArrayAccessSchemaType"/>
 <xs:element name="String" type="StringSchemaType"/>
 <xs:element name="Std" type="StdSchemaType"/>
 <xs:element name="Lambda" type="LambdaSchemaType"/>
 <xs:element name="IMap" type="IMapSchemaType"/>
+<xs:element name="Int" type="IntSchemaType"/>
+<xs:element name="RootObjectType" type="RootObjectTypeSchemaType" />
 <xs:element name="Reflect" type="ReflectSchemaType"/>
 <xs:element name="Array" type="ArraySchemaType"/>
 <xs:element name="StringBuf" type="StringBufSchemaType"/>
+<xs:element name="Float" type="FloatSchemaType"/>
 <xs:element name="Date" type="DateSchemaType"/>
 <xs:element name="StringTools" type="StringToolsSchemaType"/>
 <xs:element name="Math" type="MathSchemaType"/>

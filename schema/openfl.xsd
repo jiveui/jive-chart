@@ -51,7 +51,6 @@ xmlns:lime="lime"
 <xs:complexType name="AssetCacheSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:extension base="IAssetCacheSchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="enabled" type="xs:boolean"/>
 </xs:all>
