@@ -158,13 +158,22 @@
       <module fileurl="file://$PROJECT_DIR$/jive-chart.iml" filepath="$PROJECT_DIR$/jive-chart.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" assert-keyword="false" jdk-15="false" project-jdk-name="Haxe 3.1.3" project-jdk-type="Haxe toolkit">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" default="false" assert-keyword="false" jdk-15="false" project-jdk-name="Haxe 3.2.0" project-jdk-type="Haxe toolkit">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="libraryTable">
+    <library name="2,0,5" type="Haxe">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/../haxe/haxe/lib/lime/2,0,5" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/../haxe/haxe/lib/lime/2,0,5" />
+      </SOURCES>
+    </library>
     <library name="jive" type="Haxe">
       <CLASSES>
         <root url="file://$PROJECT_DIR$/../jive/src" />
@@ -176,12 +185,17 @@
     </library>
     <library name="openfl" type="Haxe">
       <CLASSES>
-        <root url="file://$PROJECT_DIR$/../openfl" />
+        <root url="file://$PROJECT_DIR$/../haxe/haxe/lib/openfl/2,0,1" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="file://$PROJECT_DIR$/../openfl" />
+        <root url="file://$PROJECT_DIR$/../haxe/haxe/lib/openfl/2,0,1" />
       </SOURCES>
+    </library>
+    <library name="openfl-snapsvg" type="Haxe">
+      <CLASSES />
+      <JAVADOC />
+      <SOURCES />
     </library>
   </component>
 </project>

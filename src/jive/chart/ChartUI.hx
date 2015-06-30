@@ -85,6 +85,8 @@ class ChartUI extends BaseComponentUI {
     public var textHeightX:Int = 0;
 
 
+
+
 /**
     * Methods of finding the minimum and maximum points of the x and y
     **/
@@ -301,6 +303,33 @@ class ChartUI extends BaseComponentUI {
         return index * ((max - min) / length) + min;
     }
 
+
+    public function drawCircleOnPoint():Void{
+        var data = chart.data;
+        var g = shape.graphics;
+
+        var circleRadius:Int = 3;
+        calculateScalePointX();
+        calculateScalePointY();
+        var x = windowIndentX + (data[0].x - minPointX) * scalePointX;
+        var y = heightWindow - windowIndentY - (data[0].y - minPointY) * scalePointY;
+        for (point in data){
+            var newX = windowIndentX + (point.x - minPointX)  * scalePointX;
+            var newY = heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY;
+            if (Math.abs(newX - x) >= 5) {
+                y = newY;
+                x = newX;
+                g.beginFill(0xFFFFFF, 1.0);
+                g.drawCircle(x, y, circleRadius);
+                g.endFill();
+
+        }
+    }
+
+    /*public function newPoints():Void {
+        var data = chart.data;*/
+
+    }
     /**
     * Draw graph at points at axises X and Y;
     * If points y have negative value, then axis x is positive, axis y is negative;
@@ -328,5 +357,8 @@ class ChartUI extends BaseComponentUI {
                 g.lineTo(x, y);
             }
         }
+        drawCircleOnPoint();
     }
+
+
 }
