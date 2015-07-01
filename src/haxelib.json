@@ -6,6 +6,6 @@
   "description": "A chart library for Jive UI",
   "version": "0.0.1",
   "releasenote": "Initial release",
-  "contributors": [ "ngrebenshikov", "vaseel1ch", "Deenchik" ],
+  "contributors": [ "ngrebenshikov", "AlekseyPetuhov", "Deenchik" ],
   "dependencies": { }
 }
