@@ -1,6 +1,7 @@
 package jive.chart;
 
 import flash.Lib;
+import flash.Lib;
 import flash.display.Graphics;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -14,7 +15,7 @@ class Chart extends Container {
 
     public var title:String;
 
-    private var mouseCoord:Sprite = new Sprite();
+    private var mouseArea:Sprite = new Sprite();
     private var gr:Graphics = new Graphics();
 
     public var data(get, set):Array<Point>;
@@ -29,42 +30,29 @@ class Chart extends Container {
     public function new(title = ""){
         super();
         data = [];
-        this.DrawOnCanvas();
-        this.mouseCoord.addEventListener(MouseEvent.MOUSE_DOWN, this.onMouseDown);
-        this.mouseCoord.addEventListener(MouseEvent.MOUSE_UP, this.onMouseUp);
-
-//        stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseCoordinats);
-//        mouseCoord.addEventListener(MouseEvent.MOUSE_MOVE, globalMouseCoordinats)
-        addChild(mouseCoord);
+        areaListener();
+        mouseArea.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+        addChild(mouseArea);
     }
 
-    private function onMouseDown(e:MouseEvent):Void {
-        this.gr.moveTo(e.localX, e.localY);
-        this.mouseCoord.addEventListener(MouseEvent.MOUSE_MOVE, this.onMouseMove);
-        trace("onMouseDown");
-    }
-
-    private function onMouseUp(e:MouseEvent):Void{
-        this.mouseCoord.removeEventListener(MouseEvent.MOUSE_MOVE, this.onMouseMove);
-        trace("onMouseUp");
-    }
-
-    private function onMouseMove(e:MouseEvent):Void{
-        this.gr.lineTo(e.localX, e.localY);
+    private function onMouseMove(e:MouseEvent):Void {
+        gr.moveTo(e.localX, e.localY);
         trace("onMouseMove" + " x " + e.localX + " y " + e.localY );
     }
 
-    private function DrawOnCanvas():Void
+    private function areaListener():Void
     {
-        this.mouseCoord = new Sprite();
-        this.gr = this.mouseCoord.graphics;
-        this.gr.beginFill(0x9966ff);
-        this.gr.drawRect(0, 0, 300, 300);
-        this.gr.endFill();
-        this.gr.lineStyle(1, 0xff0000, 1);
-        flash.Lib.current.addChild(this.mouseCoord);
-        this.mouseCoord.x = 80;
-        this.mouseCoord.y = 0;
+        var widthf = Lib.current.stage.stageWidth;
+        var heightf = Lib.current.stage.stageHeight;
+        mouseArea = new Sprite();
+        gr = this.mouseArea.graphics;
+//        gr.beginFill(0x9966ff);
+        gr.drawRect(0, 0, widthf, heightf);
+//        gr.endFill();
+//        gr.lineStyle(1, 0xff0000, 1);
+//        flash.Lib.current.addChild(mouseCoord);
+        mouseArea.x = 80;
+        mouseArea.y = 0;
     }
 
 
@@ -84,9 +72,6 @@ class Chart extends Container {
     override public function getUIClassID():String{
         return "ChartUI";
     }
-
-
-
 }
 
 
