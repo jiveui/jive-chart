@@ -1,6 +1,7 @@
 package jive.chart;
 
 
+import flash.Lib;
 import flash.display.Stage;
 import flash.events.EventDispatcher;
 import flash.events.Event;
@@ -29,6 +30,9 @@ class ChartUI extends BaseComponentUI {
 
     public function new() {
         super();
+
+
+
     }
 
     private function getPropertyPrefix():String{
@@ -55,8 +59,13 @@ class ChartUI extends BaseComponentUI {
 
         widthWindow = b.width;
         heightWindow = b.height;
+
         drawAxises();
         drawGraph();
+
+//        areaListener();
+        mouseArea.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+        chart.addChild(mouseArea);
     }
 
     override public function installUI(c:Component):Void { }
@@ -90,6 +99,9 @@ class ChartUI extends BaseComponentUI {
     public var textWidthX:Int = 0;
     public var textWidthY:Int = 0;
     public var textHeightX:Int = 0;
+
+    public var newPointX:Array<Float> = [];
+    public var newPointY:Array<Float> = [];
 
 
 
@@ -167,6 +179,7 @@ class ChartUI extends BaseComponentUI {
         var tf: JTextField = new JTextField(chart.data[0].xValue.getCaptionByFloatValue( if (minPointX < 0) minPointX else maxPointX));
         textWidthX = Std.int(tf.preferredSize.width);
         textHeightX = Std.int(tf.preferredSize.height);
+        trace("text width X:" + textWidthX);
         return textWidthX;
     }
 
@@ -176,6 +189,7 @@ class ChartUI extends BaseComponentUI {
         calculateMaximumY();
         var tf: JTextField = new JTextField(chart.data[0].yValue.getCaptionByFloatValue( if (minPointY < 0) minPointY else maxPointY));
         textWidthY = Std.int(tf.preferredSize.width);
+        trace("text width Y:" + textWidthY);
         return textWidthY;
     }
 
@@ -316,6 +330,18 @@ class ChartUI extends BaseComponentUI {
     * If points x haxe negative valuse, then axis x is negatime, axis y is positive;
     * If points x and y have negative value, then axis x and y is negative.
     **/
+
+
+    public var mouseArea:Sprite = new Sprite();
+    private var gr:Graphics = new Graphics();
+
+    public function onMouseMove(e:MouseEvent):Void {
+        gr.moveTo(e.localX, e.localY);
+        if (e.localX == newPointX[0]){ trace ("s123");}
+        trace("onMouseMove" + " x " + e.localX + " y " + e.localY );
+
+    }
+
     public function drawGraph():Void{
 
         var data = chart.data;
@@ -325,8 +351,10 @@ class ChartUI extends BaseComponentUI {
         calculateScalePointY();
         lineStyleGraph();
 
-        var newPointX:Array<Float> = [];
-        var newPointY:Array<Float> = [];
+        gr = mouseArea.graphics;
+        gr.drawRect(0, 0, widthWindow, heightWindow);
+        mouseArea.x = 80;
+        mouseArea.y = 0;
 
         var circleRadius:Int = 2;
 
@@ -339,12 +367,15 @@ class ChartUI extends BaseComponentUI {
             if (Math.abs(newX - x) >= 7) {
                 y = newY;
                 x = newX;
-                newPointX.push(x);
-                newPointY.push(y);
 
+                trace ("sss: " + x);
                 g.lineTo(x, y);
+                var newxx = x - 80;
+                newPointX.push(newxx);
             }
         }
+        trace("first point new X " + newPointX[0]);
+        trace("newPointX.length: " + newPointX.length);
         for (point in data){
             var newX = windowIndentX + (point.x - minPointX)  * scalePointX;
             var newY = heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY;
