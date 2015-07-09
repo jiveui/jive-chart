@@ -27,6 +27,7 @@ class ChartUI extends BaseComponentUI {
     private var chart: Chart;
     private var widthWindow: Int;
     private var heightWindow: Int;
+    private var gr:Graphics = new Graphics();
 
     public function new() {
         super();
@@ -63,9 +64,7 @@ class ChartUI extends BaseComponentUI {
         drawAxises();
         drawGraph();
 
-//        areaListener();
-        mouseArea.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-        chart.addChild(mouseArea);
+
     }
 
     override public function installUI(c:Component):Void { }
@@ -319,30 +318,65 @@ class ChartUI extends BaseComponentUI {
         g.lineTo(widthWindow, 0);
     }
 
-
     private function interpolateValue(index: Int, length: Int, min: Float, max: Float): Float {
         return index * ((max - min) / length) + min;
     }
 
     /**
-    * Draw graph at points at axises X and Y;
-    * If points y have negative value, then axis x is positive, axis y is negative;
-    * If points x haxe negative valuse, then axis x is negatime, axis y is positive;
-    * If points x and y have negative value, then axis x and y is negative.
+    * Mouse coordinats.
     **/
-
-
-    public var mouseArea:Sprite = new Sprite();
-    private var gr:Graphics = new Graphics();
-
     public function onMouseMove(e:MouseEvent):Void {
         gr.moveTo(e.localX, e.localY);
-        if (e.localX == newPointX[0]){ trace ("s123");}
+        var x = e.localX;
+        calculateNearesPointIndex(x);
         trace("onMouseMove" + " x " + e.localX + " y " + e.localY );
+    }
+
+    var mouseArea:Sprite;
+
+    public function drawBubble():Void {
+        var gr:Graphics;
+        if (mouseArea == null){
+            mouseArea = new Sprite();
+            chart.addChild(mouseArea);
+        }
+
+        gr = mouseArea.graphics;
+        gr.drawRect(0, 0, widthWindow, heightWindow);
+        mouseArea.x = 80;
+        mouseArea.y = 0;
+
 
     }
 
+    public function calculateNearesPointIndex(x:Float):Int {
+        var indexMin:Int = 0;
+
+        var i: Int = 0;
+        var data = newPointX;
+        for (point in data){
+            if (Math.abs(x - data[indexMin]) > Math.abs(x - data[i])){
+                indexMin = i;
+            }
+            i++;
+        }
+        trace("Succes! " + indexMin);
+        return indexMin;
+    }
+
+    /**
+    * Draw graph at points at axises X and Y;
+    * If points y have negative value, then axis x is positive, axis y is negative;
+    * If points x haxe negative valuse, then axis x is negative, axis y is positive;
+    * If points x and y have negative value, then axis x and y is negative.
+    **/
+
     public function drawGraph():Void{
+        chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+
+        gr = chart.graphics;
+        gr.drawRect(0, 0, widthWindow, heightWindow);
 
         var data = chart.data;
 
@@ -351,31 +385,31 @@ class ChartUI extends BaseComponentUI {
         calculateScalePointY();
         lineStyleGraph();
 
-        gr = mouseArea.graphics;
-        gr.drawRect(0, 0, widthWindow, heightWindow);
-        mouseArea.x = 80;
-        mouseArea.y = 0;
-
         var circleRadius:Int = 2;
 
         var x = windowIndentX + (data[0].x - minPointX) * scalePointX;
         var y = heightWindow - windowIndentY - (data[0].y - minPointY) * scalePointY;
         g.moveTo(x, y);
+        newPointX = [];
+        newPointY = [];
         for (point in data){
             var newX = windowIndentX + (point.x - minPointX)  * scalePointX;
             var newY = heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY;
             if (Math.abs(newX - x) >= 7) {
                 y = newY;
                 x = newX;
-
-                trace ("sss: " + x);
+                trace ("newX: " + x);
                 g.lineTo(x, y);
-                var newxx = x - 80;
-                newPointX.push(newxx);
+                newPointX.push(x);
+                newPointY.push(y);
             }
         }
+
         trace("first point new X " + newPointX[0]);
+        trace("first point new y:" + newPointY[0]);
         trace("newPointX.length: " + newPointX.length);
+        trace("newPointY.length" + newPointY.length);
+
         for (point in data){
             var newX = windowIndentX + (point.x - minPointX)  * scalePointX;
             var newY = heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY;
