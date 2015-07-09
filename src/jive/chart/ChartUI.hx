@@ -334,12 +334,15 @@ class ChartUI extends BaseComponentUI {
 
     public var mouseArea:Sprite;
     public var indexMin:Int = 0;
+    public var circleRadius:Int = 2;
 
     public function drawBubble():Void {
         var gr:Graphics;
+
         if (mouseArea == null){
             mouseArea = new Sprite();
             chart.addChild(mouseArea);
+            trace("Create Layout");
         }
 
         gr = mouseArea.graphics;
@@ -349,8 +352,8 @@ class ChartUI extends BaseComponentUI {
         mouseArea.y = 0;
 
 
-        gr.beginFill(0x000000, 1.0);
-        gr.drawCircle(newPointX[indexMin], newPointY[indexMin], 2);
+        gr.beginFill(0xff0000, 1.0);
+        gr.drawCircle(newPointX[indexMin], newPointY[indexMin], circleRadius);
         gr.endFill();
     }
 
@@ -379,17 +382,15 @@ class ChartUI extends BaseComponentUI {
         chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
         chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 
-        gr = chart.graphics;
-        gr.drawRect(0, 0, widthWindow, heightWindow);
 
         var data = chart.data;
-
         var g = shape.graphics;
+
+        var gr = chart.graphics;
+        gr.drawRect(0, 0, widthWindow, heightWindow);
         calculateScalePointX();
         calculateScalePointY();
         lineStyleGraph();
-
-        var circleRadius:Int = 2;
 
         var x = windowIndentX + (data[0].x - minPointX) * scalePointX;
         var y = heightWindow - windowIndentY - (data[0].y - minPointY) * scalePointY;
@@ -402,17 +403,17 @@ class ChartUI extends BaseComponentUI {
             if (Math.abs(newX - x) >= 7) {
                 y = newY;
                 x = newX;
-                trace ("newX: " + x);
+//                trace ("newX: " + x);
                 g.lineTo(x, y);
                 newPointX.push(x);
                 newPointY.push(y);
             }
         }
 
-        trace("first point new X " + newPointX[0]);
-        trace("first point new y:" + newPointY[0]);
-        trace("newPointX.length: " + newPointX.length);
-        trace("newPointY.length" + newPointY.length);
+//        trace("first point new X " + newPointX[0]);
+//        trace("first point new y:" + newPointY[0]);
+//        trace("newPointX.length: " + newPointX.length);
+//        trace("newPointY.length" + newPointY.length);
 
         for (point in data){
             var newX = windowIndentX + (point.x - minPointX)  * scalePointX;
