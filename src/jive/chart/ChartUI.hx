@@ -327,12 +327,13 @@ class ChartUI extends BaseComponentUI {
     **/
     public function onMouseMove(e:MouseEvent):Void {
         gr.moveTo(e.localX, e.localY);
-        var x = e.localX;
-        calculateNearesPointIndex(x);
+        calculateNearesPointIndex(e.localX);
+        drawBubble();
         trace("onMouseMove" + " x " + e.localX + " y " + e.localY );
     }
 
-    var mouseArea:Sprite;
+    public var mouseArea:Sprite;
+    public var indexMin:Int = 0;
 
     public function drawBubble():Void {
         var gr:Graphics;
@@ -342,15 +343,18 @@ class ChartUI extends BaseComponentUI {
         }
 
         gr = mouseArea.graphics;
+        gr.clear();
         gr.drawRect(0, 0, widthWindow, heightWindow);
-        mouseArea.x = 80;
+        mouseArea.x = 0;
         mouseArea.y = 0;
 
 
+        gr.beginFill(0x000000, 1.0);
+        gr.drawCircle(newPointX[indexMin], newPointY[indexMin], 2);
+        gr.endFill();
     }
 
     public function calculateNearesPointIndex(x:Float):Int {
-        var indexMin:Int = 0;
 
         var i: Int = 0;
         var data = newPointX;
