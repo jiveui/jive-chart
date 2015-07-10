@@ -1,6 +1,7 @@
 package jive.chart;
 
 
+import org.aswing.JLabel;
 import flash.Lib;
 import flash.display.Stage;
 import flash.events.EventDispatcher;
@@ -63,13 +64,10 @@ class ChartUI extends BaseComponentUI {
 
         drawAxises();
         drawGraph();
-
-
     }
 
     override public function installUI(c:Component):Void { }
     override public function uninstallUI(c:Component):Void { }
-
 
     /**
     * Minimum and maximum x and y points.
@@ -90,7 +88,6 @@ class ChartUI extends BaseComponentUI {
     public var windowIndentY:Float = 20;
     public var arrowIndentY:Float = 3;
 
-    // sticks text field
     public var xValueSize:Float = 0;
     public var yValueSize:Float = 0;
 
@@ -101,9 +98,6 @@ class ChartUI extends BaseComponentUI {
 
     public var newPointX:Array<Float> = [];
     public var newPointY:Array<Float> = [];
-
-
-
 
 /**
     * Methods of finding the minimum and maximum points of the x and y
@@ -241,7 +235,6 @@ class ChartUI extends BaseComponentUI {
         windowIndentY = textHeightX + arrowIndentY;
 
         var g = shape.graphics;
-
         //axises
         lineStyleAxises();
         g.moveTo(windowIndentX, heightWindow - windowIndentY);
@@ -322,6 +315,8 @@ class ChartUI extends BaseComponentUI {
         return index * ((max - min) / length) + min;
     }
 
+    public var mouseLabel:JLabel;
+
     /**
     * Mouse coordinats.
     **/
@@ -329,12 +324,14 @@ class ChartUI extends BaseComponentUI {
         gr.moveTo(e.localX, e.localY);
         calculateNearesPointIndex(e.localX);
         drawBubble();
-        trace("onMouseMove" + " x " + e.localX + " y " + e.localY );
+//        trace("onMouseMove" + " x " + e.localX + " y " + e.localY );
+
     }
 
     public var mouseArea:Sprite;
     public var indexMin:Int = 0;
     public var circleRadius:Int = 2;
+    public var tf:JTextField;
 
     public function drawBubble():Void {
         var gr:Graphics;
@@ -343,6 +340,8 @@ class ChartUI extends BaseComponentUI {
             mouseArea = new Sprite();
             chart.addChild(mouseArea);
             trace("Create Layout");
+            tf = new JTextField();
+            chart.append(tf);
         }
 
         gr = mouseArea.graphics;
@@ -350,15 +349,17 @@ class ChartUI extends BaseComponentUI {
         gr.drawRect(0, 0, widthWindow, heightWindow);
         mouseArea.x = 0;
         mouseArea.y = 0;
-
-
         gr.beginFill(0xff0000, 1.0);
         gr.drawCircle(newPointX[indexMin], newPointY[indexMin], circleRadius);
         gr.endFill();
+
+        tf.text = Std.string(newPointX[indexMin]);
+        tf.location = new IntPoint(Std.int(newPointX[indexMin]), Std.int(newPointY[indexMin] - 10));
+        trace (tf.location);
+        indexMin = 0;
     }
 
     public function calculateNearesPointIndex(x:Float):Int {
-
         var i: Int = 0;
         var data = newPointX;
         for (point in data){
@@ -379,14 +380,18 @@ class ChartUI extends BaseComponentUI {
     **/
 
     public function drawGraph():Void{
+        var data = chart.data;
+        var g = shape.graphics;
+        var gr = chart.graphics;
+
+        chart.removeChild(mouseArea);
+        mouseArea = null;
+
+
         chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
         chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 
 
-        var data = chart.data;
-        var g = shape.graphics;
-
-        var gr = chart.graphics;
         gr.drawRect(0, 0, widthWindow, heightWindow);
         calculateScalePointX();
         calculateScalePointY();

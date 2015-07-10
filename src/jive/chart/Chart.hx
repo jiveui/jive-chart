@@ -1,10 +1,5 @@
 package jive.chart;
 
-//import flash.Lib;
-//import flash.display.Graphics;
-//import flash.events.Event;
-//import flash.events.MouseEvent;
-//import flash.display.Sprite;
 import org.aswing.UIManager;
 import org.aswing.Container;
 import Array;
@@ -13,12 +8,6 @@ import Array;
 class Chart extends Container {
 
     public var title:String;
-
-//    public var mouseArea:Sprite = new Sprite();
-//    private var gr:Graphics = new Graphics();
-
-//    public var newChart = new ChartUI();
-    public var newChart = new ChartUI();
 
     public var data(get, set):Array<Point>;
     private var _data: Array<Point>;
