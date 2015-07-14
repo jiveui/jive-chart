@@ -2,6 +2,12 @@ package jive.chart;
 
 class Point {
 
+    public var displayX(get, null):String;
+    private function get_displayX():String { return xValue.caption;}
+
+    public var displayY(get, null):Float;
+    private function get_displayY():Float { return xValue.floatValue;}
+
     public var x(get, null): Float;
     private function get_x(): Float { return xValue.floatValue; }
 

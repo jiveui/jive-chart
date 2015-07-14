@@ -8,7 +8,6 @@ import flash.events.EventDispatcher;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.display.Sprite;
-//import lime.ui.MouseEventManager;
 import flash.display.Graphics;
 import flash.events.MouseEvent;
 import flash.display.Shape;
@@ -28,14 +27,10 @@ class ChartUI extends BaseComponentUI {
     private var chart: Chart;
     private var widthWindow: Int;
     private var heightWindow: Int;
-    private var gr:Graphics = new Graphics();
-
+    public var textLabel:Array<JTextField>;
 
     public function new() {
         super();
-
-
-
     }
 
     private function getPropertyPrefix():String{
@@ -99,8 +94,10 @@ class ChartUI extends BaseComponentUI {
 
     public var newPointX:Array<Float> = [];
     public var newPointY:Array<Float> = [];
+    public var newPointXValue:Array<String> = [];
+    public var newPointYValue:Array<String> = [];
 
-/**
+    /**
     * Methods of finding the minimum and maximum points of the x and y
     **/
     public function calculateMinimumX(): Float{
@@ -225,6 +222,8 @@ class ChartUI extends BaseComponentUI {
     * draw text value axises.
     **/
     public function drawAxises():Void{
+        var g = shape.graphics;
+
         calculateMaximumX();
         calculateMaximumY();
         calculateScalePointX();
@@ -235,7 +234,6 @@ class ChartUI extends BaseComponentUI {
         windowIndentX = textWidthY;
         windowIndentY = textHeightX + arrowIndentY;
 
-        var g = shape.graphics;
         //axises
         lineStyleAxises();
         g.moveTo(windowIndentX, heightWindow - windowIndentY);
@@ -250,25 +248,24 @@ class ChartUI extends BaseComponentUI {
 
     private function drawGridVerticalLinesAndCaptions(g: Graphics) {
         lineStyleAxises();
-        var captionWidthWithMargin = textMargin + textWidthX;
+        var captionWidthWithMargin = textWidthX;
         var areaWidth = widthWindow - windowIndentX;
         var sticksAmount = Std.int(areaWidth/captionWidthWithMargin) + 1;
         var y = heightWindow - windowIndentY;
         var stickSize = arrowIndentY;
         var x0 = windowIndentX;
+        trace("areaWidth " + areaWidth);
+
         for (i in 0...sticksAmount) {
             var t = new JTextField(chart.data[0].xValue.getCaptionByFloatValue(interpolateValue(i, sticksAmount, minPointX, maxPointX)));
             var insets = t.getInsets();
             TextFields.push(t);
-
             var x = x0 + i * captionWidthWithMargin;
             g.moveTo(x, y);
             g.lineTo(x, y + stickSize);
-
-            trace(t.preferredSize);
-
             t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + stickSize) + insets.top);
             chart.append(t);
+            trace(t.text);
 
             lineStyleGrid();
             g.moveTo(x, y);
@@ -279,7 +276,7 @@ class ChartUI extends BaseComponentUI {
 
     private function drawGridHorizontalLinesAndCaptions(g: Graphics) {
         lineStyleAxises();
-        var captionHeightWithMargin = textMargin + textWidthY;
+        var captionHeightWithMargin = textWidthY;
         var areaHeight = heightWindow - windowIndentY;
         var sticksAmount = Std.int(areaHeight/captionHeightWithMargin) + 1;
         var x = windowIndentX;
@@ -289,11 +286,9 @@ class ChartUI extends BaseComponentUI {
             var t = new JTextField(chart.data[0].yValue.getCaptionByFloatValue(interpolateValue(i, sticksAmount, minPointY, maxPointY)));
             var insets = t.getInsets();
             TextFields.push(t);
-
             var y = y0 - i * captionHeightWithMargin;
             g.moveTo(x, y);
             g.lineTo(x - stickSize, y);
-
             t.location = new IntPoint(insets.left, Std.int(y - t.preferredSize.height/2) + insets.top);
             chart.append(t);
 
@@ -322,11 +317,9 @@ class ChartUI extends BaseComponentUI {
     * Mouse coordinats.
     **/
     public function onMouseMove(e:MouseEvent):Void {
-        gr.moveTo(e.localX, e.localY);
         calculateNearesPointIndex(e.localX);
         drawBubble();
 //        trace("onMouseMove" + " x " + e.localX + " y " + e.localY );
-
     }
 
     public var mouseArea:Sprite;
@@ -349,21 +342,20 @@ class ChartUI extends BaseComponentUI {
             tf = new JTextField();
             chart.append(tf);
         }
-
         gr = mouseArea.graphics;
         gr.clear();
         gr.drawRect(0, 0, widthWindow, heightWindow);
-        mouseArea.x = 0;
-        mouseArea.y = 0;
         gr.beginFill(0xff0000, 1.0);
         gr.drawCircle(newPointX[indexMin], newPointY[indexMin], circleRadius);
         gr.endFill();
 
-        tf.text = (Std.string("x: " + roundPointValue(newPointX[indexMin]) + "\n" + "y: " + roundPointValue(heightWindow - newPointY[indexMin])));
+        tf.text = (Std.string("x: " + newPointXValue[indexMin] + "\n" + "y: " + newPointYValue[indexMin]));
         tf.location = new IntPoint(Std.int(newPointX[indexMin]), Std.int(newPointY[indexMin] - 40));
-        trace (tf.location);
+        gr.beginFill(0xFFFF00, 0.3);
+        gr.drawRect(newPointX[indexMin], newPointY[indexMin] - 40, tf.preferredSize.width, tf.preferredSize.height);
+        gr.endFill();
+//        trace (tf.location);
         indexMin = 0;
-        trace ("dad " + TextFields[1]);
     }
 
     public function calculateNearesPointIndex(x:Float):Int {
@@ -386,6 +378,7 @@ class ChartUI extends BaseComponentUI {
     * If points x and y have negative value, then axis x and y is negative.
     **/
 
+
     public function drawGraph():Void{
         var data = chart.data;
         var g = shape.graphics;
@@ -393,7 +386,6 @@ class ChartUI extends BaseComponentUI {
 
         chart.removeChild(mouseArea);
         mouseArea = null;
-
 
         chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
         chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
@@ -409,27 +401,25 @@ class ChartUI extends BaseComponentUI {
         g.moveTo(x, y);
         newPointX = [];
         newPointY = [];
+        newPointXValue = [];
+        newPointYValue = [];
         for (point in data){
-            var newX = windowIndentX + (point.x - minPointX)  * scalePointX;
-            var newY = heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY;
+            var newX = windowIndentX + (point.x - minPointX) * scalePointX;
+            var newY = heightWindow - windowIndentY - (point.y - minPointY) * scalePointY;
             if (Math.abs(newX - x) >= 7) {
                 y = newY;
                 x = newX;
-//                trace ("newX: " + x);
                 g.lineTo(x, y);
                 newPointX.push(x);
                 newPointY.push(y);
+                newPointXValue.push(point.xCaption);
+                newPointYValue.push(point.yCaption);
             }
         }
 
-//        trace("first point new X " + newPointX[0]);
-//        trace("first point new y:" + newPointY[0]);
-//        trace("newPointX.length: " + newPointX.length);
-//        trace("newPointY.length" + newPointY.length);
-
         for (point in data){
-            var newX = windowIndentX + (point.x - minPointX)  * scalePointX;
-            var newY = heightWindow - windowIndentY - (point.y - minPointY)  * scalePointY;
+            var newX = windowIndentX + (point.x - minPointX) * scalePointX;
+            var newY = heightWindow - windowIndentY - (point.y - minPointY) * scalePointY;
             if (Math.abs(newX - x) >= 7) {
                 y = newY;
                 x = newX;
