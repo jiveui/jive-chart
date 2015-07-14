@@ -30,6 +30,7 @@ class ChartUI extends BaseComponentUI {
     private var heightWindow: Int;
     private var gr:Graphics = new Graphics();
 
+
     public function new() {
         super();
 
@@ -333,6 +334,11 @@ class ChartUI extends BaseComponentUI {
     public var circleRadius:Int = 2;
     public var tf:JTextField;
 
+    public function roundPointValue(x:Float):Float {
+        var xx:Float = Math.pow(10, 2);
+        return Math.round(x * xx) / xx;
+    }
+
     public function drawBubble():Void {
         var gr:Graphics;
 
@@ -353,10 +359,11 @@ class ChartUI extends BaseComponentUI {
         gr.drawCircle(newPointX[indexMin], newPointY[indexMin], circleRadius);
         gr.endFill();
 
-        tf.text = Std.string(newPointX[indexMin]);
-        tf.location = new IntPoint(Std.int(newPointX[indexMin]), Std.int(newPointY[indexMin] - 10));
+        tf.text = (Std.string("x: " + roundPointValue(newPointX[indexMin]) + "\n" + "y: " + roundPointValue(heightWindow - newPointY[indexMin])));
+        tf.location = new IntPoint(Std.int(newPointX[indexMin]), Std.int(newPointY[indexMin] - 40));
         trace (tf.location);
         indexMin = 0;
+        trace ("dad " + TextFields[1]);
     }
 
     public function calculateNearesPointIndex(x:Float):Int {
@@ -368,7 +375,7 @@ class ChartUI extends BaseComponentUI {
             }
             i++;
         }
-        trace("Succes! " + indexMin);
+//        trace("Succes! " + indexMin);
         return indexMin;
     }
 
