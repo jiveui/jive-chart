@@ -1,9 +1,11 @@
 <xs:schema targetNamespace="org.aswing" xmlns="org.aswing" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:bindx="bindx"
 xmlns:org-aswing-plaf-basic-background="org.aswing.plaf.basic.background"
-xmlns:jive-plaf-flat-tabbedpane="jive.plaf.flat.tabbedpane"
 xmlns:jive-plaf-flat-border="jive.plaf.flat.border"
+xmlns:jive-plaf-flat-tabbedpane="jive.plaf.flat.tabbedpane"
 xmlns:jive="jive"
 xmlns:org-aswing-table="org.aswing.table"
+xmlns:jive-plaf-flat-accordion="jive.plaf.flat.accordion"
 xmlns:org-aswing-plaf-basic-splitpane="org.aswing.plaf.basic.splitpane"
 xmlns:org-aswing-plaf-basic-border="org.aswing.plaf.basic.border"
 xmlns:org-aswing-table-sorter="org.aswing.table.sorter"
@@ -19,6 +21,7 @@ xmlns:flash-net="flash.net"
 xmlns:org-aswing-plaf-basic-tabbedpane="org.aswing.plaf.basic.tabbedpane"
 xmlns:jive-plaf-flat="jive.plaf.flat"
 xmlns:empty="empty"
+xmlns:jive-plaf-flat-adjuster="jive.plaf.flat.adjuster"
 xmlns:org-aswing-border="org.aswing.border"
 xmlns:haxe-ds="haxe.ds"
 xmlns:org-aswing-plaf-basic-icon="org.aswing.plaf.basic.icon"
@@ -30,11 +33,13 @@ xmlns:org-aswing-ext="org.aswing.ext"
 xmlns:org-aswing-tree="org.aswing.tree"
 xmlns:flash-events="flash.events"
 >
+<xs:import namespace="bindx" schemaLocation="bindx.xsd" />
 <xs:import namespace="org.aswing.plaf.basic.background" schemaLocation="org.aswing.plaf.basic.background.xsd" />
-<xs:import namespace="jive.plaf.flat.tabbedpane" schemaLocation="jive.plaf.flat.tabbedpane.xsd" />
 <xs:import namespace="jive.plaf.flat.border" schemaLocation="jive.plaf.flat.border.xsd" />
+<xs:import namespace="jive.plaf.flat.tabbedpane" schemaLocation="jive.plaf.flat.tabbedpane.xsd" />
 <xs:import namespace="jive" schemaLocation="jive.xsd" />
 <xs:import namespace="org.aswing.table" schemaLocation="org.aswing.table.xsd" />
+<xs:import namespace="jive.plaf.flat.accordion" schemaLocation="jive.plaf.flat.accordion.xsd" />
 <xs:import namespace="org.aswing.plaf.basic.splitpane" schemaLocation="org.aswing.plaf.basic.splitpane.xsd" />
 <xs:import namespace="org.aswing.plaf.basic.border" schemaLocation="org.aswing.plaf.basic.border.xsd" />
 <xs:import namespace="org.aswing.table.sorter" schemaLocation="org.aswing.table.sorter.xsd" />
@@ -50,6 +55,7 @@ xmlns:flash-events="flash.events"
 <xs:import namespace="org.aswing.plaf.basic.tabbedpane" schemaLocation="org.aswing.plaf.basic.tabbedpane.xsd" />
 <xs:import namespace="jive.plaf.flat" schemaLocation="jive.plaf.flat.xsd" />
 <xs:import namespace="empty" schemaLocation="empty.xsd" />
+<xs:import namespace="jive.plaf.flat.adjuster" schemaLocation="jive.plaf.flat.adjuster.xsd" />
 <xs:import namespace="org.aswing.border" schemaLocation="org.aswing.border.xsd" />
 <xs:import namespace="haxe.ds" schemaLocation="haxe.ds.xsd" />
 <xs:import namespace="org.aswing.plaf.basic.icon" schemaLocation="org.aswing.plaf.basic.icon.xsd" />
@@ -67,97 +73,116 @@ xmlns:flash-events="flash.events"
 <xs:element ref="org-aswing-plaf-basic-background:ProgressBarBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:ButtonBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:ComboBoxBackground" />
-<xs:element ref="org-aswing-plaf-basic-background:ToolTipBackground" />
 <xs:element ref="org-aswing-plaf-basic-border:PopupMenuBorder" />
-<xs:element ref="jive-plaf-flat-background:FlatPanelBackground" />
+<xs:element ref="jive-plaf-flat-icon:PlusIcon" />
 <xs:element ref="org-aswing-plaf-basic-border:TextAreaBorder" />
-<xs:element ref="org-aswing-plaf-basic-border:ProgressBarBorder" />
 <xs:element ref="SolidBackground" />
-<xs:element ref="org-aswing-plaf-basic-icon:SliderThumbIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:FrameIconifiedIcon" />
 <xs:element ref="org-aswing-colorchooser:NoColorIcon" />
-<xs:element ref="org-aswing-border:DecorateBorder" />
 <xs:element ref="org-aswing-plaf-basic-background:TextComponentBackBround" />
 <xs:element ref="jive-plaf-flat-background:FlatScrollBarThumb" />
-<xs:element ref="org-aswing-plaf-basic-border:TextFieldBorder" />
-<xs:element ref="AssetIcon" />
-<xs:element ref="jive-plaf-flat-background:FlatProgressBarIcon" />
-<xs:element ref="org-aswing-plaf-basic-icon:ArrowIcon" />
-<xs:element ref="org-aswing-plaf-basic-icon:MenuCheckIcon" />
-<xs:element ref="org-aswing-plaf-basic-icon:RadioButtonMenuItemCheckIcon" />
 <xs:element ref="org-aswing-plaf-basic-tabbedpane:BasicClosableTabbedPaneTab" />
 <xs:element ref="org-aswing-plaf-basic-background:ProgressBarIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:MenuItemArrowIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:FrameCloseIcon" />
 <xs:element ref="jive-plaf-flat-background:FlatTextComponentBackground" />
-<xs:element ref="org-aswing-plaf-basic-background:TableHeaderBackground" />
-<xs:element ref="org-aswing-plaf-basic-icon:FrameIcon" />
-<xs:element ref="jive-plaf-flat-border:TextCellComponentBorder" />
-<xs:element ref="org-aswing-plaf-basic-icon:CheckBoxIcon" />
-<xs:element ref="org-aswing-plaf-basic-icon:ScrollBarArrowIcon" />
 <xs:element ref="org-aswing-plaf-basic-background:InputBackground" />
 <xs:element ref="MultipleAssetIcon" />
-<xs:element ref="org-aswing-plaf-basic-background:ToggleButtonBackground" />
-<xs:element ref="jive-plaf-flat-icon:FlatMenuArrowIcon" />
-<xs:element ref="org-aswing-colorchooser:ColorRectIcon" />
-<xs:element ref="org-aswing-plaf:DefaultEmptyDecoraterResource" />
-<xs:element ref="org-aswing-plaf-basic-border:ColorChooserBorder" />
 <xs:element ref="org-aswing-border:SimpleTitledBorder" />
 <xs:element ref="org-aswing-plaf-basic-background:TableBackground" />
 <xs:element ref="AssetBackground" />
-<xs:element ref="jive-plaf-flat-icon:FlatRadioButtonIcon" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButtonBackground" />
 <xs:element ref="org-aswing-plaf-basic-icon:MenuArrowIcon" />
-<xs:element ref="org-aswing-plaf-basic-frame:BasicFrameTitleBarBG" />
+<xs:element ref="org-aswing-plaf-basic-border:LineBorderResource" />
+<xs:element ref="jive-plaf-flat-border:ExtendedLineBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:ComboBoxBorder" />
-<xs:element ref="jive-plaf-flat-border:FlatPopupMenuBorder" />
 <xs:element ref="SimpleButtonIcon" />
 <xs:element ref="jive-plaf-flat-background:FlatScrollBarBackground" />
-<xs:element ref="org-aswing-plaf-basic-icon:CheckBoxMenuItemCheckIcon" />
 <xs:element ref="jive-plaf-flat-icon:FlatComboBoxArrowIcon" />
 <xs:element ref="org-aswing-plaf-basic-border:FrameBorder" />
 <xs:element ref="jive-plaf-flat-icon:FlatCheckBoxIcon" />
-<xs:element ref="EmptyIcon" />
 <xs:element ref="org-aswing-plaf-basic-border:ComboBoxPopupBorder" />
 <xs:element ref="org-aswing-plaf-basic-icon:RadioButtonIcon" />
-<xs:element ref="org-aswing-plaf-basic-icon:MenuItemCheckIcon" />
 <xs:element ref="org-aswing-plaf-basic-background:PanelBackground" />
 <xs:element ref="org-aswing-border:CaveBorder" />
 <xs:element ref="jive-plaf-flat-background:FlatProgressBarBackground" />
 <xs:element ref="org-aswing-plaf-basic-adjuster:PopupSliderThumbIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:FrameMaximizeIcon" />
 <xs:element ref="org-aswing-border:TitledBorder" />
+<xs:element ref="jive-plaf-flat-border:TableLineBorder" />
 <xs:element ref="Icon" />
-<xs:element ref="Border" />
-<xs:element ref="org-aswing-plaf-basic-icon:SolidArrowIcon" />
-<xs:element ref="org-aswing-plaf-basic-icon:FrameNormalIcon" />
-<xs:element ref="jive-plaf-flat-tabbedpane:FlatTabBackground" />
-<xs:element ref="jive-plaf-flat-background:FlatInputBackground" />
-<xs:element ref="org-aswing-plaf-basic-border:TableHeaderCellBorder" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionItemBackground" />
+<xs:element ref="jive-plaf-flat-icon:FrameCloseIcon" />
 <xs:element ref="org-aswing-plaf-basic-tabbedpane:CloseIcon" />
-<xs:element ref="jive-plaf-flat-background:FlatButtonBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:ScrollBarThumb" />
-<xs:element ref="org-aswing-tree:TreeFolderIcon" />
+<xs:element ref="jive-plaf-flat-background:FlatTableBackground" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionItemBorder" />
 <xs:element ref="org-aswing-colorchooser:PreviewColorIcon" />
-<xs:element ref="org-aswing-plaf-basic-border:ToolTipBorder" />
 <xs:element ref="org-aswing-plaf-basic-splitpane:DividerIcon" />
-<xs:element ref="org-aswing-plaf-basic-border:TextComponentBorder" />
 <xs:element ref="jive-plaf-flat-icon:FlatSliderThumbIcon" />
 <xs:element ref="org-aswing-border:BevelBorder" />
-<xs:element ref="LoadIcon" />
-<xs:element ref="org-aswing-tree:TreeLeafIcon" />
+<xs:element ref="jive-plaf-flat-adjuster:AdjusterBorder" />
 <xs:element ref="SimpleButtonIconToggle" />
 <xs:element ref="GroundDecorator" />
 <xs:element ref="org-aswing-plaf-basic-background:ListBackground" />
 <xs:element ref="org-aswing-plaf-basic-icon:TitleIcon" />
-<xs:element ref="org-aswing-border:SideLineBorder" />
 <xs:element ref="org-aswing-plaf-basic-background:ScrollBarBackground" />
 <xs:element ref="org-aswing-plaf-basic-tabbedpane:TabBackground" />
 <xs:element ref="org-aswing-table-sorter:Arrow" />
+<xs:element ref="org-aswing-plaf-basic-border:EmptyBorderResource" />
+<xs:element ref="jive-plaf-flat-border:FlatComboBoxPopupBorder" />
+<xs:element ref="org-aswing-plaf-basic-background:ToolTipBackground" />
+<xs:element ref="jive-plaf-flat-background:FlatPanelBackground" />
+<xs:element ref="org-aswing-plaf-basic-border:ProgressBarBorder" />
+<xs:element ref="org-aswing-plaf-basic-icon:SliderThumbIcon" />
+<xs:element ref="org-aswing-border:DecorateBorder" />
+<xs:element ref="jive-plaf-flat-icon:MinusIcon" />
+<xs:element ref="org-aswing-plaf-basic-border:TextFieldBorder" />
+<xs:element ref="AssetIcon" />
+<xs:element ref="jive-plaf-flat-background:FlatProgressBarIcon" />
+<xs:element ref="org-aswing-plaf-basic-icon:ArrowIcon" />
+<xs:element ref="org-aswing-plaf-basic-icon:MenuCheckIcon" />
+<xs:element ref="org-aswing-plaf-basic-icon:RadioButtonMenuItemCheckIcon" />
+<xs:element ref="jive-plaf-flat-border:TableHeaderCellBorder" />
+<xs:element ref="org-aswing-plaf-basic-background:TableHeaderBackground" />
+<xs:element ref="org-aswing-plaf-basic-icon:FrameIcon" />
+<xs:element ref="jive-plaf-flat-border:TextCellComponentBorder" />
+<xs:element ref="org-aswing-plaf-basic-icon:CheckBoxIcon" />
+<xs:element ref="org-aswing-plaf-basic-icon:ScrollBarArrowIcon" />
+<xs:element ref="org-aswing-plaf-basic-background:ToggleButtonBackground" />
+<xs:element ref="jive-plaf-flat-icon:FlatMenuArrowIcon" />
+<xs:element ref="org-aswing-colorchooser:ColorRectIcon" />
+<xs:element ref="org-aswing-plaf:DefaultEmptyDecoraterResource" />
+<xs:element ref="jive-plaf-flat-icon:ExpandIcon" />
+<xs:element ref="org-aswing-plaf-basic-border:ColorChooserBorder" />
+<xs:element ref="jive-plaf-flat-icon:FlatRadioButtonIcon" />
+<xs:element ref="org-aswing-plaf-basic-frame:BasicFrameTitleBarBG" />
+<xs:element ref="jive-plaf-flat-border:FlatPopupMenuBorder" />
+<xs:element ref="org-aswing-plaf-basic-icon:CheckBoxMenuItemCheckIcon" />
+<xs:element ref="EmptyIcon" />
+<xs:element ref="org-aswing-plaf-basic-icon:MenuItemCheckIcon" />
+<xs:element ref="Border" />
+<xs:element ref="org-aswing-plaf-basic-icon:SolidArrowIcon" />
+<xs:element ref="org-aswing-plaf-basic-icon:FrameNormalIcon" />
+<xs:element ref="jive-plaf-flat-tabbedpane:FlatTabBackground" />
+<xs:element ref="jive-plaf-flat-background:FlatTableHeaderBackground" />
+<xs:element ref="jive-plaf-flat-background:FlatInputBackground" />
+<xs:element ref="org-aswing-plaf-basic-border:TableHeaderCellBorder" />
+<xs:element ref="jive-plaf-flat-background:FlatButtonBackground" />
+<xs:element ref="jive-plaf-flat-adjuster:MinusButtonBackground" />
+<xs:element ref="org-aswing-tree:TreeFolderIcon" />
+<xs:element ref="jive-plaf-flat-icon:FrameIcon" />
+<xs:element ref="org-aswing-plaf-basic-border:ToolTipBorder" />
+<xs:element ref="org-aswing-plaf-basic-border:TextComponentBorder" />
+<xs:element ref="LoadIcon" />
+<xs:element ref="org-aswing-tree:TreeLeafIcon" />
+<xs:element ref="jive-plaf-flat-adjuster:AdjusterBackground" />
+<xs:element ref="org-aswing-border:SideLineBorder" />
+<xs:element ref="jive-plaf-flat-background:FlatFrameBackground" />
 <xs:element ref="GradientBackground" />
 <xs:element ref="org-aswing-plaf-basic:ToolBarButtonBgAdapter" />
-<xs:element ref="org-aswing-plaf-basic-border:EmptyBorderResource" />
 <xs:element ref="org-aswing-border:LineBorder" />
-<xs:element ref="jive-plaf-flat-border:FlatComboBoxPopupBorder" />
+<xs:element ref="jive-plaf-flat-adjuster:PlusButtonBackground" />
 </xs:choice>
 </xs:complexType>
 
@@ -245,25 +270,33 @@ xmlns:flash-events="flash.events"
 <xs:element ref="org-aswing-plaf-basic-background:TextComponentBackBround" />
 <xs:element ref="jive-plaf-flat-background:FlatScrollBarThumb" />
 <xs:element ref="jive-plaf-flat-background:FlatProgressBarIcon" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionItemBackground" />
 <xs:element ref="org-aswing-plaf-basic-tabbedpane:BasicClosableTabbedPaneTab" />
 <xs:element ref="jive-plaf-flat-tabbedpane:FlatTabBackground" />
+<xs:element ref="jive-plaf-flat-background:FlatTableHeaderBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:ProgressBarIcon" />
 <xs:element ref="jive-plaf-flat-background:FlatInputBackground" />
 <xs:element ref="jive-plaf-flat-background:FlatButtonBackground" />
+<xs:element ref="jive-plaf-flat-adjuster:MinusButtonBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:ScrollBarThumb" />
 <xs:element ref="jive-plaf-flat-background:FlatTextComponentBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:TableHeaderBackground" />
+<xs:element ref="jive-plaf-flat-background:FlatTableBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:InputBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:ToggleButtonBackground" />
 <xs:element ref="org-aswing-plaf:DefaultEmptyDecoraterResource" />
 <xs:element ref="org-aswing-plaf-basic-background:TableBackground" />
 <xs:element ref="AssetBackground" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButtonBackground" />
+<xs:element ref="jive-plaf-flat-adjuster:AdjusterBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:ListBackground" />
 <xs:element ref="org-aswing-plaf-basic-background:ScrollBarBackground" />
 <xs:element ref="org-aswing-plaf-basic-frame:BasicFrameTitleBarBG" />
+<xs:element ref="jive-plaf-flat-background:FlatFrameBackground" />
 <xs:element ref="org-aswing-plaf-basic-tabbedpane:TabBackground" />
 <xs:element ref="GradientBackground" />
 <xs:element ref="org-aswing-plaf-basic:ToolBarButtonBgAdapter" />
+<xs:element ref="jive-plaf-flat-adjuster:PlusButtonBackground" />
 </xs:choice>
 </xs:complexType>
 
@@ -279,6 +312,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JMenuItem" />
 <xs:element ref="JRadioButtonMenuItem" />
 <xs:element ref="JButton" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element ref="JCheckBoxMenuItem" />
 <xs:element ref="JRadioButton" />
 <xs:element ref="JMenu" />
@@ -325,6 +359,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JToolTip" />
 <xs:element ref="org-aswing-ext:DefaultGridCell" />
 <xs:element ref="AbstractTabbedPane" />
+<xs:element ref="jive:Dialog" />
 <xs:element ref="jive-formatting:RegExFormattedTextArea" />
 <xs:element ref="org-aswing-tree:DefaultTreeCell" />
 <xs:element ref="org-aswing-ext:Folder" />
@@ -356,6 +391,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JSharedToolTip" />
 <xs:element ref="JSplitPane" />
 <xs:element ref="JTextField" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element ref="JRootPane" />
 <xs:element ref="jive:Spot" />
 <xs:element ref="JRadioButton" />
@@ -363,6 +399,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JAdjuster" />
 <xs:element ref="JSlider" />
 <xs:element ref="JPopupMenu" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionItemContainer" />
 <xs:element ref="JTextArea" />
 <xs:element ref="org-aswing-plaf-basic-splitpane:Divider" />
 <xs:element ref="JStepper" />
@@ -411,18 +448,20 @@ xmlns:flash-events="flash.events"
 <xs:complexType name="JLabelButtonSchemaTypeValue">
 <xs:all><xs:element ref="JLabelButton"/></xs:all></xs:complexType>
 
-<xs:complexType name="EmptyIconSchemaTypeValue">
-<xs:all><xs:element ref="EmptyIcon"/></xs:all></xs:complexType>
-
 <xs:complexType name="JWindowSchemaTypeValue">
 <xs:choice>
+<xs:element ref="jive:Dialog" />
 <xs:element ref="JFrame" />
 <xs:element ref="JWindow" />
 </xs:choice>
 </xs:complexType>
 
+<xs:complexType name="EmptyIconSchemaTypeValue">
+<xs:all><xs:element ref="EmptyIcon"/></xs:all></xs:complexType>
+
 <xs:complexType name="JButtonSchemaTypeValue">
 <xs:choice>
+<xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element ref="jive-plaf-flat-tabbedpane:FlatTabButton" />
 <xs:element ref="JButton" />
 </xs:choice>
@@ -497,6 +536,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="jive:Spot" />
 <xs:element ref="SoftBox" />
 <xs:element ref="JOptionPane" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionItemContainer" />
 <xs:element ref="jive-plaf-flat:TextCellComponent" />
 <xs:element ref="Box" />
 <xs:element ref="JPanel" />
@@ -594,23 +634,29 @@ xmlns:flash-events="flash.events"
 <xs:choice>
 <xs:element ref="org-aswing-plaf-basic-border:FrameBorder" />
 <xs:element ref="org-aswing-border:EmptyBorder" />
-<xs:element ref="jive-plaf-flat-border:TextCellComponentBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:ComboBoxPopupBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:PopupMenuBorder" />
 <xs:element ref="org-aswing-border:CaveBorder" />
-<xs:element ref="org-aswing-plaf:DefaultEmptyDecoraterResource" />
-<xs:element ref="org-aswing-plaf-basic-border:ToolTipBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:TextAreaBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:ProgressBarBorder" />
+<xs:element ref="org-aswing-border:TitledBorder" />
+<xs:element ref="org-aswing-border:DecorateBorder" />
+<xs:element ref="jive-plaf-flat-border:TableLineBorder" />
+<xs:element ref="org-aswing-plaf-basic-border:TextFieldBorder" />
+<xs:element ref="org-aswing-plaf-basic-border:TableHeaderCellBorder" />
+<xs:element ref="jive-plaf-flat-border:TableHeaderCellBorder" />
+<xs:element ref="jive-plaf-flat-border:TextCellComponentBorder" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionItemBorder" />
+<xs:element ref="org-aswing-plaf:DefaultEmptyDecoraterResource" />
+<xs:element ref="org-aswing-plaf-basic-border:ToolTipBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:TextComponentBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:ColorChooserBorder" />
 <xs:element ref="org-aswing-border:SimpleTitledBorder" />
-<xs:element ref="org-aswing-border:TitledBorder" />
 <xs:element ref="org-aswing-border:BevelBorder" />
-<xs:element ref="org-aswing-border:DecorateBorder" />
-<xs:element ref="org-aswing-plaf-basic-border:TextFieldBorder" />
+<xs:element ref="jive-plaf-flat-adjuster:AdjusterBorder" />
+<xs:element ref="org-aswing-plaf-basic-border:LineBorderResource" />
 <xs:element ref="org-aswing-border:SideLineBorder" />
-<xs:element ref="org-aswing-plaf-basic-border:TableHeaderCellBorder" />
+<xs:element ref="jive-plaf-flat-border:ExtendedLineBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:ComboBoxBorder" />
 <xs:element ref="org-aswing-plaf-basic-border:EmptyBorderResource" />
 <xs:element ref="org-aswing-border:LineBorder" />
@@ -769,12 +815,14 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JSharedToolTip" />
 <xs:element ref="JSplitPane" />
 <xs:element ref="AbstractTabbedPane" />
+<xs:element ref="jive:Dialog" />
 <xs:element ref="JRootPane" />
 <xs:element ref="org-aswing-ext:Folder" />
 <xs:element ref="jive:Spot" />
 <xs:element ref="JPanel" />
 <xs:element ref="JPopupMenu" />
 <xs:element ref="org-aswing-table:JTableHeader" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionItemContainer" />
 <xs:element ref="org-aswing-plaf-basic-splitpane:Divider" />
 <xs:element ref="AssetPane" />
 <xs:element ref="JClosableTabbedPane" />
@@ -889,6 +937,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JToolTip" />
 <xs:element ref="org-aswing-ext:DefaultGridCell" />
 <xs:element ref="AbstractTabbedPane" />
+<xs:element ref="jive:Dialog" />
 <xs:element ref="jive-formatting:RegExFormattedTextArea" />
 <xs:element ref="org-aswing-tree:DefaultTreeCell" />
 <xs:element ref="org-aswing-ext:Folder" />
@@ -920,6 +969,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JSharedToolTip" />
 <xs:element ref="JSplitPane" />
 <xs:element ref="JTextField" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element ref="JRootPane" />
 <xs:element ref="jive:Spot" />
 <xs:element ref="JRadioButton" />
@@ -927,6 +977,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JAdjuster" />
 <xs:element ref="JSlider" />
 <xs:element ref="JPopupMenu" />
+<xs:element ref="jive-plaf-flat-accordion:AccordionItemContainer" />
 <xs:element ref="JTextArea" />
 <xs:element ref="org-aswing-plaf-basic-splitpane:Divider" />
 <xs:element ref="JStepper" />
@@ -970,7 +1021,11 @@ xmlns:flash-events="flash.events"
 <xs:all><xs:element ref="JStepper"/></xs:all></xs:complexType>
 
 <xs:complexType name="JFrameSchemaTypeValue">
-<xs:all><xs:element ref="JFrame"/></xs:all></xs:complexType>
+<xs:choice>
+<xs:element ref="jive:Dialog" />
+<xs:element ref="JFrame" />
+</xs:choice>
+</xs:complexType>
 
 <xs:complexType name="GradientBackgroundSchemaTypeValue">
 <xs:all><xs:element ref="GradientBackground"/></xs:all></xs:complexType>
@@ -1066,6 +1121,7 @@ xmlns:flash-events="flash.events"
 
 <xs:complexType name="JPopupSchemaTypeValue">
 <xs:choice>
+<xs:element ref="jive:Dialog" />
 <xs:element ref="JWindow" />
 <xs:element ref="JFrame" />
 <xs:element ref="JPopup" />
@@ -1080,11 +1136,13 @@ xmlns:flash-events="flash.events"
 <xs:element ref="EmptyIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:RadioButtonIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:MenuItemCheckIcon" />
+<xs:element ref="jive-plaf-flat-icon:PlusIcon" />
 <xs:element ref="org-aswing-plaf-basic-adjuster:PopupSliderThumbIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:FrameMaximizeIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:SliderThumbIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:FrameIconifiedIcon" />
 <xs:element ref="org-aswing-colorchooser:NoColorIcon" />
+<xs:element ref="jive-plaf-flat-icon:MinusIcon" />
 <xs:element ref="AssetIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:SolidArrowIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:FrameNormalIcon" />
@@ -1092,6 +1150,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="org-aswing-plaf-basic-icon:MenuCheckIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:RadioButtonMenuItemCheckIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:MenuItemArrowIcon" />
+<xs:element ref="jive-plaf-flat-icon:FrameCloseIcon" />
 <xs:element ref="org-aswing-plaf-basic-tabbedpane:CloseIcon" />
 <xs:element ref="org-aswing-plaf-basic-icon:FrameCloseIcon" />
 <xs:element ref="org-aswing-tree:TreeFolderIcon" />
@@ -1102,8 +1161,10 @@ xmlns:flash-events="flash.events"
 <xs:element ref="org-aswing-colorchooser:PreviewColorIcon" />
 <xs:element ref="jive-plaf-flat-icon:FlatMenuArrowIcon" />
 <xs:element ref="org-aswing-colorchooser:ColorRectIcon" />
+<xs:element ref="jive-plaf-flat-icon:FrameIcon" />
 <xs:element ref="org-aswing-plaf:DefaultEmptyDecoraterResource" />
 <xs:element ref="org-aswing-plaf-basic-splitpane:DividerIcon" />
+<xs:element ref="jive-plaf-flat-icon:ExpandIcon" />
 <xs:element ref="jive-plaf-flat-icon:FlatSliderThumbIcon" />
 <xs:element ref="LoadIcon" />
 <xs:element ref="org-aswing-tree:TreeLeafIcon" />
@@ -1147,6 +1208,7 @@ xmlns:flash-events="flash.events"
 
 <xs:complexType name="JRootPaneSchemaTypeValue">
 <xs:choice>
+<xs:element ref="jive:Dialog" />
 <xs:element ref="JWindow" />
 <xs:element ref="JFrame" />
 <xs:element ref="JPopup" />
@@ -1307,7 +1369,9 @@ xmlns:flash-events="flash.events"
 <xs:complexContent>
 <xs:extension base="AbstractTabbedPaneSchemaType">
 <xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="itemContainerClass" type="xs:string"/>
 </xs:all>
+<xs:attribute name="itemContainerClass" type="xs:string"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -1612,6 +1676,8 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" name="dropTrigger" type="xs:boolean"/>
 <xs:element minOccurs="0" name="resizerMargin" type="InsetsSchemaTypeValue"/>
 <xs:element minOccurs="0" name="transitFocusFactor" type="xs:double"/>
+<xs:element minOccurs="0" name="__fieldBindings__" type="bindx:FieldsBindSignalSchemaTypeValue"/>
+<xs:element minOccurs="0" name="__methodBindings__" type="bindx:MethodsBindSignalSchemaTypeValue"/>
 </xs:all>
 <xs:attribute name="ui" type="xs:string"/>
 <xs:attribute name="clipBounds" type="xs:string"/>
@@ -1645,6 +1711,8 @@ xmlns:flash-events="flash.events"
 <xs:attribute name="dropTrigger" type="xs:boolean"/>
 <xs:attribute name="resizerMargin" type="xs:string"/>
 <xs:attribute name="transitFocusFactor" type="xs:double"/>
+<xs:attribute name="__fieldBindings__" type="xs:string"/>
+<xs:attribute name="__methodBindings__" type="xs:string"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -1681,12 +1749,14 @@ xmlns:flash-events="flash.events"
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
 <xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="family" type="xs:string"/>
 <xs:element minOccurs="0" name="name" type="xs:string"/>
 <xs:element minOccurs="0" name="size" type="xs:int"/>
 <xs:element minOccurs="0" name="bold" type="xs:boolean"/>
 <xs:element minOccurs="0" name="italic" type="xs:boolean"/>
 <xs:element minOccurs="0" name="underline" type="xs:boolean"/>
 </xs:all>
+<xs:attribute name="family" type="xs:string"/>
 <xs:attribute name="name" type="xs:string"/>
 <xs:attribute name="size" type="xs:int"/>
 <xs:attribute name="bold" type="xs:boolean"/>
@@ -1746,15 +1816,6 @@ xmlns:flash-events="flash.events"
 </xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="EmptyIconSchemaType">
-<xs:complexContent>
-<xs:extension base="empty:RootObjectTypeSchemaType">
-<xs:all minOccurs='0'>
-</xs:all>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-
 <xs:complexType name="JWindowSchemaType">
 <xs:complexContent>
 <xs:extension base="JPopupSchemaType">
@@ -1766,6 +1827,15 @@ xmlns:flash-events="flash.events"
 <xs:attribute name="content" type="xs:string"/>
 <xs:attribute name="activable" type="xs:boolean"/>
 <xs:attribute name="actived" type="xs:boolean"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="EmptyIconSchemaType">
+<xs:complexContent>
+<xs:extension base="empty:RootObjectTypeSchemaType">
+<xs:all minOccurs='0'>
+</xs:all>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -1867,6 +1937,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" name="dataModel" type="org-aswing-table:TableModelSchemaTypeValue"/>
 <xs:element minOccurs="0" name="columnModel" type="org-aswing-table:TableColumnModelSchemaTypeValue"/>
 <xs:element minOccurs="0" name="selectionModel" type="ListSelectionModelSchemaTypeValue"/>
+<xs:element minOccurs="0" name="selectionMode" type="xs:int"/>
 <xs:element minOccurs="0" name="tableHeader" type="org-aswing-table:JTableHeaderSchemaTypeValue"/>
 <xs:element minOccurs="0" name="footer" type="ComponentSchemaTypeValue"/>
 <xs:element minOccurs="0" name="rowHeight" type="xs:int"/>
@@ -1887,10 +1958,12 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" name="verticalBlockIncrement" type="xs:int"/>
 <xs:element minOccurs="0" name="horizontalUnitIncrement" type="xs:int"/>
 <xs:element minOccurs="0" name="horizontalBlockIncrement" type="xs:int"/>
+<xs:element minOccurs="0" name="selectedItem" type="xs:string"/>
 </xs:all>
 <xs:attribute name="dataModel" type="xs:string"/>
 <xs:attribute name="columnModel" type="xs:string"/>
 <xs:attribute name="selectionModel" type="xs:string"/>
+<xs:attribute name="selectionMode" type="xs:int"/>
 <xs:attribute name="tableHeader" type="xs:string"/>
 <xs:attribute name="footer" type="xs:string"/>
 <xs:attribute name="rowHeight" type="xs:int"/>
@@ -1911,6 +1984,7 @@ xmlns:flash-events="flash.events"
 <xs:attribute name="verticalBlockIncrement" type="xs:int"/>
 <xs:attribute name="horizontalUnitIncrement" type="xs:int"/>
 <xs:attribute name="horizontalBlockIncrement" type="xs:int"/>
+<xs:attribute name="selectedItem" type="xs:string"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -2420,8 +2494,10 @@ xmlns:flash-events="flash.events"
 <xs:extension base="empty:RootObjectTypeSchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="asset" type="flash-display:DisplayObjectSchemaTypeValue"/>
+<xs:element minOccurs="0" name="keepRatio" type="xs:boolean"/>
 </xs:all>
 <xs:attribute name="asset" type="xs:string"/>
+<xs:attribute name="keepRatio" type="xs:boolean"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -2654,6 +2730,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="JToolTip" />
 <xs:element minOccurs="0" ref="org-aswing-ext:DefaultGridCell" />
 <xs:element minOccurs="0" ref="AbstractTabbedPane" />
+<xs:element minOccurs="0" ref="jive:Dialog" />
 <xs:element minOccurs="0" ref="jive-formatting:RegExFormattedTextArea" />
 <xs:element minOccurs="0" ref="org-aswing-tree:DefaultTreeCell" />
 <xs:element minOccurs="0" ref="org-aswing-ext:Folder" />
@@ -2685,6 +2762,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="JSharedToolTip" />
 <xs:element minOccurs="0" ref="JSplitPane" />
 <xs:element minOccurs="0" ref="JTextField" />
+<xs:element minOccurs="0" ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element minOccurs="0" ref="JRootPane" />
 <xs:element minOccurs="0" ref="jive:Spot" />
 <xs:element minOccurs="0" ref="JRadioButton" />
@@ -2692,6 +2770,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="JAdjuster" />
 <xs:element minOccurs="0" ref="JSlider" />
 <xs:element minOccurs="0" ref="JPopupMenu" />
+<xs:element minOccurs="0" ref="jive-plaf-flat-accordion:AccordionItemContainer" />
 <xs:element minOccurs="0" ref="JTextArea" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-splitpane:Divider" />
 <xs:element minOccurs="0" ref="JStepper" />
@@ -2934,6 +3013,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" name="titleBar" type="FrameTitleBarSchemaTypeValue"/>
 <xs:element minOccurs="0" name="title" type="xs:string"/>
 <xs:element minOccurs="0" name="icon" type="IconSchemaTypeValue"/>
+<xs:element minOccurs="0" name="defaultCloseOperation" type="xs:int"/>
 <xs:element minOccurs="0" name="dragable" type="xs:boolean"/>
 <xs:element minOccurs="0" name="resizable" type="xs:boolean"/>
 <xs:element minOccurs="0" name="closable" type="xs:boolean"/>
@@ -2943,6 +3023,7 @@ xmlns:flash-events="flash.events"
 <xs:attribute name="titleBar" type="xs:string"/>
 <xs:attribute name="title" type="xs:string"/>
 <xs:attribute name="icon" type="xs:string"/>
+<xs:attribute name="defaultCloseOperation" type="xs:int"/>
 <xs:attribute name="dragable" type="xs:boolean"/>
 <xs:attribute name="resizable" type="xs:boolean"/>
 <xs:attribute name="closable" type="xs:boolean"/>
@@ -3367,6 +3448,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" name="editable" type="xs:boolean"/>
 <xs:element minOccurs="0" name="valueTranslator" type="xs:string"/>
 <xs:element minOccurs="0" name="valueParser" type="xs:string"/>
+<xs:element minOccurs="0" name="stepSize" type="xs:int"/>
 </xs:all>
 <xs:attribute name="model" type="xs:string"/>
 <xs:attribute name="orientation" type="xs:int"/>
@@ -3379,6 +3461,7 @@ xmlns:flash-events="flash.events"
 <xs:attribute name="editable" type="xs:boolean"/>
 <xs:attribute name="valueTranslator" type="xs:string"/>
 <xs:attribute name="valueParser" type="xs:string"/>
+<xs:attribute name="stepSize" type="xs:int"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -3459,8 +3542,8 @@ xmlns:flash-events="flash.events"
 <xs:element name="SoftBox" type="SoftBoxSchemaType"/>
 <xs:element name="WeightBoxLayout" type="WeightBoxLayoutSchemaType"/>
 <xs:element name="JLabelButton" type="JLabelButtonSchemaType"/>
-<xs:element name="EmptyIcon" type="EmptyIconSchemaType"/>
 <xs:element name="JWindow" type="JWindowSchemaType"/>
+<xs:element name="EmptyIcon" type="EmptyIconSchemaType"/>
 <xs:element name="JButton" type="JButtonSchemaType"/>
 <xs:element name="AbstractCellEditor" type="AbstractCellEditorSchemaType"/>
 <xs:element name="StyleResult" type="StyleResultSchemaType"/>

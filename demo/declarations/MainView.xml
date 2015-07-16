@@ -15,6 +15,7 @@
                 </selectionBackground>
                 <preferredSize>
                     <geom:IntDimension width="200" height="-1"/>
+
                 </preferredSize>
                 <model>
                     <VectorListModel>
@@ -32,6 +33,15 @@
                 <ui><chart:ChartUI/></ui>
                 <preferredSize>
                     <geom:IntDimension width="350" height="300"/>
+                </preferredSize>
+            </chart:Chart>
+            <chart:Chart id="chart2" constraints="org.aswing.BorderLayout.SOUTH" data="{Binding chartData mode=oneway}">
+                <foreground>
+                    <ASColor rgb="0xffffff"/>
+                </foreground>
+                <ui><chart:ChartPeriodSelector/></ui>
+                <preferredSize>
+                    <geom:IntDimension width="100" height="50"/>
                 </preferredSize>
             </chart:Chart>
         </JPanel>

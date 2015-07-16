@@ -1,10 +1,12 @@
 <xs:schema targetNamespace="jive.chart" xmlns="jive.chart" xmlns:xs="http://www.w3.org/2001/XMLSchema"
 xmlns:org-aswing="org.aswing"
 xmlns:org-aswing-plaf="org.aswing.plaf"
+xmlns:flash-display="flash.display"
 xmlns:empty="empty"
 >
 <xs:import namespace="org.aswing" schemaLocation="org.aswing.xsd" />
 <xs:import namespace="org.aswing.plaf" schemaLocation="org.aswing.plaf.xsd" />
+<xs:import namespace="flash.display" schemaLocation="flash.display.xsd" />
 <xs:import namespace="empty" schemaLocation="empty.xsd" />
 <xs:complexType name="FloatValueSchemaTypeValue">
 <xs:all><xs:element ref="FloatValue"/></xs:all></xs:complexType>
@@ -34,6 +36,9 @@ xmlns:empty="empty"
 
 <xs:complexType name="ChartSchemaTypeValue">
 <xs:all><xs:element ref="Chart"/></xs:all></xs:complexType>
+
+<xs:complexType name="ChartPeriodSelectorSchemaTypeValue">
+<xs:all><xs:element ref="ChartPeriodSelector"/></xs:all></xs:complexType>
 
 <xs:complexType name="FloatValueSchemaType">
 <xs:complexContent>
@@ -90,6 +95,7 @@ xmlns:empty="empty"
 <xs:extension base="org-aswing-plaf:BaseComponentUISchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="TextFields" type="empty:ArraySchemaTypeValue"/>
+<xs:element minOccurs="0" name="textLabel" type="empty:ArraySchemaTypeValue"/>
 <xs:element minOccurs="0" name="minPointX" type="xs:double"/>
 <xs:element minOccurs="0" name="minPointY" type="xs:double"/>
 <xs:element minOccurs="0" name="maxPointX" type="xs:double"/>
@@ -106,8 +112,15 @@ xmlns:empty="empty"
 <xs:element minOccurs="0" name="textWidthX" type="xs:int"/>
 <xs:element minOccurs="0" name="textWidthY" type="xs:int"/>
 <xs:element minOccurs="0" name="textHeightX" type="xs:int"/>
+<xs:element minOccurs="0" name="textHeightY" type="xs:int"/>
+<xs:element minOccurs="0" name="newPoints" type="empty:ArraySchemaTypeValue"/>
+<xs:element minOccurs="0" name="bubbleDrawArea" type="flash-display:SpriteSchemaTypeValue"/>
+<xs:element minOccurs="0" name="indexMin" type="xs:int"/>
+<xs:element minOccurs="0" name="circleRadius" type="xs:int"/>
+<xs:element minOccurs="0" name="tf" type="org-aswing:JTextFieldSchemaTypeValue"/>
 </xs:all>
 <xs:attribute name="TextFields" type="xs:string"/>
+<xs:attribute name="textLabel" type="xs:string"/>
 <xs:attribute name="minPointX" type="xs:double"/>
 <xs:attribute name="minPointY" type="xs:double"/>
 <xs:attribute name="maxPointX" type="xs:double"/>
@@ -124,6 +137,12 @@ xmlns:empty="empty"
 <xs:attribute name="textWidthX" type="xs:int"/>
 <xs:attribute name="textWidthY" type="xs:int"/>
 <xs:attribute name="textHeightX" type="xs:int"/>
+<xs:attribute name="textHeightY" type="xs:int"/>
+<xs:attribute name="newPoints" type="xs:string"/>
+<xs:attribute name="bubbleDrawArea" type="xs:string"/>
+<xs:attribute name="indexMin" type="xs:int"/>
+<xs:attribute name="circleRadius" type="xs:int"/>
+<xs:attribute name="tf" type="xs:string"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -132,6 +151,8 @@ xmlns:empty="empty"
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
 <xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="displayX" type="xs:double"/>
+<xs:element minOccurs="0" name="displayY" type="xs:double"/>
 <xs:element minOccurs="0" name="x" type="xs:double"/>
 <xs:element minOccurs="0" name="y" type="xs:double"/>
 <xs:element minOccurs="0" name="xCaption" type="xs:string"/>
@@ -139,6 +160,8 @@ xmlns:empty="empty"
 <xs:element minOccurs="0" name="xValue" type="ChartValueSchemaTypeValue"/>
 <xs:element minOccurs="0" name="yValue" type="ChartValueSchemaTypeValue"/>
 </xs:all>
+<xs:attribute name="displayX" type="xs:double"/>
+<xs:attribute name="displayY" type="xs:double"/>
 <xs:attribute name="x" type="xs:double"/>
 <xs:attribute name="y" type="xs:double"/>
 <xs:attribute name="xCaption" type="xs:string"/>
@@ -175,6 +198,47 @@ xmlns:empty="empty"
 </xs:complexContent>
 </xs:complexType>
 
+<xs:complexType name="ChartPeriodSelectorSchemaType">
+<xs:complexContent>
+<xs:extension base="org-aswing-plaf:BaseComponentUISchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="minPointX" type="xs:double"/>
+<xs:element minOccurs="0" name="minPointY" type="xs:double"/>
+<xs:element minOccurs="0" name="maxPointX" type="xs:double"/>
+<xs:element minOccurs="0" name="maxPointY" type="xs:double"/>
+<xs:element minOccurs="0" name="scalePointX" type="xs:double"/>
+<xs:element minOccurs="0" name="scalePointY" type="xs:double"/>
+<xs:element minOccurs="0" name="windowIndentX" type="xs:double"/>
+<xs:element minOccurs="0" name="arrowIndentX" type="xs:double"/>
+<xs:element minOccurs="0" name="windowIndentY" type="xs:double"/>
+<xs:element minOccurs="0" name="arrowIndentY" type="xs:double"/>
+<xs:element minOccurs="0" name="xValueSize" type="xs:double"/>
+<xs:element minOccurs="0" name="yValueSize" type="xs:double"/>
+<xs:element minOccurs="0" name="newPoints" type="empty:ArraySchemaTypeValue"/>
+<xs:element minOccurs="0" name="bubbleDrawArea" type="flash-display:SpriteSchemaTypeValue"/>
+<xs:element minOccurs="0" name="indexMin" type="xs:int"/>
+<xs:element minOccurs="0" name="circleRadius" type="xs:int"/>
+</xs:all>
+<xs:attribute name="minPointX" type="xs:double"/>
+<xs:attribute name="minPointY" type="xs:double"/>
+<xs:attribute name="maxPointX" type="xs:double"/>
+<xs:attribute name="maxPointY" type="xs:double"/>
+<xs:attribute name="scalePointX" type="xs:double"/>
+<xs:attribute name="scalePointY" type="xs:double"/>
+<xs:attribute name="windowIndentX" type="xs:double"/>
+<xs:attribute name="arrowIndentX" type="xs:double"/>
+<xs:attribute name="windowIndentY" type="xs:double"/>
+<xs:attribute name="arrowIndentY" type="xs:double"/>
+<xs:attribute name="xValueSize" type="xs:double"/>
+<xs:attribute name="yValueSize" type="xs:double"/>
+<xs:attribute name="newPoints" type="xs:string"/>
+<xs:attribute name="bubbleDrawArea" type="xs:string"/>
+<xs:attribute name="indexMin" type="xs:int"/>
+<xs:attribute name="circleRadius" type="xs:int"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
 
 <xs:element name="FloatValue" type="FloatValueSchemaType"/>
 <xs:element name="Axis" type="AxisSchemaType"/>
@@ -184,4 +248,5 @@ xmlns:empty="empty"
 <xs:element name="Point" type="PointSchemaType"/>
 <xs:element name="DateValue" type="DateValueSchemaType"/>
 <xs:element name="Chart" type="ChartSchemaType"/>
+<xs:element name="ChartPeriodSelector" type="ChartPeriodSelectorSchemaType"/>
 </xs:schema>

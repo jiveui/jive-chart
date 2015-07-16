@@ -270,7 +270,6 @@ class ChartUI extends BaseComponentUI {
         var stickSize = arrowIndentY;
         var x0 = windowIndentX;
         trace("areaWidth " + areaWidth);
-
         for (i in 0...sticksAmount) {
             var t = new JTextField(chart.data[0].xValue.getCaptionByFloatValue(interpolateValue(i, areaWidth/captionWidthWithMargin, minPointX, maxPointX)));
             var insets = t.getInsets();
@@ -281,7 +280,6 @@ class ChartUI extends BaseComponentUI {
             t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + stickSize) + insets.top);
             chart.append(t);
             trace(t.text);
-
             lineStyleGrid();
             g.moveTo(x, y);
             g.lineTo(x, 0);
@@ -306,7 +304,6 @@ class ChartUI extends BaseComponentUI {
             g.lineTo(x - stickSize, y);
             t.location = new IntPoint(insets.left, Std.int(y - t.preferredSize.height/2) + insets.top);
             chart.append(t);
-
             lineStyleGrid();
             g.moveTo(x, y);
             g.lineTo(widthWindow, y);
@@ -332,7 +329,6 @@ class ChartUI extends BaseComponentUI {
     public function onMouseMove(e:MouseEvent):Void {
         calculateNearesPointIndex(e.localX);
         drawBubble();
-//        trace("onMouseMove" + " x " + e.localX + "\nww" + widthWindow * (2/3));
     }
 
     public function roundPointValue(x:Float):Float {
@@ -365,16 +361,27 @@ class ChartUI extends BaseComponentUI {
         var pixelHinting = true;
         var miterLimit = 3;
         gr.lineStyle(thickness, color.getRGB(), alpha, pixelHinting, miterLimit);
-
         if (newPoints.length / 2 < indexMin){
-            tf.location = new IntPoint(Std.int(newPoints[indexMin].displayX) + 16, Std.int(newPoints[indexMin].displayY - 60));
-            gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
-            gr.lineTo(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY - 55);
-            gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
-            gr.lineTo(newPoints[indexMin].displayX + 16, newPoints[indexMin].displayY - 72 + tf.preferredSize.height);
-            gr.beginFill(0xFFFFFF, 0.5);
-            gr.drawRoundRect(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY - 60, tf.preferredSize.width - 20, tf.preferredSize.height - 10, 15);
-            gr.endFill();
+            if (heightWindow / 3 < newPoints[indexMin].displayY){
+                tf.location = new IntPoint(Std.int(newPoints[indexMin].displayX) + 16, Std.int(newPoints[indexMin].displayY - 60));
+                gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+                gr.lineTo(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY - 55);
+                gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+                gr.lineTo(newPoints[indexMin].displayX + 16, newPoints[indexMin].displayY - 72 + tf.preferredSize.height);
+                gr.beginFill(0xFFFFFF, 0.5);
+                gr.drawRoundRect(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY - 60, tf.preferredSize.width - 20, tf.preferredSize.height - 10, 15);
+                gr.endFill();
+                }
+            else if (heightWindow / 3 > newPoints[indexMin].displayY){
+                tf.location = new IntPoint(Std.int(newPoints[indexMin].displayX) + 16, Std.int(newPoints[indexMin].displayY + 19));
+                gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+                gr.lineTo(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY + 55);
+                gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+                gr.lineTo(newPoints[indexMin].displayX + 16, newPoints[indexMin].displayY + 72 - tf.preferredSize.height);
+                gr.beginFill(0xFFFFFF, 0.5);
+                gr.drawRoundRect(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY +19, tf.preferredSize.width - 20, tf.preferredSize.height - 10, 15);
+                gr.endFill();
+            }
         }
         else if(newPoints.length / 2 >= indexMin){
             if (heightWindow / 3 < newPoints[indexMin].displayY){
@@ -399,8 +406,6 @@ class ChartUI extends BaseComponentUI {
                 gr.endFill();
             }
         }
-//        trace("text: " + tf.text);
-//        trace("newPoints:" + newPoints.length / 2 + "index: " + indexMin);
         indexMin = 0;
     }
 
