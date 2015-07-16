@@ -94,10 +94,10 @@ class ChartUI extends BaseComponentUI {
     public var textHeightY:Int = 0;
 
     public var newPoints:Array<Point> = [];
-    /*public var newPointY:Array<Float> = [];
-    public var newPointXValue:Array<String> = [];
-    public var newPointYValue:Array<String> = [];
-    */
+    public var bubbleDrawArea:Sprite;
+    public var indexMin:Int = 0;
+    public var circleRadius:Int = 2;
+    public var tf:JTextField;
 
     /**
     * Methods of finding the minimum and maximum points of the x and y
@@ -326,21 +326,14 @@ class ChartUI extends BaseComponentUI {
         return index * ((max - min) / length) + min;
     }
 
-    public var mouseLabel:JLabel;
-
     /**
     * Mouse coordinats.
     **/
     public function onMouseMove(e:MouseEvent):Void {
         calculateNearesPointIndex(e.localX);
         drawBubble();
-//        trace("onMouseMove" + " x " + e.localX + " y " + e.localY );
+//        trace("onMouseMove" + " x " + e.localX + "\nww" + widthWindow * (2/3));
     }
-
-    public var bubbleDrawArea:Sprite;
-    public var indexMin:Int = 0;
-    public var circleRadius:Int = 2;
-    public var tf:JTextField;
 
     public function roundPointValue(x:Float):Float {
         var xx:Float = Math.pow(10, 2);
@@ -364,8 +357,7 @@ class ChartUI extends BaseComponentUI {
         gr.drawCircle(newPoints[indexMin].displayX, newPoints[indexMin].displayY, circleRadius);
         gr.endFill();
 
-        tf.text = (Std.string("x: " + newPoints[indexMin].xCaption + "\n" + "y: " + newPoints[indexMin].yCaption));
-        tf.location = new IntPoint(Std.int(newPoints[indexMin].displayX) + 16, Std.int(newPoints[indexMin].displayY - 60));
+        tf.text = (Std.string(newPoints[indexMin].xCaption + "\n" + newPoints[indexMin].yCaption));
 
         var thickness = 0.7;
         var color = ASColor.RED;
@@ -374,14 +366,41 @@ class ChartUI extends BaseComponentUI {
         var miterLimit = 3;
         gr.lineStyle(thickness, color.getRGB(), alpha, pixelHinting, miterLimit);
 
-        gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
-        gr.lineTo(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY - 55);
-        gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
-        gr.lineTo(newPoints[indexMin].displayX + 16, newPoints[indexMin].displayY - 62 + tf.preferredSize.height);
-        gr.beginFill(0xFFFFFF, 0.3);
-        gr.drawRoundRect(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY - 60, tf.preferredSize.width, tf.preferredSize.height, 15);
-        gr.endFill();
-        trace ("text: " + tf.text);
+        if (newPoints.length / 2 < indexMin){
+            tf.location = new IntPoint(Std.int(newPoints[indexMin].displayX) + 16, Std.int(newPoints[indexMin].displayY - 60));
+            gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+            gr.lineTo(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY - 55);
+            gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+            gr.lineTo(newPoints[indexMin].displayX + 16, newPoints[indexMin].displayY - 72 + tf.preferredSize.height);
+            gr.beginFill(0xFFFFFF, 0.5);
+            gr.drawRoundRect(newPoints[indexMin].displayX + 15, newPoints[indexMin].displayY - 60, tf.preferredSize.width - 20, tf.preferredSize.height - 10, 15);
+            gr.endFill();
+        }
+        else if(newPoints.length / 2 >= indexMin){
+            if (heightWindow / 3 < newPoints[indexMin].displayY){
+                tf.location = new IntPoint(Std.int(newPoints[indexMin].displayX) - tf.preferredSize.width + 5, Std.int(newPoints[indexMin].displayY - 60));
+                gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+                gr.lineTo(newPoints[indexMin].displayX - 15, newPoints[indexMin].displayY - 55);
+                gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+                gr.lineTo(newPoints[indexMin].displayX - 16, newPoints[indexMin].displayY - 72 + tf.preferredSize.height);
+                gr.beginFill(0xFFFFFF, 0.5);
+                gr.drawRoundRect(newPoints[indexMin].displayX - tf.preferredSize.width + 5, newPoints[indexMin].displayY - 60, tf.preferredSize.width - 18, tf.preferredSize.height - 10, 15);
+                gr.endFill();
+                }
+            else if (heightWindow / 3 > newPoints[indexMin].displayY)
+            {
+                tf.location = new IntPoint(Std.int(newPoints[indexMin].displayX) - tf.preferredSize.width + 5, Std.int(newPoints[indexMin].displayY + 19));
+                gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+                gr.lineTo(newPoints[indexMin].displayX - 15, newPoints[indexMin].displayY + 55);
+                gr.moveTo(newPoints[indexMin].displayX, newPoints[indexMin].displayY);
+                gr.lineTo(newPoints[indexMin].displayX - 16, newPoints[indexMin].displayY + 72 - tf.preferredSize.height);
+                gr.beginFill(0xFFFFFF, 0.5);
+                gr.drawRoundRect(newPoints[indexMin].displayX - tf.preferredSize.width + 5, newPoints[indexMin].displayY + 19, tf.preferredSize.width - 20, tf.preferredSize.height - 10, 15);
+                gr.endFill();
+            }
+        }
+//        trace("text: " + tf.text);
+//        trace("newPoints:" + newPoints.length / 2 + "index: " + indexMin);
         indexMin = 0;
     }
 
@@ -396,13 +415,6 @@ class ChartUI extends BaseComponentUI {
         return indexMin;
     }
 
-    /**
-    * Draw graph at points at axises X and Y;
-    * If points y have negative value, then axis x is positive, axis y is negative;
-    * If points x haxe negative valuse, then axis x is negative, axis y is positive;
-    * If points x and y have negative value, then axis x and y is negative.
-    **/
-
     private inline function calcDisplayX(x: Float) {
         return windowIndentX + (x - minPointX) * scalePointX;
     }
@@ -411,6 +423,12 @@ class ChartUI extends BaseComponentUI {
         return heightWindow - windowIndentY - (y - minPointY) * scalePointY;
     }
 
+    /**
+    * Draw graph at points at axises X and Y;
+    * If points y have negative value, then axis x is positive, axis y is negative;
+    * If points x haxe negative valuse, then axis x is negative, axis y is positive;
+    * If points x and y have negative value, then axis x and y is negative.
+    **/
     public function drawGraph():Void{
         var data = chart.data;
         var g = shape.graphics;
@@ -420,7 +438,6 @@ class ChartUI extends BaseComponentUI {
 
         chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
         chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-
         chart.graphics.drawRect(0, 0, widthWindow, heightWindow);
 
         calculateScalePointX();
