@@ -221,11 +221,23 @@ class ChartUI extends BaseComponentUI {
 
     public function lineStyleGraph(){
         var g = shape.graphics;
-        var thickness = 0.5;
+        var thickness = 0.9;
         var color = ASColor.RED;
         var alpha = 1;
         var pixelHinting = true;
         var miterLimit = 3;
+        g.lineStyle(thickness, color.getRGB(), alpha, pixelHinting, miterLimit);
+        return g;
+    }
+
+
+    public function lineStyleSelector() {
+        var g = shape.graphics;
+        var thickness = 0.1;
+        var color = ASColor.RED;
+        var alpha = 0.5;
+        var pixelHinting = true;
+        var miterLimit = 1;
         g.lineStyle(thickness, color.getRGB(), alpha, pixelHinting, miterLimit);
         return g;
     }
