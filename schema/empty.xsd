@@ -351,6 +351,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-plaf-basic:BasicToggleButtonUI" />
 <xs:element ref="lime-text-_Glyph:Glyph_Impl_" />
 <xs:element ref="lime-utils:Int32Array" />
+<xs:element ref="jive-chart:CalculateValues" />
 <xs:element ref="org-aswing-plaf-basic:BasicCheckBoxUI" />
 <xs:element ref="flash-text:Font" />
 <xs:element ref="org-aswing:ASColor" />

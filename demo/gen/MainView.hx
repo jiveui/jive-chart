@@ -45,7 +45,7 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
         /* declarations/MainView.xml:17 characters: 21-38 */
         var res = new org.aswing.geom.IntDimension();
         /* declarations/MainView.xml:17 characters: 40-45 */
-        res.width = 200;
+        res.width = 150;
         /* declarations/MainView.xml:17 characters: 52-58 */
         res.height = -1;
         return res;
@@ -158,7 +158,7 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
         /* declarations/MainView.xml:35 characters: 40-45 */
         res.width = 350;
         /* declarations/MainView.xml:35 characters: 52-58 */
-        res.height = 300;
+        res.height = 230;
         return res;
     }
 
@@ -223,7 +223,7 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
         /* declarations/MainView.xml:44 characters: 40-45 */
         res.width = 100;
         /* declarations/MainView.xml:44 characters: 52-58 */
-        res.height = 50;
+        res.height = 70;
         return res;
     }
 

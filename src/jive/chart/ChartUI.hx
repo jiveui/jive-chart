@@ -28,7 +28,6 @@ class ChartUI extends BaseComponentUI {
     private var widthWindow: Int;
     private var heightWindow: Int;
     public var textLabel:Array<JTextField>;
-
     public function new() {
         super();
     }
@@ -129,7 +128,7 @@ class ChartUI extends BaseComponentUI {
             if (minPointY > point.y)
                 minPointY = point.y;
         }
-        trace("minY " + minPointY);
+//        trace("minY " + minPointY);
         return minPointY;
     }
 
@@ -140,7 +139,7 @@ class ChartUI extends BaseComponentUI {
             if (maxPointY < point.y)
                 maxPointY = point.y;
         }
-        trace("maxY " + maxPointY);
+//        trace("maxY " + maxPointY);
         return maxPointY;
     }
 
@@ -152,8 +151,8 @@ class ChartUI extends BaseComponentUI {
         calculateMinimumX();
         xValueSize = maxPointX - minPointX;
         scalePointX = (widthWindow - windowIndentX) / xValueSize ;
-        trace (scalePointX);
-        trace (xValueSize);
+//        trace (scalePointX);
+//        trace (xValueSize);
         return scalePointX;
     }
 
@@ -174,7 +173,7 @@ class ChartUI extends BaseComponentUI {
         var tf: JTextField = new JTextField(chart.data[0].xValue.getCaptionByFloatValue( if (minPointX < 0) minPointX else maxPointX));
         textWidthX = Std.int(tf.preferredSize.width);
         textHeightX = Std.int(tf.preferredSize.height);
-        trace("text width X:" + textWidthX);
+//        trace("text width X:" + textWidthX);
         return textWidthX;
     }
 
@@ -184,7 +183,7 @@ class ChartUI extends BaseComponentUI {
         calculateMaximumY();
         var tf: JTextField = new JTextField(chart.data[0].yValue.getCaptionByFloatValue( if (minPointY < 0) minPointY else maxPointY));
         textWidthY = Std.int(tf.preferredSize.width);
-        trace("text width Y:" + textWidthY);
+//        trace("text width Y:" + textWidthY);
         return textWidthY;
     }
 
@@ -194,7 +193,7 @@ class ChartUI extends BaseComponentUI {
         calculateMaximumX;
         var tf: JTextField = new JTextField(chart.data[0].yValue.getCaptionByFloatValue( if (minPointY < 0) minPointY else maxPointY));
         textHeightY = Std.int(tf.preferredSize.height);
-        trace("text height Y:" + textHeightY);
+//        trace("text height Y:" + textHeightY);
         return textHeightY;
     }
 
@@ -269,7 +268,7 @@ class ChartUI extends BaseComponentUI {
         var y = heightWindow - windowIndentY;
         var stickSize = arrowIndentY;
         var x0 = windowIndentX;
-        trace("areaWidth " + areaWidth);
+//        trace("areaWidth " + areaWidth);
         for (i in 0...sticksAmount) {
             var t = new JTextField(chart.data[0].xValue.getCaptionByFloatValue(interpolateValue(i, areaWidth/captionWidthWithMargin, minPointX, maxPointX)));
             var insets = t.getInsets();
@@ -279,7 +278,7 @@ class ChartUI extends BaseComponentUI {
             g.lineTo(x, y + stickSize);
             t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + stickSize) + insets.top);
             chart.append(t);
-            trace(t.text);
+//            trace(t.text);
             lineStyleGrid();
             g.moveTo(x, y);
             g.lineTo(x, 0);
@@ -449,6 +448,7 @@ class ChartUI extends BaseComponentUI {
         calculateScalePointY();
         lineStyleGraph();
 
+
         var x = calcDisplayX(data[0].x);
         g.moveTo(x, calcDisplayY(data[0].y));
         newPoints = [];
@@ -470,4 +470,5 @@ class ChartUI extends BaseComponentUI {
                 g.endFill();
         }
     }
+
 }

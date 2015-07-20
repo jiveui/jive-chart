@@ -219,6 +219,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicToggleButtonUI" />
 <xs:element minOccurs="0" ref="lime-text-_Glyph:Glyph_Impl_" />
 <xs:element minOccurs="0" ref="lime-utils:Int32Array" />
+<xs:element minOccurs="0" ref="jive-chart:CalculateValues" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicCheckBoxUI" />
 <xs:element minOccurs="0" ref="flash-text:Font" />
 <xs:element minOccurs="0" ref="org-aswing:ASColor" />

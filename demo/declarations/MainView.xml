@@ -14,7 +14,7 @@
                     <ASColor rgb="0x34495e"/>
                 </selectionBackground>
                 <preferredSize>
-                    <geom:IntDimension width="200" height="-1"/>
+                    <geom:IntDimension width="150" height="-1"/>
 
                 </preferredSize>
                 <model>
@@ -32,7 +32,7 @@
                 </foreground>
                 <ui><chart:ChartUI/></ui>
                 <preferredSize>
-                    <geom:IntDimension width="350" height="300"/>
+                    <geom:IntDimension width="350" height="230"/>
                 </preferredSize>
             </chart:Chart>
             <chart:Chart id="chart2" constraints="org.aswing.BorderLayout.SOUTH" data="{Binding chartData mode=oneway}">
@@ -41,7 +41,7 @@
                 </foreground>
                 <ui><chart:ChartPeriodSelector/></ui>
                 <preferredSize>
-                    <geom:IntDimension width="100" height="50"/>
+                    <geom:IntDimension width="100" height="70"/>
                 </preferredSize>
             </chart:Chart>
         </JPanel>
