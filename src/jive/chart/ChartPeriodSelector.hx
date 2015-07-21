@@ -1,12 +1,10 @@
 package jive.chart;
 
+import flash.events.MouseEvent;
+import flash.display.Sprite;
+import flash.display.Graphics;
 import org.aswing.JTextField;
 import org.aswing.geom.IntPoint;
-import org.aswing.geom.IntPoint;
-import flash.events.MouseEvent;
-import flash.display.Graphics;
-import org.aswing.ASColor;
-import flash.display.Sprite;
 import org.aswing.AsWingUtils;
 import org.aswing.graphics.Graphics2D;
 import org.aswing.geom.IntRectangle;
@@ -14,6 +12,8 @@ import org.aswing.Component;
 import flash.display.Shape;
 
 class ChartPeriodSelector extends ChartUI{
+
+    public var selectorArea:Sprite;
 
     public function new() {
         super();
@@ -66,6 +66,10 @@ class ChartPeriodSelector extends ChartUI{
             g.lineTo(x, y + stickSize);
             t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + stickSize) + insets.top);
             chart.append(t);
+            lineStyleGrid();
+            g.moveTo(x, y);
+            g.lineTo(x, 0);
+            lineStyleAxises();
         }
     }
 
@@ -78,6 +82,7 @@ class ChartPeriodSelector extends ChartUI{
         calculateMaxTextWidthX();
         calculateMaxTextWidthY();
         calculateMaxTextHeightY();
+        windowIndentX = windowIndentX + arrowIndentX;
         windowIndentY = textHeightX + arrowIndentY;
         lineStyleAxises();
         g.moveTo(windowIndentX, heightWindow - windowIndentY);
@@ -91,6 +96,14 @@ class ChartPeriodSelector extends ChartUI{
     override public function drawGraph():Void{
         var data = chart.data;
         var g = shape.graphics;
+
+        chart.removeChild(selectorArea);
+        selectorArea = null;
+
+        chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+        chart.graphics.drawRect(windowIndentX, 0, widthWindow, heightWindow - windowIndentY);
+
         var resX:Float;
         var resY:Float;
         calculateScalePointX();
@@ -109,7 +122,6 @@ class ChartPeriodSelector extends ChartUI{
                 point.displayY = calcDisplayY(point.y);
                 newPoints.push(point);
 
-
                 g.beginFill(0xff0000, 0.5);
                 lineStyleSelector();
                 g.moveTo(point.displayX, point.displayY);
@@ -120,19 +132,44 @@ class ChartPeriodSelector extends ChartUI{
                 g.lineTo(point.displayX, point.displayY);
                 g.endFill();
 
-
-
                 x = newX;
                 resX = x;
                 resY = calcDisplayY(point.y);
             }
         }
-        /*for (point in newPoints){
-            g.beginFill(0xdd0000, 0.6);
-            g.lineTo()
-            g.moveTo();
+    }
 
-        }*/
+    override public function onMouseMove(e:MouseEvent):Void {
+        calculateNearesPointIndex(e.localX);
+        drawSelectorArea();
+    }
 
+    public function drawSelectorArea():Void {
+        var gr:Graphics;
+
+        if (selectorArea == null){
+            selectorArea = new Sprite();
+            chart.addChild(selectorArea);
+            trace("Create Layout");
+            tf = new JTextField();
+            chart.append(tf);
+        }
+
+        gr = selectorArea.graphics;
+        gr.clear();
+        gr.beginFill(0x000000, 0.3);
+        gr.drawRect(windowIndentX, 0, newPoints[indexMin].displayX - windowIndentX - arrowIndentX, heightWindow - windowIndentY);
+        gr.endFill();
+        tf.text = (Std.string(newPoints[indexMin].xCaption + "\n" + newPoints[indexMin].yCaption));
+        trace ("ss : " + newPoints[indexMin].xCaption);
+
+        gr.beginFill(0x000000, 0.5);
+        gr.drawRect(newPoints[indexMin].displayX, 0, widthWindow, heightWindow - windowIndentY);
+        gr.endFill();
+
+
+
+
+        indexMin = 0;
     }
 }

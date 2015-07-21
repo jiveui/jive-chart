@@ -3,8 +3,10 @@ package jive.chart;
 class Point {
 
     public var displayX:Float;
-
     public var displayY:Float;
+
+//    public var pointSelectorX:Float;
+//    public var pointSelectorY:Float;
 
     public var x(get, null): Float;
     private function get_x(): Float { return xValue.floatValue; }
@@ -20,6 +22,13 @@ class Point {
 
     public var xValue: ChartValue;
     public var yValue: ChartValue;
+
+    public function clone():Point {
+        var p = new Point(xValue, yValue);
+        p.displayX = displayX;
+        p.displayY = displayY;
+        return p;
+    }
 
     public function new(x: Dynamic, y: Dynamic) {
 
@@ -40,7 +49,7 @@ class Point {
         } else if (Std.is(y, Date)) {
             yValue = new DateValue(y);
         } else {
-            yValue = x;
+            yValue = y;
         }
     }
 

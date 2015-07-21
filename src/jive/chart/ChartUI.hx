@@ -342,11 +342,6 @@ class ChartUI extends BaseComponentUI {
         drawBubble();
     }
 
-    public function roundPointValue(x:Float):Float {
-        var xx:Float = Math.pow(10, 2);
-        return Math.round(x * xx) / xx;
-    }
-
     public function drawBubble():Void {
         var gr:Graphics;
 

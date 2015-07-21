@@ -13,7 +13,7 @@ class Chart extends Container {
     private var _data: Array<Point>;
     private function get_data(): Array<Point> { return _data; }
     private function set_data(v: Array<Point>): Array<Point> {
-        _data = v;
+        _data = Lambda.array(Lambda.map(v, function(p) { return p.clone();}));
         repaint();
         return _data;
     }
