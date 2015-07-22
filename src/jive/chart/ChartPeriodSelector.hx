@@ -13,7 +13,8 @@ import flash.display.Shape;
 
 class ChartPeriodSelector extends ChartUI{
 
-    public var selectorArea:Sprite;
+    public var LeftSelectorArea:Sprite;
+    public var RightSelectorArea:Sprite;
 
     public function new() {
         super();
@@ -49,30 +50,6 @@ class ChartPeriodSelector extends ChartUI{
     override public function installUI(c:Component):Void { }
     override public function uninstallUI(c:Component):Void { }
 
-    override private function drawGridVerticalLinesAndCaptions(g: Graphics) {
-        lineStyleAxises();
-        var captionWidthWithMargin = textWidthX;
-        var areaWidth = widthWindow - windowIndentX;
-        var sticksAmount = Std.int(areaWidth/captionWidthWithMargin)+1;
-        var y = heightWindow - windowIndentY;
-        var stickSize = arrowIndentY;
-        var x0 = windowIndentX;
-        for (i in 0...sticksAmount) {
-            var t = new JTextField(chart.data[0].xValue.getCaptionByFloatValue(interpolateValue(i, areaWidth/captionWidthWithMargin, minPointX, maxPointX)));
-            var insets = t.getInsets();
-            TextFields.push(t);
-            var x = x0 + i * captionWidthWithMargin;
-            g.moveTo(x, y);
-            g.lineTo(x, y + stickSize);
-            t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + stickSize) + insets.top);
-            chart.append(t);
-            lineStyleGrid();
-            g.moveTo(x, y);
-            g.lineTo(x, 0);
-            lineStyleAxises();
-        }
-    }
-
     override public function drawAxises():Void{
         var g = shape.graphics;
         calculateMaximumX();
@@ -82,7 +59,7 @@ class ChartPeriodSelector extends ChartUI{
         calculateMaxTextWidthX();
         calculateMaxTextWidthY();
         calculateMaxTextHeightY();
-        windowIndentX = windowIndentX + arrowIndentX;
+        windowIndentX = 25;
         windowIndentY = textHeightX + arrowIndentY;
         lineStyleAxises();
         g.moveTo(windowIndentX, heightWindow - windowIndentY);
@@ -97,11 +74,19 @@ class ChartPeriodSelector extends ChartUI{
         var data = chart.data;
         var g = shape.graphics;
 
-        chart.removeChild(selectorArea);
-        selectorArea = null;
+        chart.removeChild(LeftSelectorArea);
+        LeftSelectorArea = null;
+        chart.removeChild(RightSelectorArea);
+        RightSelectorArea = null;
 
+
+        chart.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownL);
+        chart.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownR);
+
+
+/*
         chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);*/
         chart.graphics.drawRect(windowIndentX, 0, widthWindow, heightWindow - windowIndentY);
 
         var resX:Float;
@@ -139,37 +124,89 @@ class ChartPeriodSelector extends ChartUI{
         }
     }
 
-    override public function onMouseMove(e:MouseEvent):Void {
-        calculateNearesPointIndex(e.localX);
-        drawSelectorArea();
+    public var toggleSelectorL:Bool = false;
+    public var toggleSelectorR:Bool = false;
+
+    public function onMouseDownL(e:MouseEvent):Void {
+        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveL);
+        chart.addEventListener(MouseEvent.MOUSE_UP, onMouseUpL);
+
     }
 
-    public function drawSelectorArea():Void {
-        var gr:Graphics;
+    public function onMouseUpL(e:MouseEvent):Void {
+        chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveL);
+    }
 
-        if (selectorArea == null){
-            selectorArea = new Sprite();
-            chart.addChild(selectorArea);
+    public function onMouseMoveL(e:MouseEvent):Void {
+        calculateNearesPointIndex(e.localX);
+        drawSelectorAreaL();
+    }
+
+    public function onMouseDownR(e:MouseEvent):Void {
+        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveR);
+        chart.addEventListener(MouseEvent.MOUSE_UP, onMouseUpR);
+
+    }
+
+    public function onMouseUpR(e:MouseEvent):Void {
+        chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveR);
+    }
+
+    public function onMouseMoveR(e:MouseEvent):Void {
+        calculateNearesPointIndex(e.localX);
+        drawSelectorAreaR();
+    }
+
+    public function drawSelectorAreaL():Void {
+        var lgr:Graphics;
+
+        if (LeftSelectorArea == null){
+            LeftSelectorArea = new Sprite();
+            chart.addChild(LeftSelectorArea);
             trace("Create Layout");
             tf = new JTextField();
             chart.append(tf);
         }
 
-        gr = selectorArea.graphics;
-        gr.clear();
-        gr.beginFill(0x000000, 0.3);
-        gr.drawRect(windowIndentX, 0, newPoints[indexMin].displayX - windowIndentX - arrowIndentX, heightWindow - windowIndentY);
-        gr.endFill();
+        lgr = LeftSelectorArea.graphics;
+        lgr.clear();
+        lgr.beginFill(0x000000, 0.3);
+        lgr.drawRect(windowIndentX, 0, newPoints[indexMin].displayX - windowIndentX - arrowIndentX, heightWindow - windowIndentY);
+        lgr.endFill();
         tf.text = (Std.string(newPoints[indexMin].xCaption + "\n" + newPoints[indexMin].yCaption));
-        trace ("ss : " + newPoints[indexMin].xCaption);
+        lgr.beginFill(0xff0000, 0.8);
+        lgr.drawRect(newPoints[indexMin].displayX - 2, 0, 4, heightWindow - windowIndentY );
+        lgr.endFill();
+        indexMin = 0;
+    }
+    public function drawSelectorAreaR():Void {
+        var rgr:Graphics;
 
-        gr.beginFill(0x000000, 0.5);
-        gr.drawRect(newPoints[indexMin].displayX, 0, widthWindow, heightWindow - windowIndentY);
-        gr.endFill();
+        if (RightSelectorArea == null){
+            RightSelectorArea = new Sprite();
+            chart.addChild(RightSelectorArea);
+            trace("Create Layout");
+        }
 
+        rgr = RightSelectorArea.graphics;
+        rgr.clear();
 
-
+        rgr.beginFill(0x000000, 0.5);
+        rgr.drawRect(newPoints[indexMin].displayX, 0, widthWindow - newPoints[indexMin].displayX, heightWindow - windowIndentY);
+        rgr.endFill();
+//        rgr.beginFill(0xff0000, 0.8);
+//        rgr.drawRect(newPoints[indexMin].displayX - 2, 0, 4, heightWindow - windowIndentY );
+//        rgr.endFill();
 
         indexMin = 0;
     }
+
+/*    public function toggleSelectorL(x:Float, width:Float):Void {
+        var tsl:Graphics;
+        tsl = LeftSelectorArea.graphics;
+        tsl.clear();
+        tsl.beginFill(0xff0000, 0.8);
+        tsl.drawRect(newPoints[indexMin].displayX - arrowIndentX, 0, 10, heightWindow - windowIndentY );
+        tsl.endFill();
+    }*/
 }

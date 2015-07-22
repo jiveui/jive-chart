@@ -161,6 +161,9 @@
       <module fileurl="file://$PROJECT_DIR$/jive-chart.iml" filepath="$PROJECT_DIR$/jive-chart.iml" />
     </modules>
   </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/src/jive/chart/CalculateValues.hx" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" default="false" assert-keyword="false" jdk-15="false" project-jdk-name="Haxe 3.2.0" project-jdk-type="Haxe toolkit">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
