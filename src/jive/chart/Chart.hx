@@ -56,7 +56,8 @@ class Chart extends Container {
         selectorBrush = new SolidBrush(ASColor.RED);
         markPen = graphPen;
         markBrush = new SolidBrush(ASColor.WHITE);
-
+        selectorBubbleBorder = new Pen(ASColor.RED, 0.7);
+        selectorBubbleBackground = new SolidBrush(ASColor.WHITE);
         labelsLayer = new Container();
         interactionLayer = new Container();
 

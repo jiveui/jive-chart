@@ -149,74 +149,88 @@ class ChartUI extends BaseComponentUI {
         drawBubble(index);
     }
 
-    public function drawBubble(x: Int, y: Int, area: IntRectangle) {
+    public function drawBubble(x: Int) {
 
         chart.interactionLayer.removeAll();
-        
-        var g: Graphics2D = chart.interactionLayer.graphics;
-        gr.clear();
+        var g: Graphics2D = new Graphics2D(chart.interactionLayer.graphics);
+//        chart.interactionLayer.graphics;
+        g.clear();
 
-        var label = new JLabel(pointsToDraw[index].xCaption + "\n" + pointsToDraw[index].yCaption);
-        chart.interactionLayer.append(label);
+//        var label = new JLabel(pointsToDraw[index].xCaption + "\n" + pointsToDraw[index].yCaption);
+//        chart.interactionLayer.append(label);
 
-        gr.drawRect(graphBounds.x, graphBounds.y, graphBounds.width, graphBounds.height);
-        gr.beginFill(0xff0000, 1.0);
-        gr.drawCircle(pointsToDraw[index].displayX, pointsToDraw[index].displayY, chart.selectorSize);
-        gr.endFill();
+        var pX = pointsToDraw[index].displayX;
+        var pY = pointsToDraw[index].displayY;
+        var cornerRadius = 5;
+        var padding = 4;
+        var indentBorder = 12;
 
-        var thickness = 0.7;
-        var color = ASColor.RED;
-        var alpha = 1;
-        var pixelHinting = true;
-        var miterLimit = 3;
 
-        gr.lineStyle(thickness, color.getRGB(), alpha, pixelHinting, miterLimit);
-        if (pointsToDraw.length / 2 < index){
+
+//        g.drawRect(graphBounds.x, graphBounds.y, graphBounds.width, graphBounds.height);
+//        g.beginFill(0xff0000, 1.0);
+//        g.drawCircle(pointsToDraw[index].displayX, pointsToDraw[index].displayY, chart.selectorSize);
+//        g.endFill();
+
+        g.beginDraw(chart.selectorBubbleBorder);
+        g.beginFill(chart.selectorBubbleBackground);
+        g.moveTo(pX, pY);
+        g.lineTo(pX + padding + indentBorder * 0.75, pY + indentBorder);
+        g.curveTo(pX, pY + indentBorder, pX, pY + padding + indentBorder * 0.75);
+        g.curveTo(pX, pY + (2*(padding + indentBorder * 0.75)), pX + padding + indentBorder * 0.75, pY + (2*(padding + indentBorder * 0.75)));
+//        g.lineTo()
+
+
+        g.endDraw();
+        g.endFill();
+
+
+/*        if (pointsToDraw.length / 2 < index){
             if (graphBounds.height / 3 < pointsToDraw[index].displayY){
                 label.location = new IntPoint(Std.int(pointsToDraw[index].displayX) + 16, Std.int(pointsToDraw[index].displayY - 60));
-                gr.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                gr.lineTo(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY - 55);
-                gr.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                gr.lineTo(pointsToDraw[index].displayX + 16, pointsToDraw[index].displayY - 72 + label.preferredSize.height);
-                gr.beginFill(0xFFFFFF, 0.5);
-                gr.drawRoundRect(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY - 60, label.preferredSize.width - 20, label.preferredSize.height - 10, 15);
-                gr.endFill();
+                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
+                g.lineTo(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY - 55);
+                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
+                g.lineTo(pointsToDraw[index].displayX + 16, pointsToDraw[index].displayY - 72 + label.preferredSize.height);
+                g.beginFill(0xFFFFFF, 0.5);
+                g.drawRoundRect(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY - 60, label.preferredSize.width - 20, label.preferredSize.height - 10, 15);
+                g.endFill();
                 }
             else if (graphBounds.height / 3 > pointsToDraw[index].displayY){
                 label.location = new IntPoint(Std.int(pointsToDraw[index].displayX) + 16, Std.int(pointsToDraw[index].displayY + 19));
-                gr.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                gr.lineTo(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY + 55);
-                gr.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                gr.lineTo(pointsToDraw[index].displayX + 16, pointsToDraw[index].displayY + 72 - label.preferredSize.height);
-                gr.beginFill(0xFFFFFF, 0.5);
-                gr.drawRoundRect(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY +19, label.preferredSize.width - 20, label.preferredSize.height - 10, 15);
-                gr.endFill();
+                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
+                g.lineTo(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY + 55);
+                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
+                g.lineTo(pointsToDraw[index].displayX + 16, pointsToDraw[index].displayY + 72 - label.preferredSize.height);
+                g.beginFill(0xFFFFFF, 0.5);
+                g.drawRoundRect(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY +19, label.preferredSize.width - 20, label.preferredSize.height - 10, 15);
+                g.endFill();
             }
         }
         else if(pointsToDraw.length / 2 >= index){
             if (graphBounds.height / 3 < pointsToDraw[index].displayY){
                 label.location = new IntPoint(Std.int(pointsToDraw[index].displayX) - label.preferredSize.width + 5, Std.int(pointsToDraw[index].displayY - 60));
-                gr.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                gr.lineTo(pointsToDraw[index].displayX - 15, pointsToDraw[index].displayY - 55);
-                gr.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                gr.lineTo(pointsToDraw[index].displayX - 16, pointsToDraw[index].displayY - 72 + label.preferredSize.height);
-                gr.beginFill(0xFFFFFF, 0.5);
-                gr.drawRoundRect(pointsToDraw[index].displayX - label.preferredSize.width + 5, pointsToDraw[index].displayY - 60, label.preferredSize.width - 18, label.preferredSize.height - 10, 15);
-                gr.endFill();
+                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
+                g.lineTo(pointsToDraw[index].displayX - 15, pointsToDraw[index].displayY - 55);
+                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
+                g.lineTo(pointsToDraw[index].displayX - 16, pointsToDraw[index].displayY - 72 + label.preferredSize.height);
+                g.beginFill(0xFFFFFF, 0.5);
+                g.drawRoundRect(pointsToDraw[index].displayX - label.preferredSize.width + 5, pointsToDraw[index].displayY - 60, label.preferredSize.width - 18, label.preferredSize.height - 10, 15);
+                g.endFill();
                 }
             else if (graphBounds.height / 3 > pointsToDraw[index].displayY)
             {
                 label.location = new IntPoint(Std.int(pointsToDraw[index].displayX) - label.preferredSize.width + 5, Std.int(pointsToDraw[index].displayY + 19));
-                gr.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                gr.lineTo(pointsToDraw[index].displayX - 15, pointsToDraw[index].displayY + 55);
-                gr.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                gr.lineTo(pointsToDraw[index].displayX - 16, pointsToDraw[index].displayY + 72 - label.preferredSize.height);
-                gr.beginFill(0xFFFFFF, 0.5);
-                gr.drawRoundRect(pointsToDraw[index].displayX - label.preferredSize.width + 5, pointsToDraw[index].displayY + 19, label.preferredSize.width - 20, label.preferredSize.height - 10, 15);
-                gr.endFill();
+                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
+                g.lineTo(pointsToDraw[index].displayX - 15, pointsToDraw[index].displayY + 55);
+                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
+                g.lineTo(pointsToDraw[index].displayX - 16, pointsToDraw[index].displayY + 72 - label.preferredSize.height);
+                g.beginFill(0xFFFFFF, 0.5);
+                g.drawRoundRect(pointsToDraw[index].displayX - label.preferredSize.width + 5, pointsToDraw[index].displayY + 19, label.preferredSize.width - 20, label.preferredSize.height - 10, 15);
+                g.endFill();
             }
         }
-        index = 0;
+//        index = 0;*/
     }
 
     public function calculateNearesPointIndex(x:Float):Int {
