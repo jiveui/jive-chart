@@ -149,7 +149,7 @@ class ChartUI extends BaseComponentUI {
         drawBubble(index);
     }
 
-    public function drawBubble(x: Int) {
+    public function drawBubble(index: Int) {
 
         chart.interactionLayer.removeAll();
         var g: Graphics2D = new Graphics2D(chart.interactionLayer.graphics);
@@ -161,29 +161,43 @@ class ChartUI extends BaseComponentUI {
 
         var pX = pointsToDraw[index].displayX;
         var pY = pointsToDraw[index].displayY;
-        var cornerRadius = 5;
+        var cornerRadius = 10;
         var padding = 4;
-        var indentBorder = 12;
+        var tailSize = 25;
+        var contentDimension = new IntDimension(200, 100);
+
+        var incline = tailSize*0.5;
 
 
+        var dx = 1;
+        if (pX < graphBounds.x + graphBounds.width/2) {
+            dx = 1;
+        } else {
+            dx = -1;
+        }
 
-//        g.drawRect(graphBounds.x, graphBounds.y, graphBounds.width, graphBounds.height);
-//        g.beginFill(0xff0000, 1.0);
-//        g.drawCircle(pointsToDraw[index].displayX, pointsToDraw[index].displayY, chart.selectorSize);
-//        g.endFill();
 
         g.beginDraw(chart.selectorBubbleBorder);
         g.beginFill(chart.selectorBubbleBackground);
         g.moveTo(pX, pY);
-        g.lineTo(pX + padding + indentBorder * 0.75, pY + indentBorder);
-        g.curveTo(pX, pY + indentBorder, pX, pY + padding + indentBorder * 0.75);
-        g.curveTo(pX, pY + (2*(padding + indentBorder * 0.75)), pX + padding + indentBorder * 0.75, pY + (2*(padding + indentBorder * 0.75)));
-//        g.lineTo()
-
-
+        g.lineTo(pX + dx * (tailSize/2 + cornerRadius*2), pY - tailSize - incline );
+        g.lineTo(pX + dx * (tailSize/2 + cornerRadius), pY - tailSize - incline);
+        g.curveTo(pX + dx * (tailSize/2), pY - tailSize - incline, pX + dx * tailSize/2, pY - tailSize - cornerRadius - incline);
+        g.lineTo(pX + dx * tailSize/2, pY - tailSize - contentDimension.height + cornerRadius - incline);
+        g.curveTo(pX + dx * tailSize/2, pY - tailSize - contentDimension.height - incline,
+                    pX + dx * (tailSize/2 + cornerRadius), pY - tailSize - contentDimension.height - incline);
+        g.lineTo(pX + dx * (tailSize/2 + contentDimension.width - cornerRadius), pY - tailSize - contentDimension.height - incline);
+        g.curveTo(pX + dx * (tailSize/2 + contentDimension.width), pY - tailSize - contentDimension.height - incline,
+                    pX + dx * (tailSize/2 + contentDimension.width), pY - tailSize - contentDimension.height + cornerRadius - incline);
+        g.lineTo(pX + dx * (tailSize/2 + contentDimension.width), pY - tailSize - cornerRadius - incline);
+        g.curveTo(pX + dx * (tailSize/2 + contentDimension.width), pY - tailSize - incline,
+                    pX + dx * (tailSize/2 + contentDimension.width - cornerRadius), pY - tailSize - incline);
+        g.lineTo(pX + dx * (tailSize*1.25 + cornerRadius*2), pY - tailSize - incline);
+        g.lineTo(pX, pY);
         g.endDraw();
         g.endFill();
 
+        g.fillCircle(chart.selectorBrush, pX, pY, chart.selectorSize);
 
 /*        if (pointsToDraw.length / 2 < index){
             if (graphBounds.height / 3 < pointsToDraw[index].displayY){

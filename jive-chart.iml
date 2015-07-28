@@ -10,8 +10,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/demo/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/demo/gen" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/demo/bin" />
     </content>
-    <orderEntry type="jdk" jdkName="Haxe 3.2.0" jdkType="Haxe toolkit" />
+    <orderEntry type="jdk" jdkName="Haxe 3.0.1" jdkType="Haxe toolkit" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jive" level="project" />
     <orderEntry type="library" name="openfl" level="project" />
