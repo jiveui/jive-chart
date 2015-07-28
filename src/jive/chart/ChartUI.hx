@@ -176,23 +176,29 @@ class ChartUI extends BaseComponentUI {
             dx = -1;
         }
 
+        var dy = 1;
+        if (pY > graphBounds.y + graphBounds.height / 2){
+            dy = 1;
+        } else {
+            dy = -1;
+        }
 
         g.beginDraw(chart.selectorBubbleBorder);
         g.beginFill(chart.selectorBubbleBackground);
         g.moveTo(pX, pY);
-        g.lineTo(pX + dx * (tailSize/2 + cornerRadius*2), pY - tailSize - incline );
-        g.lineTo(pX + dx * (tailSize/2 + cornerRadius), pY - tailSize - incline);
-        g.curveTo(pX + dx * (tailSize/2), pY - tailSize - incline, pX + dx * tailSize/2, pY - tailSize - cornerRadius - incline);
-        g.lineTo(pX + dx * tailSize/2, pY - tailSize - contentDimension.height + cornerRadius - incline);
-        g.curveTo(pX + dx * tailSize/2, pY - tailSize - contentDimension.height - incline,
-                    pX + dx * (tailSize/2 + cornerRadius), pY - tailSize - contentDimension.height - incline);
-        g.lineTo(pX + dx * (tailSize/2 + contentDimension.width - cornerRadius), pY - tailSize - contentDimension.height - incline);
-        g.curveTo(pX + dx * (tailSize/2 + contentDimension.width), pY - tailSize - contentDimension.height - incline,
-                    pX + dx * (tailSize/2 + contentDimension.width), pY - tailSize - contentDimension.height + cornerRadius - incline);
-        g.lineTo(pX + dx * (tailSize/2 + contentDimension.width), pY - tailSize - cornerRadius - incline);
-        g.curveTo(pX + dx * (tailSize/2 + contentDimension.width), pY - tailSize - incline,
-                    pX + dx * (tailSize/2 + contentDimension.width - cornerRadius), pY - tailSize - incline);
-        g.lineTo(pX + dx * (tailSize*1.25 + cornerRadius*2), pY - tailSize - incline);
+        g.lineTo(pX + dx * (tailSize/2 + cornerRadius*2), pY - dy * (tailSize + incline));
+        g.lineTo(pX + dx * (tailSize/2 + cornerRadius), pY - dy * (tailSize + incline));
+        g.curveTo(pX + dx * (tailSize/2), pY - dy * (tailSize + incline), pX + dx * tailSize/2, pY - dy * (tailSize + cornerRadius + incline));
+        g.lineTo(pX + dx * tailSize/2, pY - dy * (tailSize + contentDimension.height - cornerRadius + incline));
+        g.curveTo(pX + dx * tailSize/2, pY - dy * (tailSize + contentDimension.height + incline),
+                    pX + dx * (tailSize/2 + cornerRadius), pY - dy * (tailSize + contentDimension.height + incline));
+        g.lineTo(pX + dx * (tailSize/2 + contentDimension.width - cornerRadius), pY - dy * (tailSize + contentDimension.height + incline));
+        g.curveTo(pX + dx * (tailSize/2 + contentDimension.width), pY - dy * (tailSize + contentDimension.height + incline),
+                    pX + dx * (tailSize/2 + contentDimension.width), pY - dy * (tailSize + contentDimension.height - cornerRadius + incline));
+        g.lineTo(pX + dx * (tailSize/2 + contentDimension.width), pY - dy * (tailSize + cornerRadius + incline));
+        g.curveTo(pX + dx * (tailSize/2 + contentDimension.width), pY - dy * (tailSize + incline),
+                    pX + dx * (tailSize/2 + contentDimension.width - cornerRadius), pY - dy * (tailSize + incline));
+        g.lineTo(pX + dx * (tailSize*1.25 + cornerRadius*2), pY - dy * (tailSize + incline));
         g.lineTo(pX, pY);
         g.endDraw();
         g.endFill();
