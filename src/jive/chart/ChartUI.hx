@@ -1,6 +1,8 @@
 package jive.chart;
 
 
+import org.aswing.Insets;
+import org.aswing.border.EmptyBorder;
 import org.aswing.graphics.SolidBrush;
 import org.aswing.ASColor;
 import org.aswing.graphics.SolidBrush;
@@ -60,8 +62,8 @@ class ChartUI extends BaseComponentUI {
     private inline function calcStatisticsAndGraphBounds(b: IntRectangle) {
         stats = ChartHelper.calcStatistics(chart.data, b);
         graphBounds = b.clone();
-        graphBounds.move(stats.yLabelDimension.width, 0);
-        graphBounds.resize(-stats.yLabelDimension.width, -stats.xLabelDimension.height - chart.tickSize);
+        graphBounds.move(stats.yLabelDimension.width + chart.tickSize, 0);
+        graphBounds.resize(-stats.yLabelDimension.width- chart.tickSize, -stats.xLabelDimension.height - chart.tickSize);
         stats = ChartHelper.calcStatistics(chart.data, graphBounds);
     }
 
@@ -109,8 +111,8 @@ class ChartUI extends BaseComponentUI {
 
     private function createLabelForInterpolatedValue(valueTranslator: ChartValue, index: Int, amount: Float, min: Float, max: Float): JLabel {
         var label = new JLabel(valueTranslator.getCaptionByFloatValue(interpolateValue(index, amount, min, max)));
-        label.invalidate();
-        label.repaint();
+        label.foreground = chart.axisLabelColor;
+        label.pack();
         return label;
     }
 
@@ -151,52 +153,52 @@ class ChartUI extends BaseComponentUI {
 
     public function drawBubble(index: Int) {
 
-        chart.interactionLayer.removeAll();
         var g: Graphics2D = new Graphics2D(chart.interactionLayer.graphics);
-//        chart.interactionLayer.graphics;
         g.clear();
 
-//        var label = new JLabel(pointsToDraw[index].xCaption + "\n" + pointsToDraw[index].yCaption);
-//        chart.interactionLayer.append(label);
+        var label = new JLabel(pointsToDraw[index].xCaption + "\n" + pointsToDraw[index].yCaption);
+        label.border = new EmptyBorder(null, Insets.createIdentic(chart.selectorBubblePadding));
 
-        var pX = pointsToDraw[index].displayX;
-        var pY = pointsToDraw[index].displayY;
-        var cornerRadius = 10;
-        var padding = 4;
-        var tailSize = 25;
-        var contentDimension = new IntDimension(200, 100);
+        var pX: Float = pointsToDraw[index].displayX;
+        var pY: Float = pointsToDraw[index].displayY;
+        var cornerRadius = chart.selectorBubbleCornerRadius;
+        var tailSize: Float = chart.selectorBubbleTailSize;
+        var contentDimension = label.preferredSize;
+        var incline: Float = tailSize*0.5;
 
-        var incline = tailSize*0.5;
-
-
-        var dx = 1;
+        var dx = 1.0;
         if (pX < graphBounds.x + graphBounds.width/2) {
-            dx = 1;
+            dx = 1.0;
         } else {
-            dx = -1;
+            dx = -1.0;
         }
 
-        var dy = 1;
+        var dy = 1.0;
         if (pY > graphBounds.y + graphBounds.height / 2){
-            dy = 1;
+            dy = 1.0;
         } else {
-            dy = -1;
+            dy = -1.0;
         }
+
+        var corner1 = new IntPoint(Std.int(pX + dx * (tailSize/2)), Std.int(pY - dy * (tailSize + incline)));
+        var corner2 = new IntPoint(Std.int(pX + dx * tailSize/2), Std.int(pY -  dy *(tailSize + contentDimension.height + incline)));
+        var corner3 = new IntPoint(Std.int(pX + dx * (tailSize/2 + contentDimension.width)), Std.int(pY - dy * (tailSize + contentDimension.height + incline)));
+        var corner4 = new IntPoint(Std.int(pX + dx * (tailSize/2 + contentDimension.width)), Std.int(pY - dy * (tailSize + incline)));
 
         g.beginDraw(chart.selectorBubbleBorder);
         g.beginFill(chart.selectorBubbleBackground);
         g.moveTo(pX, pY);
         g.lineTo(pX + dx * (tailSize/2 + cornerRadius*2), pY - dy * (tailSize + incline));
         g.lineTo(pX + dx * (tailSize/2 + cornerRadius), pY - dy * (tailSize + incline));
-        g.curveTo(pX + dx * (tailSize/2), pY - dy * (tailSize + incline), pX + dx * tailSize/2, pY - dy * (tailSize + cornerRadius + incline));
+        g.curveTo(corner1.x, corner1.y, corner1.x, pY - dy * (tailSize + cornerRadius + incline));
         g.lineTo(pX + dx * tailSize/2, pY - dy * (tailSize + contentDimension.height - cornerRadius + incline));
-        g.curveTo(pX + dx * tailSize/2, pY - dy * (tailSize + contentDimension.height + incline),
+        g.curveTo(corner2.x, corner2.y,
                     pX + dx * (tailSize/2 + cornerRadius), pY - dy * (tailSize + contentDimension.height + incline));
         g.lineTo(pX + dx * (tailSize/2 + contentDimension.width - cornerRadius), pY - dy * (tailSize + contentDimension.height + incline));
-        g.curveTo(pX + dx * (tailSize/2 + contentDimension.width), pY - dy * (tailSize + contentDimension.height + incline),
+        g.curveTo(corner3.x, corner3.y,
                     pX + dx * (tailSize/2 + contentDimension.width), pY - dy * (tailSize + contentDimension.height - cornerRadius + incline));
         g.lineTo(pX + dx * (tailSize/2 + contentDimension.width), pY - dy * (tailSize + cornerRadius + incline));
-        g.curveTo(pX + dx * (tailSize/2 + contentDimension.width), pY - dy * (tailSize + incline),
+        g.curveTo(corner4.x, corner4.y,
                     pX + dx * (tailSize/2 + contentDimension.width - cornerRadius), pY - dy * (tailSize + incline));
         g.lineTo(pX + dx * (tailSize*1.25 + cornerRadius*2), pY - dy * (tailSize + incline));
         g.lineTo(pX, pY);
@@ -205,52 +207,26 @@ class ChartUI extends BaseComponentUI {
 
         g.fillCircle(chart.selectorBrush, pX, pY, chart.selectorSize);
 
-/*        if (pointsToDraw.length / 2 < index){
-            if (graphBounds.height / 3 < pointsToDraw[index].displayY){
-                label.location = new IntPoint(Std.int(pointsToDraw[index].displayX) + 16, Std.int(pointsToDraw[index].displayY - 60));
-                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                g.lineTo(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY - 55);
-                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                g.lineTo(pointsToDraw[index].displayX + 16, pointsToDraw[index].displayY - 72 + label.preferredSize.height);
-                g.beginFill(0xFFFFFF, 0.5);
-                g.drawRoundRect(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY - 60, label.preferredSize.width - 20, label.preferredSize.height - 10, 15);
-                g.endFill();
-                }
-            else if (graphBounds.height / 3 > pointsToDraw[index].displayY){
-                label.location = new IntPoint(Std.int(pointsToDraw[index].displayX) + 16, Std.int(pointsToDraw[index].displayY + 19));
-                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                g.lineTo(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY + 55);
-                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                g.lineTo(pointsToDraw[index].displayX + 16, pointsToDraw[index].displayY + 72 - label.preferredSize.height);
-                g.beginFill(0xFFFFFF, 0.5);
-                g.drawRoundRect(pointsToDraw[index].displayX + 15, pointsToDraw[index].displayY +19, label.preferredSize.width - 20, label.preferredSize.height - 10, 15);
-                g.endFill();
+        label.foreground = chart.axisLabelColor;
+        label.pack();
+
+        if (dy > 0) {
+            if (dx > 0) {
+                label.location = corner2;
+            } else {
+                label.location = corner3;
+            }
+        } else {
+            if (dx > 0) {
+                label.location = corner1;
+            } else {
+                label.location = corner4;
             }
         }
-        else if(pointsToDraw.length / 2 >= index){
-            if (graphBounds.height / 3 < pointsToDraw[index].displayY){
-                label.location = new IntPoint(Std.int(pointsToDraw[index].displayX) - label.preferredSize.width + 5, Std.int(pointsToDraw[index].displayY - 60));
-                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                g.lineTo(pointsToDraw[index].displayX - 15, pointsToDraw[index].displayY - 55);
-                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                g.lineTo(pointsToDraw[index].displayX - 16, pointsToDraw[index].displayY - 72 + label.preferredSize.height);
-                g.beginFill(0xFFFFFF, 0.5);
-                g.drawRoundRect(pointsToDraw[index].displayX - label.preferredSize.width + 5, pointsToDraw[index].displayY - 60, label.preferredSize.width - 18, label.preferredSize.height - 10, 15);
-                g.endFill();
-                }
-            else if (graphBounds.height / 3 > pointsToDraw[index].displayY)
-            {
-                label.location = new IntPoint(Std.int(pointsToDraw[index].displayX) - label.preferredSize.width + 5, Std.int(pointsToDraw[index].displayY + 19));
-                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                g.lineTo(pointsToDraw[index].displayX - 15, pointsToDraw[index].displayY + 55);
-                g.moveTo(pointsToDraw[index].displayX, pointsToDraw[index].displayY);
-                g.lineTo(pointsToDraw[index].displayX - 16, pointsToDraw[index].displayY + 72 - label.preferredSize.height);
-                g.beginFill(0xFFFFFF, 0.5);
-                g.drawRoundRect(pointsToDraw[index].displayX - label.preferredSize.width + 5, pointsToDraw[index].displayY + 19, label.preferredSize.width - 20, label.preferredSize.height - 10, 15);
-                g.endFill();
-            }
-        }
-//        index = 0;*/
+
+        chart.interactionLayer.removeAll();
+        chart.interactionLayer.append(label);
+
     }
 
     public function calculateNearesPointIndex(x:Float):Int {

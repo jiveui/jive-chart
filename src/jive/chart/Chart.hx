@@ -1,5 +1,8 @@
 package jive.chart;
 
+import org.aswing.border.EmptyBorder;
+import org.aswing.EmptyLayout;
+import org.aswing.JPanel;
 import org.aswing.graphics.SolidBrush;
 import flash.display.Sprite;
 import org.aswing.ASColor;
@@ -15,12 +18,17 @@ class Chart extends Container {
 
     public var title: String;
     public var tickSize: Int = 5;
+
     public var axisPen: IPen;
+    public var axisLabelColor: ASColor;
     public var graphPen: IPen;
     public var selectorPen: IPen;
     public var selectorBrush: IBrush;
     public var selectorBubbleBorder: IPen;
     public var selectorBubbleBackground: IBrush;
+    public var selectorBubblePadding: Int = 4;
+    public var selectorBubbleTailSize: Int = 25;
+    public var selectorBubbleCornerRadius: Int = 10;
 
     public var selectorSize: Int = 4;
     public var gridPen: IPen;
@@ -57,12 +65,15 @@ class Chart extends Container {
         markPen = graphPen;
         markBrush = new SolidBrush(ASColor.WHITE);
         selectorBubbleBorder = new Pen(ASColor.RED, 0.7);
-        selectorBubbleBackground = new SolidBrush(new ASColor(0xffffff, 0.5));
+        selectorBubbleBackground = new SolidBrush(new ASColor(0xffffff, 0.8));
         labelsLayer = new Container();
         interactionLayer = new Container();
+        axisLabelColor = ASColor.GRAY;
 
         append(labelsLayer);
         append(interactionLayer);
+
+        doLayout();
     }
 
     @:dox(hide)

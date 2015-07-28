@@ -31,9 +31,6 @@
                     <ASColor rgb="0x000000"/>
                 </foreground>
                 <ui><chart:ChartUI/></ui>
-                <preferredSize>
-                    <geom:IntDimension width="350" height="230"/>
-                </preferredSize>
             </chart:Chart>
             <!--<chart:Chart id="chart2" constraints="org.aswing.BorderLayout.SOUTH" data="{Binding chartData mode=oneway}">-->
                 <!--<foreground>-->

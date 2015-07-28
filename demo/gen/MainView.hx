@@ -148,16 +148,6 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
         return res;
     }
 
-    inline function get_intDimension__1():org.aswing.geom.IntDimension {
-        /* declarations/MainView.xml:35 characters: 21-38 */
-        var res = new org.aswing.geom.IntDimension();
-        /* declarations/MainView.xml:35 characters: 40-45 */
-        res.width = 350;
-        /* declarations/MainView.xml:35 characters: 52-58 */
-        res.height = 230;
-        return res;
-    }
-
     function get_chart1():jive.chart.Chart {
         /* declarations/MainView.xml:29 characters: 13-24 */
         if (chart1_initialized) return chart1;
@@ -189,8 +179,6 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
         res.foreground = get_aSColor__2();
         /* declarations/MainView.xml:33 characters: 17-19 */
         res.ui = get_chartUI__0();
-        /* declarations/MainView.xml:34 characters: 17-30 */
-        res.preferredSize = get_intDimension__1();
         return res;
     }
 
