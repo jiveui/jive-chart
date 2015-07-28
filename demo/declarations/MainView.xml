@@ -35,15 +35,15 @@
                     <geom:IntDimension width="350" height="230"/>
                 </preferredSize>
             </chart:Chart>
-            <chart:Chart id="chart2" constraints="org.aswing.BorderLayout.SOUTH" data="{Binding chartData mode=oneway}">
-                <foreground>
-                    <ASColor rgb="0xffffff"/>
-                </foreground>
-                <ui><chart:ChartPeriodSelector/></ui>
-                <preferredSize>
-                    <geom:IntDimension width="100" height="70"/>
-                </preferredSize>
-            </chart:Chart>
+            <!--<chart:Chart id="chart2" constraints="org.aswing.BorderLayout.SOUTH" data="{Binding chartData mode=oneway}">-->
+                <!--<foreground>-->
+                    <!--<ASColor rgb="0xffffff"/>-->
+                <!--</foreground>-->
+                <!--<ui><chart:ChartPeriodSelector/></ui>-->
+                <!--<preferredSize>-->
+                    <!--<geom:IntDimension width="100" height="70"/>-->
+                <!--</preferredSize>-->
+            <!--</chart:Chart>-->
         </JPanel>
     </content>
 </JWindow>

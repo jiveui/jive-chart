@@ -5,9 +5,6 @@ class Point {
     public var displayX:Float;
     public var displayY:Float;
 
-//    public var pointSelectorX:Float;
-//    public var pointSelectorY:Float;
-
     public var x(get, null): Float;
     private function get_x(): Float { return xValue.floatValue; }
 

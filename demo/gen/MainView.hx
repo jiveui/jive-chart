@@ -6,10 +6,6 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
 
     @:isVar public var chart1(get, set):jive.chart.Chart;
 
-    var chart2_initialized:Bool = false;
-
-    @:isVar public var chart2(get, set):jive.chart.Chart;
-
     public function destroyHml():Void {
         
     }
@@ -198,71 +194,6 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
         return res;
     }
 
-    function set_chart2(value:jive.chart.Chart):jive.chart.Chart {
-        chart2_initialized = true;
-        return chart2 = value;
-    }
-
-    inline function get_aSColor__3():org.aswing.ASColor {
-        /* declarations/MainView.xml:40 characters: 21-28 */
-        var res = new org.aswing.ASColor();
-        /* declarations/MainView.xml:40 characters: 30-33 */
-        res.rgb = 0xffffff;
-        return res;
-    }
-
-    inline function get_chartPeriodSelector__0():jive.chart.ChartPeriodSelector {
-        /* declarations/MainView.xml:42 characters: 21-46 */
-        var res = new jive.chart.ChartPeriodSelector();
-        return res;
-    }
-
-    inline function get_intDimension__2():org.aswing.geom.IntDimension {
-        /* declarations/MainView.xml:44 characters: 21-38 */
-        var res = new org.aswing.geom.IntDimension();
-        /* declarations/MainView.xml:44 characters: 40-45 */
-        res.width = 100;
-        /* declarations/MainView.xml:44 characters: 52-58 */
-        res.height = 70;
-        return res;
-    }
-
-    function get_chart2():jive.chart.Chart {
-        /* declarations/MainView.xml:38 characters: 13-24 */
-        if (chart2_initialized) return chart2;
-        chart2_initialized = true;
-        this.chart2 = new jive.chart.Chart();
-        var res = this.chart2;
-        if (null != dataContext) { res.data = this.dataContext.chartData; }
-        var programmaticalyChange = false;
-        var sourcePropertyListener = function(_,_) {
-                            if (!programmaticalyChange) {
-                                programmaticalyChange = true;
-                                res.data = this.dataContext.chartData;
-                                programmaticalyChange = false;
-                            }
-                        };
-        var bindSourceListener = function() { bindx.Bind.bindx(this.dataContext.chartData, sourcePropertyListener); }
-        if (null != dataContext) { bindSourceListener(); }
-        bindx.Bind.bindx(this.dataContext, function(old,_) {
-                                if (null != old) { bindx.Bind.unbindx(old.chartData, sourcePropertyListener);}
-                                if (null != this.dataContext) {
-                                    res.data = this.dataContext.chartData;
-                                    bindSourceListener();
-                                }
-                            });
-                        
-        /* declarations/MainView.xml:38 characters: 38-49 */
-        res.constraints = org.aswing.BorderLayout.SOUTH;
-        /* declarations/MainView.xml:39 characters: 17-27 */
-        res.foreground = get_aSColor__3();
-        /* declarations/MainView.xml:42 characters: 17-19 */
-        res.ui = get_chartPeriodSelector__0();
-        /* declarations/MainView.xml:43 characters: 17-30 */
-        res.preferredSize = get_intDimension__2();
-        return res;
-    }
-
     inline function get_jPanel__0():org.aswing.JPanel {
         /* declarations/MainView.xml:5 characters: 9-15 */
         var res = new org.aswing.JPanel();
@@ -270,7 +201,6 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
         res.layout = get_borderLayout__0();
         res.append(get_jList__0());
         res.append(chart1);
-        res.append(chart2);
         return res;
     }
 

@@ -27,11 +27,22 @@
         </exec>
     </target>
 
-
     <target name="gen.docs">
         <antcall target="haxe">
             <param name="hxml" value="docs.hxml"/>
         </antcall>
+    </target>
+
+    <target name="setup.haxelib">
+        <exec dir="${project.root.path}" executable="haxelib" failonerror="true">
+            <arg line="dev lime"/>
+        </exec>
+        <exec dir="${project.root.path}" executable="haxelib" failonerror="true">
+            <arg line="set lime 2.5.1"/>
+        </exec>
+        <exec dir="${project.root.path}" executable="haxelib" failonerror="true">
+            <arg line="set openfl 3.2.0"/>
+        </exec>
     </target>
 
 </project>
