@@ -61,9 +61,13 @@ class ChartUI extends BaseComponentUI {
 
     private inline function calcStatisticsAndGraphBounds(b: IntRectangle) {
         stats = ChartHelper.calcStatistics(chart.data, b);
+
+        var verticalMarginForTopMostLabel = Std.int(stats.yLabelDimension.height/2)+1;
+        var horizontalMarginForRightMostLabel = Std.int(stats.xLabelDimension.width/2)+1;
         graphBounds = b.clone();
-        graphBounds.move(stats.yLabelDimension.width + chart.tickSize, 0);
-        graphBounds.resize(-stats.yLabelDimension.width- chart.tickSize, -stats.xLabelDimension.height - chart.tickSize);
+        graphBounds.move(stats.yLabelDimension.width + chart.tickSize, verticalMarginForTopMostLabel);
+        graphBounds.resize(-stats.yLabelDimension.width - chart.tickSize - horizontalMarginForRightMostLabel,
+                            -stats.xLabelDimension.height - chart.tickSize - verticalMarginForTopMostLabel);
         stats = ChartHelper.calcStatistics(chart.data, graphBounds);
     }
 
@@ -135,8 +139,8 @@ class ChartUI extends BaseComponentUI {
     }
 
     private function drawGridBorderLines(g: Graphics2D) {
-        g.drawLine(chart.gridPen, graphBounds.x, 0, graphBounds.x + graphBounds.width, 0);
-        g.drawLine(chart.gridPen, graphBounds.x + graphBounds.width, graphBounds.y + graphBounds.height, graphBounds.x + graphBounds.width, 0);
+        g.drawLine(chart.gridPen, graphBounds.x, graphBounds.y, graphBounds.x + graphBounds.width, graphBounds.y);
+        g.drawLine(chart.gridPen, graphBounds.x + graphBounds.width, graphBounds.y + graphBounds.height, graphBounds.x + graphBounds.width, graphBounds.y);
     }
 
     private function interpolateValue(index: Float, length: Float, min: Float, max: Float): Float {
