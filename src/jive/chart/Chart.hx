@@ -1,5 +1,7 @@
 package jive.chart;
 
+import org.aswing.ASFont;
+import org.aswing.JLabel;
 import org.aswing.border.EmptyBorder;
 import org.aswing.EmptyLayout;
 import org.aswing.JPanel;
@@ -18,6 +20,7 @@ class Chart extends Container {
 
     public var title: String;
     public var tickSize: Int = 5;
+    public var setTitle:JLabel;
 
     public var axisPen: IPen;
     public var axisLabelColor: ASColor;
@@ -35,6 +38,8 @@ class Chart extends Container {
     public var selectorSize: Int = 4;
     public var gridPen: IPen;
     public var areaUnderLineBrush: IBrush;
+
+    public var titleFont: ASFont;
 
     public var markBrush: IBrush;
     public var markPen: IPen;
@@ -72,6 +77,10 @@ class Chart extends Container {
         interactionLayer = new Container();
         axisLabelColor = ASColor.GRAY;
 
+        setTitle = new JLabel();
+        titleFont = new ASFont("Tahoma", 14);
+
+        append(setTitle);
         append(labelsLayer);
         append(interactionLayer);
 

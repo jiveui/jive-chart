@@ -1,6 +1,7 @@
 package jive.chart;
 
 
+import org.aswing.VectorListModel;
 import org.aswing.Insets;
 import org.aswing.border.EmptyBorder;
 import org.aswing.graphics.SolidBrush;
@@ -37,6 +38,7 @@ class ChartUI extends BaseComponentUI {
     private var graphBounds: IntRectangle;
 
     public var textLabel:Array<JTextField>;
+    public var titleLabel:JLabel;
 
     public function new() {
         super();
@@ -62,12 +64,19 @@ class ChartUI extends BaseComponentUI {
     private inline function calcStatisticsAndGraphBounds(b: IntRectangle) {
         stats = ChartHelper.calcStatistics(chart.data, b, chart);
 
+        titleLabel = chart.setTitle;
+        if (titleLabel.text == ""){
+            titleLabel.setText(chart.title);
+        }
+        titleLabel.location = new IntPoint(0,0);
+        titleLabel.pack();
+
         var verticalMarginForTopMostLabel = Std.int(stats.yLabelDimension.height/2)+1;
         var horizontalMarginForRightMostLabel = Std.int(stats.xLabelDimension.width/2)+1;
         graphBounds = b.clone();
-        graphBounds.move(stats.yLabelDimension.width + chart.tickSize, verticalMarginForTopMostLabel);
+        graphBounds.move(stats.yLabelDimension.width + chart.tickSize, verticalMarginForTopMostLabel + Std.int(titleLabel.preferredSize.height));
         graphBounds.resize(-stats.yLabelDimension.width - chart.tickSize - horizontalMarginForRightMostLabel,
-                            -stats.xLabelDimension.height - chart.tickSize - verticalMarginForTopMostLabel);
+                            -stats.xLabelDimension.height - chart.tickSize - verticalMarginForTopMostLabel - Std.int(titleLabel.preferredSize.height));
         stats = ChartHelper.calcStatistics(chart.data, graphBounds, chart);
     }
 

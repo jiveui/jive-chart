@@ -1,5 +1,6 @@
 -lib jive
 -lib hml
+-lib actuate
 -lib openfl
 -lib lime
 -lib jive-chart

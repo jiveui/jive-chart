@@ -27,6 +27,7 @@
                 </model>
             </JList>
             <chart:Chart id="chart1" constraints="org.aswing.BorderLayout.CENTER" data="{Binding chartData mode=oneway}">
+                <chart:title>'Title Title Title Title Title Title Title Title'</chart:title>
                 <foreground>
                     <ASColor rgb="0x000000"/>
                 </foreground>
