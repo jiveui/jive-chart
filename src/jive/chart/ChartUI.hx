@@ -60,7 +60,7 @@ class ChartUI extends BaseComponentUI {
     }
 
     private inline function calcStatisticsAndGraphBounds(b: IntRectangle) {
-        stats = ChartHelper.calcStatistics(chart.data, b);
+        stats = ChartHelper.calcStatistics(chart.data, b, chart);
 
         var verticalMarginForTopMostLabel = Std.int(stats.yLabelDimension.height/2)+1;
         var horizontalMarginForRightMostLabel = Std.int(stats.xLabelDimension.width/2)+1;
@@ -68,7 +68,7 @@ class ChartUI extends BaseComponentUI {
         graphBounds.move(stats.yLabelDimension.width + chart.tickSize, verticalMarginForTopMostLabel);
         graphBounds.resize(-stats.yLabelDimension.width - chart.tickSize - horizontalMarginForRightMostLabel,
                             -stats.xLabelDimension.height - chart.tickSize - verticalMarginForTopMostLabel);
-        stats = ChartHelper.calcStatistics(chart.data, graphBounds);
+        stats = ChartHelper.calcStatistics(chart.data, graphBounds, chart);
     }
 
     override public function installUI(c:Component):Void { }

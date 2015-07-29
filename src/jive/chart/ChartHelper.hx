@@ -1,5 +1,8 @@
 package jive.chart;
 
+import org.aswing.border.EmptyBorder;
+import org.aswing.Insets;
+import org.aswing.Insets;
 import org.aswing.graphics.IPen;
 import org.aswing.JLabel;
 import org.aswing.geom.IntDimension;
@@ -53,7 +56,7 @@ class ChartHelper {
 
     }
 
-    public static function calcStatistics(points: Array<Point>, bounds: IntRectangle): ChartStatistics {
+    public static function calcStatistics(points: Array<Point>, bounds: IntRectangle, chart: Chart): ChartStatistics {
         var r: ChartStatistics = {
             minX: 0,
             minY: 0,
@@ -87,26 +90,30 @@ class ChartHelper {
         r.scaleX = bounds.width / (r.maxX - r.minX);
         r.scaleY = bounds.height / (r.maxY - r.minY);
 
-        r.xLabelDimension = calcMaxLabelsDimesionForX(points, r);
-        r.yLabelDimension = calcMaxLabelsDimesionForY(points, r);
+        r.xLabelDimension = calcMaxLabelsDimesionForX(points, r, chart);
+        r.yLabelDimension = calcMaxLabelsDimesionForY(points, r, chart);
 
         return r;
     }
 
-    public static function calcMaxLabelsDimesionForX(points: Array<Point>, stats: ChartStatistics): IntDimension {
+    public static function calcMaxLabelsDimesionForX(points: Array<Point>, stats: ChartStatistics, chart: Chart): IntDimension {
         if (null == points || points.length <= 0) return new IntDimension(0,0);
 
-        return calcMaxLabelDimensionForValue(points[0].xValue, stats.minX, stats.maxX);
+        return calcMaxLabelDimensionForValue(points[0].xValue, stats.minX, stats.maxX,
+            new Insets(chart.axisMarginBetweenLabelsAndAxis, Std.int(chart.axisMarginBetweenLabels/2), 0, Std.int(chart.axisMarginBetweenLabels/2)));
     }
 
-    public static function calcMaxLabelsDimesionForY(points: Array<Point>, stats: ChartStatistics): IntDimension {
+    public static function calcMaxLabelsDimesionForY(points: Array<Point>, stats: ChartStatistics, chart: Chart): IntDimension {
         if (null == points || points.length <= 0) return new IntDimension(0,0);
 
-        return calcMaxLabelDimensionForValue(points[0].yValue, stats.minY, stats.maxY);
+        return calcMaxLabelDimensionForValue(points[0].yValue, stats.minY, stats.maxY,
+            new Insets(Std.int(chart.axisMarginBetweenLabels/2), 0, Std.int(chart.axisMarginBetweenLabels/2), chart.axisMarginBetweenLabelsAndAxis));
     }
 
-    private static inline function calcMaxLabelDimensionForValue(value: ChartValue, min: Float, max: Float): IntDimension {
-        return (new JLabel(value.getCaptionByFloatValue( if (min < 0) min else max))).preferredSize;
+    private static inline function calcMaxLabelDimensionForValue(value: ChartValue, min: Float, max: Float, insets: Insets): IntDimension {
+        var label = new JLabel(value.getCaptionByFloatValue( if (min < 0) min else max));
+        label.border = new EmptyBorder(null, insets);
+        return label.preferredSize;
     }
 
 }

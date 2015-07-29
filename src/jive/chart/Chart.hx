@@ -21,6 +21,8 @@ class Chart extends Container {
 
     public var axisPen: IPen;
     public var axisLabelColor: ASColor;
+    public var axisMarginBetweenLabels: Int = 20;
+    public var axisMarginBetweenLabelsAndAxis: Int = 10;
     public var graphPen: IPen;
     public var selectorPen: IPen;
     public var selectorBrush: IBrush;
@@ -58,14 +60,14 @@ class Chart extends Container {
         data = [];
 
         axisPen = new Pen(ASColor.BLACK, 1.5, true);
-        graphPen = new Pen(ASColor.RED, 0.9, true);
+        graphPen = new Pen(ASColor.RED, 2.5, true);
         gridPen = new Pen(ASColor.GRAY, 0.3, true);
-        selectorPen = new Pen(ASColor.RED, 0.1, true);
+        selectorPen = new Pen(ASColor.RED, 1, true);
         selectorBrush = new SolidBrush(ASColor.RED);
-        markPen = graphPen;
+        markPen = new Pen(ASColor.RED, 0.7, true);
         markBrush = new SolidBrush(ASColor.WHITE);
-        selectorBubbleBorder = new Pen(ASColor.RED, 0.7);
-        selectorBubbleBackground = new SolidBrush(new ASColor(0xffffff, 0.8));
+        selectorBubbleBorder = new Pen(ASColor.DARK_GRAY, 0.7);
+        selectorBubbleBackground = new SolidBrush(new ASColor(0xe5e5e5,0.8));
         labelsLayer = new Container();
         interactionLayer = new Container();
         axisLabelColor = ASColor.GRAY;
