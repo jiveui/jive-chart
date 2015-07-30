@@ -1,5 +1,4 @@
 <xs:schema targetNamespace="org.aswing" xmlns="org.aswing" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-xmlns:bindx="bindx"
 xmlns:org-aswing-plaf-basic-background="org.aswing.plaf.basic.background"
 xmlns:jive-plaf-flat-border="jive.plaf.flat.border"
 xmlns:jive-plaf-flat-tabbedpane="jive.plaf.flat.tabbedpane"
@@ -30,10 +29,9 @@ xmlns:flash-display="flash.display"
 xmlns:org-aswing-colorchooser="org.aswing.colorchooser"
 xmlns:jive-plaf-flat-background="jive.plaf.flat.background"
 xmlns:org-aswing-ext="org.aswing.ext"
-xmlns:org-aswing-tree="org.aswing.tree"
 xmlns:flash-events="flash.events"
+xmlns:org-aswing-tree="org.aswing.tree"
 >
-<xs:import namespace="bindx" schemaLocation="bindx.xsd" />
 <xs:import namespace="org.aswing.plaf.basic.background" schemaLocation="org.aswing.plaf.basic.background.xsd" />
 <xs:import namespace="jive.plaf.flat.border" schemaLocation="jive.plaf.flat.border.xsd" />
 <xs:import namespace="jive.plaf.flat.tabbedpane" schemaLocation="jive.plaf.flat.tabbedpane.xsd" />
@@ -64,8 +62,8 @@ xmlns:flash-events="flash.events"
 <xs:import namespace="org.aswing.colorchooser" schemaLocation="org.aswing.colorchooser.xsd" />
 <xs:import namespace="jive.plaf.flat.background" schemaLocation="jive.plaf.flat.background.xsd" />
 <xs:import namespace="org.aswing.ext" schemaLocation="org.aswing.ext.xsd" />
-<xs:import namespace="org.aswing.tree" schemaLocation="org.aswing.tree.xsd" />
 <xs:import namespace="flash.events" schemaLocation="flash.events.xsd" />
+<xs:import namespace="org.aswing.tree" schemaLocation="org.aswing.tree.xsd" />
 <xs:complexType name="DecoratorSchemaTypeValue">
 <xs:choice>
 <xs:element ref="org-aswing-plaf-basic-background:FrameBackground" />
@@ -211,6 +209,9 @@ xmlns:flash-events="flash.events"
 </xs:choice>
 </xs:complexType>
 
+<xs:complexType name="LabelComboBoxEditorSchemaTypeValue">
+<xs:all><xs:element ref="LabelComboBoxEditor"/></xs:all></xs:complexType>
+
 <xs:complexType name="SoftBoxLayoutSchemaTypeValue">
 <xs:choice>
 <xs:element ref="org-aswing-plaf-basic:DefaultMenuLayout" />
@@ -231,6 +232,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="ListCell" />
 <xs:element ref="org-aswing-table:AbstractTableCell" />
 <xs:element ref="org-aswing-table:DefaultTextHeaderCell" />
+<xs:element ref="jive:TemplateListCell" />
 <xs:element ref="AbstractListCell" />
 <xs:element ref="jive-plaf-flat:FlatListCell" />
 <xs:element ref="org-aswing-table:PoorTextCell" />
@@ -371,11 +373,13 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JTextComponent" />
 <xs:element ref="JMenuBar" />
 <xs:element ref="JTabbedPane" />
+<xs:element ref="jive:MessageBox" />
 <xs:element ref="SoftBox" />
 <xs:element ref="jive-plaf-flat-tabbedpane:FlatTabButton" />
 <xs:element ref="JLabelButton" />
 <xs:element ref="org-aswing-table:DefaultTextCell" />
 <xs:element ref="JMenuItem" />
+<xs:element ref="jive-chart:ChartPeriodSelector" />
 <xs:element ref="JWindow" />
 <xs:element ref="JSpacer" />
 <xs:element ref="JViewport" />
@@ -390,6 +394,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="org-aswing-ext:GridCellHolder" />
 <xs:element ref="JSharedToolTip" />
 <xs:element ref="JSplitPane" />
+<xs:element ref="jive:WaitingPopup" />
 <xs:element ref="JTextField" />
 <xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element ref="JRootPane" />
@@ -451,7 +456,9 @@ xmlns:flash-events="flash.events"
 <xs:complexType name="JWindowSchemaTypeValue">
 <xs:choice>
 <xs:element ref="jive:Dialog" />
+<xs:element ref="jive:MessageBox" />
 <xs:element ref="JFrame" />
+<xs:element ref="jive:WaitingPopup" />
 <xs:element ref="JWindow" />
 </xs:choice>
 </xs:complexType>
@@ -670,6 +677,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="DefaultListCellFactory" />
 <xs:element ref="jive-plaf-flat:FlatComboBoxListCellFactory" />
 <xs:element ref="DefaultListTextCellFactory" />
+<xs:element ref="jive:TemplateListCellFactory" />
 <xs:element ref="GeneralListCellFactory" />
 <xs:element ref="jive-plaf-flat:FlatListCellFactory" />
 <xs:element ref="DefaultComboBoxListCellFactory" />
@@ -701,6 +709,7 @@ xmlns:flash-events="flash.events"
 <xs:choice>
 <xs:element ref="jive-plaf-flat:FlatComboBoxListCell" />
 <xs:element ref="DefaultComboBoxListCell" />
+<xs:element ref="jive:TemplateListCell" />
 <xs:element ref="AbstractListCell" />
 <xs:element ref="DefaultListCell" />
 <xs:element ref="jive-plaf-flat:FlatListCell" />
@@ -792,6 +801,7 @@ xmlns:flash-events="flash.events"
 <xs:complexType name="ContainerSchemaTypeValue">
 <xs:choice>
 <xs:element ref="JTree" />
+<xs:element ref="jive-chart:ChartPeriodSelector" />
 <xs:element ref="JWindow" />
 <xs:element ref="JFrameTitleBar" />
 <xs:element ref="JTable" />
@@ -814,6 +824,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="org-aswing-ext:GridCellHolder" />
 <xs:element ref="JSharedToolTip" />
 <xs:element ref="JSplitPane" />
+<xs:element ref="jive:WaitingPopup" />
 <xs:element ref="AbstractTabbedPane" />
 <xs:element ref="jive:Dialog" />
 <xs:element ref="JRootPane" />
@@ -830,6 +841,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JMenuBar" />
 <xs:element ref="JColorChooser" />
 <xs:element ref="JTabbedPane" />
+<xs:element ref="jive:MessageBox" />
 <xs:element ref="JToolBar" />
 <xs:element ref="JScrollPane" />
 <xs:element ref="org-aswing-ext:DateChooser" />
@@ -949,11 +961,13 @@ xmlns:flash-events="flash.events"
 <xs:element ref="JTextComponent" />
 <xs:element ref="JMenuBar" />
 <xs:element ref="JTabbedPane" />
+<xs:element ref="jive:MessageBox" />
 <xs:element ref="SoftBox" />
 <xs:element ref="jive-plaf-flat-tabbedpane:FlatTabButton" />
 <xs:element ref="JLabelButton" />
 <xs:element ref="org-aswing-table:DefaultTextCell" />
 <xs:element ref="JMenuItem" />
+<xs:element ref="jive-chart:ChartPeriodSelector" />
 <xs:element ref="JWindow" />
 <xs:element ref="JSpacer" />
 <xs:element ref="JViewport" />
@@ -968,6 +982,7 @@ xmlns:flash-events="flash.events"
 <xs:element ref="org-aswing-ext:GridCellHolder" />
 <xs:element ref="JSharedToolTip" />
 <xs:element ref="JSplitPane" />
+<xs:element ref="jive:WaitingPopup" />
 <xs:element ref="JTextField" />
 <xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element ref="JRootPane" />
@@ -1023,6 +1038,8 @@ xmlns:flash-events="flash.events"
 <xs:complexType name="JFrameSchemaTypeValue">
 <xs:choice>
 <xs:element ref="jive:Dialog" />
+<xs:element ref="jive:MessageBox" />
+<xs:element ref="jive:WaitingPopup" />
 <xs:element ref="JFrame" />
 </xs:choice>
 </xs:complexType>
@@ -1045,6 +1062,7 @@ xmlns:flash-events="flash.events"
 <xs:choice>
 <xs:element ref="jive-plaf-flat:FlatComboBoxListCell" />
 <xs:element ref="DefaultComboBoxListCell" />
+<xs:element ref="jive:TemplateListCell" />
 <xs:element ref="DefaultListCell" />
 <xs:element ref="jive-plaf-flat:FlatListCell" />
 <xs:element ref="AbstractListCell" />
@@ -1122,8 +1140,10 @@ xmlns:flash-events="flash.events"
 <xs:complexType name="JPopupSchemaTypeValue">
 <xs:choice>
 <xs:element ref="jive:Dialog" />
+<xs:element ref="jive:MessageBox" />
 <xs:element ref="JWindow" />
 <xs:element ref="JFrame" />
+<xs:element ref="jive:WaitingPopup" />
 <xs:element ref="JPopup" />
 </xs:choice>
 </xs:complexType>
@@ -1209,8 +1229,10 @@ xmlns:flash-events="flash.events"
 <xs:complexType name="JRootPaneSchemaTypeValue">
 <xs:choice>
 <xs:element ref="jive:Dialog" />
+<xs:element ref="jive:MessageBox" />
 <xs:element ref="JWindow" />
 <xs:element ref="JFrame" />
+<xs:element ref="jive:WaitingPopup" />
 <xs:element ref="JPopup" />
 <xs:element ref="JRootPane" />
 </xs:choice>
@@ -1312,6 +1334,7 @@ xmlns:flash-events="flash.events"
 
 <xs:complexType name="ComboBoxEditorSchemaTypeValue">
 <xs:choice>
+<xs:element ref="LabelComboBoxEditor" />
 <xs:element ref="DefaultComboBoxEditor" />
 </xs:choice>
 </xs:complexType>
@@ -1423,6 +1446,17 @@ xmlns:flash-events="flash.events"
 <xs:attribute name="restrict" type="xs:string"/>
 <xs:attribute name="selectionBeginIndex" type="xs:int"/>
 <xs:attribute name="selectionEndIndex" type="xs:int"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="LabelComboBoxEditorSchemaType">
+<xs:complexContent>
+<xs:extension base="flash-events:EventDispatcherSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="hint" type="xs:string"/>
+</xs:all>
+<xs:attribute name="hint" type="xs:string"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -1676,8 +1710,6 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" name="dropTrigger" type="xs:boolean"/>
 <xs:element minOccurs="0" name="resizerMargin" type="InsetsSchemaTypeValue"/>
 <xs:element minOccurs="0" name="transitFocusFactor" type="xs:double"/>
-<xs:element minOccurs="0" name="__fieldBindings__" type="bindx:FieldsBindSignalSchemaTypeValue"/>
-<xs:element minOccurs="0" name="__methodBindings__" type="bindx:MethodsBindSignalSchemaTypeValue"/>
 </xs:all>
 <xs:attribute name="ui" type="xs:string"/>
 <xs:attribute name="clipBounds" type="xs:string"/>
@@ -1711,8 +1743,6 @@ xmlns:flash-events="flash.events"
 <xs:attribute name="dropTrigger" type="xs:boolean"/>
 <xs:attribute name="resizerMargin" type="xs:string"/>
 <xs:attribute name="transitFocusFactor" type="xs:double"/>
-<xs:attribute name="__fieldBindings__" type="xs:string"/>
-<xs:attribute name="__methodBindings__" type="xs:string"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -2742,11 +2772,13 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="JTextComponent" />
 <xs:element minOccurs="0" ref="JMenuBar" />
 <xs:element minOccurs="0" ref="JTabbedPane" />
+<xs:element minOccurs="0" ref="jive:MessageBox" />
 <xs:element minOccurs="0" ref="SoftBox" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-tabbedpane:FlatTabButton" />
 <xs:element minOccurs="0" ref="JLabelButton" />
 <xs:element minOccurs="0" ref="org-aswing-table:DefaultTextCell" />
 <xs:element minOccurs="0" ref="JMenuItem" />
+<xs:element minOccurs="0" ref="jive-chart:ChartPeriodSelector" />
 <xs:element minOccurs="0" ref="JWindow" />
 <xs:element minOccurs="0" ref="JSpacer" />
 <xs:element minOccurs="0" ref="JViewport" />
@@ -2761,6 +2793,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-ext:GridCellHolder" />
 <xs:element minOccurs="0" ref="JSharedToolTip" />
 <xs:element minOccurs="0" ref="JSplitPane" />
+<xs:element minOccurs="0" ref="jive:WaitingPopup" />
 <xs:element minOccurs="0" ref="JTextField" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element minOccurs="0" ref="JRootPane" />
@@ -3180,11 +3213,13 @@ xmlns:flash-events="flash.events"
 <xs:extension base="EmptyLayoutSchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="align" type="xs:int"/>
+<xs:element minOccurs="0" name="verticalAlign" type="xs:int"/>
 <xs:element minOccurs="0" name="hgap" type="xs:int"/>
 <xs:element minOccurs="0" name="vgap" type="xs:int"/>
 <xs:element minOccurs="0" name="margin" type="xs:boolean"/>
 </xs:all>
 <xs:attribute name="align" type="xs:int"/>
+<xs:attribute name="verticalAlign" type="xs:int"/>
 <xs:attribute name="hgap" type="xs:int"/>
 <xs:attribute name="vgap" type="xs:int"/>
 <xs:attribute name="margin" type="xs:boolean"/>
@@ -3284,7 +3319,15 @@ xmlns:flash-events="flash.events"
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
 <xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="listCellClass" type="xs:string"/>
+<xs:element minOccurs="0" name="shareCelles" type="xs:boolean"/>
+<xs:element minOccurs="0" name="cellHeight" type="xs:int"/>
+<xs:element minOccurs="0" name="sameHeight" type="xs:boolean"/>
 </xs:all>
+<xs:attribute name="listCellClass" type="xs:string"/>
+<xs:attribute name="shareCelles" type="xs:boolean"/>
+<xs:attribute name="cellHeight" type="xs:int"/>
+<xs:attribute name="sameHeight" type="xs:boolean"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -3522,6 +3565,7 @@ xmlns:flash-events="flash.events"
 <xs:element name="FocusManager" type="FocusManagerSchemaType"/>
 <xs:element name="CursorManager" type="CursorManagerSchemaType"/>
 <xs:element name="JTextComponent" type="JTextComponentSchemaType"/>
+<xs:element name="LabelComboBoxEditor" type="LabelComboBoxEditorSchemaType"/>
 <xs:element name="SoftBoxLayout" type="SoftBoxLayoutSchemaType"/>
 <xs:element name="EmptyFont" type="EmptyFontSchemaType"/>
 <xs:element name="Cell" type="CellSchemaType"/>

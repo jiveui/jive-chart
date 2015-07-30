@@ -6,6 +6,10 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
 
     @:isVar public var chart1(get, set):jive.chart.Chart;
 
+    var chart2_initialized:Bool = false;
+
+    @:isVar public var chart2(get, set):jive.chart.ChartPeriodSelector;
+
     public function destroyHml():Void {
         
     }
@@ -129,31 +133,143 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
         return res;
     }
 
+    inline function get_borderLayout__1():org.aswing.BorderLayout {
+        /* declarations/MainView.xml:31 characters: 21-33 */
+        var res = new org.aswing.BorderLayout();
+        return res;
+    }
+
     function set_chart1(value:jive.chart.Chart):jive.chart.Chart {
         chart1_initialized = true;
         return chart1 = value;
     }
 
     inline function get_aSColor__2():org.aswing.ASColor {
-        /* declarations/MainView.xml:31 characters: 21-28 */
+        /* declarations/MainView.xml:35 characters: 25-32 */
         var res = new org.aswing.ASColor();
-        /* declarations/MainView.xml:31 characters: 30-33 */
+        /* declarations/MainView.xml:35 characters: 34-37 */
         res.rgb = 0x000000;
         return res;
     }
 
     inline function get_chartUI__0():jive.chart.ChartUI {
-        /* declarations/MainView.xml:33 characters: 21-34 */
+        /* declarations/MainView.xml:37 characters: 25-38 */
         var res = new jive.chart.ChartUI();
         return res;
     }
 
     function get_chart1():jive.chart.Chart {
-        /* declarations/MainView.xml:29 characters: 13-24 */
+        /* declarations/MainView.xml:33 characters: 17-28 */
         if (chart1_initialized) return chart1;
         chart1_initialized = true;
         this.chart1 = new jive.chart.Chart();
         var res = this.chart1;
+        if (null != dataContext) { res.data = this.dataContext.selectedChartData; }
+        var programmaticalyChange = false;
+        var sourcePropertyListener = function(_,_) {
+                            if (!programmaticalyChange) {
+                                programmaticalyChange = true;
+                                res.data = this.dataContext.selectedChartData;
+                                programmaticalyChange = false;
+                            }
+                        };
+        var bindSourceListener = function() { bindx.Bind.bindx(this.dataContext.selectedChartData, sourcePropertyListener); }
+        if (null != dataContext) { bindSourceListener(); }
+        bindx.Bind.bindx(this.dataContext, function(old,_) {
+                                if (null != old) { bindx.Bind.unbindx(old.selectedChartData, sourcePropertyListener);}
+                                if (null != this.dataContext) {
+                                    res.data = this.dataContext.selectedChartData;
+                                    bindSourceListener();
+                                }
+                            });
+                        
+        if (null != dataContext) { res.title = this.dataContext.chartTitle; }
+        var programmaticalyChange = false;
+        var sourcePropertyListener = function(_,_) {
+                            if (!programmaticalyChange) {
+                                programmaticalyChange = true;
+                                res.title = this.dataContext.chartTitle;
+                                programmaticalyChange = false;
+                            }
+                        };
+        var bindSourceListener = function() { bindx.Bind.bindx(this.dataContext.chartTitle, sourcePropertyListener); }
+        if (null != dataContext) { bindSourceListener(); }
+        bindx.Bind.bindx(this.dataContext, function(old,_) {
+                                if (null != old) { bindx.Bind.unbindx(old.chartTitle, sourcePropertyListener);}
+                                if (null != this.dataContext) {
+                                    res.title = this.dataContext.chartTitle;
+                                    bindSourceListener();
+                                }
+                            });
+                        
+        /* declarations/MainView.xml:33 characters: 42-53 */
+        res.constraints = org.aswing.BorderLayout.CENTER;
+        /* declarations/MainView.xml:34 characters: 21-31 */
+        res.foreground = get_aSColor__2();
+        /* declarations/MainView.xml:37 characters: 21-23 */
+        res.ui = get_chartUI__0();
+        return res;
+    }
+
+    function set_chart2(value:jive.chart.ChartPeriodSelector):jive.chart.ChartPeriodSelector {
+        chart2_initialized = true;
+        return chart2 = value;
+    }
+
+    inline function get_intDimension__1():org.aswing.geom.IntDimension {
+        /* declarations/MainView.xml:43 characters: 25-42 */
+        var res = new org.aswing.geom.IntDimension();
+        /* declarations/MainView.xml:43 characters: 44-49 */
+        res.width = -1;
+        /* declarations/MainView.xml:43 characters: 55-61 */
+        res.height = 120;
+        return res;
+    }
+
+    inline function get_chartPeriodSelectorUI__0():jive.chart.ChartPeriodSelectorUI {
+        /* declarations/MainView.xml:45 characters: 25-52 */
+        var res = new jive.chart.ChartPeriodSelectorUI();
+        return res;
+    }
+
+    function get_chart2():jive.chart.ChartPeriodSelector {
+        /* declarations/MainView.xml:39 characters: 17-42 */
+        if (chart2_initialized) return chart2;
+        chart2_initialized = true;
+        this.chart2 = new jive.chart.ChartPeriodSelector();
+        var res = this.chart2;
+        if (null != dataContext) { res.selectedData = this.dataContext.selectedChartData; }
+        var programmaticalyChange = false;
+        var sourcePropertyListener = function(_,_) {
+                            if (!programmaticalyChange) {
+                                programmaticalyChange = true;
+                                res.selectedData = this.dataContext.selectedChartData;
+                                programmaticalyChange = false;
+                            }
+                        };
+        var bindSourceListener = function() { bindx.Bind.bindx(this.dataContext.selectedChartData, sourcePropertyListener); }
+        if (null != dataContext) { bindSourceListener(); }
+        bindx.Bind.bindx(this.dataContext, function(old,_) {
+                                if (null != old) { bindx.Bind.unbindx(old.selectedChartData, sourcePropertyListener);}
+                                if (null != this.dataContext) {
+                                    res.selectedData = this.dataContext.selectedChartData;
+                                    bindSourceListener();
+                                }
+                            });
+                        
+        var propertyListener = function(_,_) {
+                                if (!programmaticalyChange && null != this.dataContext) {
+                                    programmaticalyChange = true;
+                                    this.dataContext.selectedChartData = res.selectedData;
+                                    programmaticalyChange = false;
+                                }
+                            };
+        bindx.Bind.bindx(res.selectedData, propertyListener);
+        bindx.Bind.bindx(this.dataContext, function(old,_) {
+                                 if (null != this.dataContext) {
+                                    this.dataContext.selectedChartData = res.selectedData;
+                                }
+                            });
         if (null != dataContext) { res.data = this.dataContext.chartData; }
         var programmaticalyChange = false;
         var sourcePropertyListener = function(_,_) {
@@ -173,22 +289,32 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
                                 }
                             });
                         
-        /* declarations/MainView.xml:29 characters: 38-49 */
-        res.constraints = org.aswing.BorderLayout.CENTER;
-        /* declarations/MainView.xml:30 characters: 17-27 */
-        res.foreground = get_aSColor__2();
-        /* declarations/MainView.xml:33 characters: 17-19 */
-        res.ui = get_chartUI__0();
+        /* declarations/MainView.xml:39 characters: 56-67 */
+        res.constraints = org.aswing.BorderLayout.SOUTH;
+        /* declarations/MainView.xml:42 characters: 21-34 */
+        res.preferredSize = get_intDimension__1();
+        /* declarations/MainView.xml:45 characters: 21-23 */
+        res.ui = get_chartPeriodSelectorUI__0();
         return res;
     }
 
     inline function get_jPanel__0():org.aswing.JPanel {
+        /* declarations/MainView.xml:29 characters: 13-19 */
+        var res = new org.aswing.JPanel();
+        /* declarations/MainView.xml:30 characters: 17-23 */
+        res.layout = get_borderLayout__1();
+        res.append(chart1);
+        res.append(chart2);
+        return res;
+    }
+
+    inline function get_jPanel__1():org.aswing.JPanel {
         /* declarations/MainView.xml:5 characters: 9-15 */
         var res = new org.aswing.JPanel();
         /* declarations/MainView.xml:6 characters: 13-19 */
         res.layout = get_borderLayout__0();
         res.append(get_jList__0());
-        res.append(chart1);
+        res.append(get_jPanel__0());
         return res;
     }
 
@@ -196,6 +322,6 @@ class MainView extends org.aswing.JWindow implements jive.DataContextControllabl
         /* declarations/MainView.xml:2 characters: 1-8 */
         super();
         /* declarations/MainView.xml:4 characters: 5-12 */
-        this.content = get_jPanel__0();
+        this.content = get_jPanel__1();
     }
 }

@@ -1,55 +1,30 @@
 <xs:schema targetNamespace="empty" xmlns="empty" xmlns:xs="http://www.w3.org/2001/XMLSchema"
 xmlns:bindx="bindx"
+xmlns:lime-math-color-_BGRA="lime.math.color._BGRA"
 xmlns:lime-graphics-cairo-_CairoOperator="lime.graphics.cairo._CairoOperator"
 xmlns:motion-actuators="motion.actuators"
-xmlns:flash-ui="flash.ui"
-xmlns:jive-plaf-flat-border="jive.plaf.flat.border"
-xmlns:jive-plaf-flat-tabbedpane="jive.plaf.flat.tabbedpane"
 xmlns:openfl-_Assets="openfl._Assets"
 xmlns:flash="flash"
-xmlns:lime="lime"
 xmlns:lime-graphics-utils="lime.graphics.utils"
-xmlns:jive="jive"
 xmlns:lime-audio-openal="lime.audio.openal"
-xmlns:lime-ui="lime.ui"
 xmlns:org-aswing-resizer="org.aswing.resizer"
-xmlns:org-aswing-table="org.aswing.table"
 xmlns:lime-graphics-cairo-_CairoHintStyle="lime.graphics.cairo._CairoHintStyle"
-xmlns:jive-plaf-flat-accordion="jive.plaf.flat.accordion"
 xmlns:org-aswing-plaf-basic-splitpane="org.aswing.plaf.basic.splitpane"
-xmlns:lime-graphics-cairo-_CairoPattern="lime.graphics.cairo._CairoPattern"
 xmlns:lime-text="lime.text"
-xmlns:jive-plaf-flat-icon="jive.plaf.flat.icon"
 xmlns:lime-graphics-cairo-_CairoLineCap="lime.graphics.cairo._CairoLineCap"
-xmlns:flash-display3D="flash.display3D"
-xmlns:lime-ui-_GamepadAxis="lime.ui._GamepadAxis"
-xmlns:lime-audio-openal-_ALDevice="lime.audio.openal._ALDevice"
-xmlns:org-aswing-plaf-basic-frame="org.aswing.plaf.basic.frame"
-xmlns:flash-media="flash.media"
-xmlns:motion="motion"
-xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
+xmlns:lime-utils-_Float64Array="lime.utils._Float64Array"
 xmlns:jive-formatting="jive.formatting"
 xmlns:org-aswing-geom="org.aswing.geom"
 xmlns:flash-net="flash.net"
-xmlns:org-aswing-error="org.aswing.error"
-xmlns:flash-utils="flash.utils"
 xmlns:flash-external="flash.external"
 xmlns:lime-_Assets="lime._Assets"
-xmlns:haxe-ds-_ObjectMap="haxe.ds._ObjectMap"
-xmlns:lime-graphics-cairo="lime.graphics.cairo"
 xmlns:jive-plaf-flat="jive.plaf.flat"
+xmlns:lime-utils-_Int16Array="lime.utils._Int16Array"
 xmlns:flash-filters="flash.filters"
 xmlns:jive-tools="jive.tools"
 xmlns:jive-plaf-flat-adjuster="jive.plaf.flat.adjuster"
-xmlns:org-aswing-border="org.aswing.border"
-xmlns:lime-audio="lime.audio"
 xmlns:lime-ui-_GamepadButton="lime.ui._GamepadButton"
-xmlns:flash-_Boot="flash._Boot"
-xmlns:flash-geom="flash.geom"
-xmlns:lime-math-_ColorMatrix="lime.math._ColorMatrix"
 xmlns:lime-graphics-cairo-_CairoAntialias="lime.graphics.cairo._CairoAntialias"
-xmlns:org-aswing-plaf="org.aswing.plaf"
-xmlns:flash-display="flash.display"
 xmlns:lime-graphics-cairo-_CairoSurface="lime.graphics.cairo._CairoSurface"
 xmlns:org-aswing-colorchooser="org.aswing.colorchooser"
 xmlns:lime-graphics-cairo-_CairoFilter="lime.graphics.cairo._CairoFilter"
@@ -58,108 +33,124 @@ xmlns:org-aswing-ext="org.aswing.ext"
 xmlns:org-aswing-plaf-basic-accordion="org.aswing.plaf.basic.accordion"
 xmlns:org-aswing-tree="org.aswing.tree"
 xmlns:lime-graphics-cairo-_CairoExtend="lime.graphics.cairo._CairoExtend"
-xmlns:lime-utils="lime.utils"
 xmlns:org-aswing-plaf-basic-cursor="org.aswing.plaf.basic.cursor"
+xmlns:lime-utils-_UInt8ClampedArray="lime.utils._UInt8ClampedArray"
 xmlns:lime-app="lime.app"
 xmlns:lime-graphics-cairo-_CairoHintMetrics="lime.graphics.cairo._CairoHintMetrics"
-xmlns:lime-graphics-cairo-_CairoSubpixelOrder="lime.graphics.cairo._CairoSubpixelOrder"
 xmlns:org-aswing-event="org.aswing.event"
 xmlns:lime-graphics-cairo-_CairoLineJoin="lime.graphics.cairo._CairoLineJoin"
-xmlns:org-aswing-plaf-basic-background="org.aswing.plaf.basic.background"
 xmlns:lime-_backend-flash="lime._backend.flash"
-xmlns:flash-display3D-textures="flash.display3D.textures"
 xmlns:org-aswing-util="org.aswing.util"
-xmlns:lime-graphics-opengl="lime.graphics.opengl"
 xmlns:flash-errors="flash.errors"
-xmlns:org-aswing-plaf-basic-border="org.aswing.plaf.basic.border"
 xmlns:jive-chart="jive.chart"
 xmlns:org-aswing-table-sorter="org.aswing.table.sorter"
 xmlns:haxe-io="haxe.io"
-xmlns:org-aswing-plaf-basic="org.aswing.plaf.basic"
-xmlns:openfl="openfl"
-xmlns:flash-system="flash.system"
-xmlns:org-aswing="org.aswing"
+xmlns:lime-utils-_ArrayBuffer="lime.utils._ArrayBuffer"
+xmlns:lime-utils-_UInt32Array="lime.utils._UInt32Array"
 xmlns:lime-math="lime.math"
 xmlns:flash-text="flash.text"
-xmlns:motion-_Actuate="motion._Actuate"
 xmlns:lime-text-_Glyph="lime.text._Glyph"
 xmlns:lime-graphics-format="lime.graphics.format"
 xmlns:org-aswing-plaf-basic-tabbedpane="org.aswing.plaf.basic.tabbedpane"
 xmlns:org-aswing-dnd="org.aswing.dnd"
-xmlns:org-aswing-plaf-basic-tree="org.aswing.plaf.basic.tree"
 xmlns:lime-graphics="lime.graphics"
 xmlns:haxe-ds="haxe.ds"
-xmlns:lime-ui-_KeyCode="lime.ui._KeyCode"
-xmlns:org-aswing-plaf-basic-icon="org.aswing.plaf.basic.icon"
 xmlns:haxe-ds-_StringMap="haxe.ds._StringMap"
-xmlns:lime-graphics-cairo-_CairoStatus="lime.graphics.cairo._CairoStatus"
-xmlns:lime-graphics-cairo-_CairoFormat="lime.graphics.cairo._CairoFormat"
-xmlns:lime-system="lime.system"
-xmlns:lime-graphics-_PixelFormat="lime.graphics._PixelFormat"
 xmlns:motion-easing="motion.easing"
-xmlns:lime-audio-openal-_ALContext="lime.audio.openal._ALContext"
 xmlns:haxe="haxe"
-xmlns:org-aswing-graphics="org.aswing.graphics"
 xmlns:flash-xml="flash.xml"
 xmlns:flash-events="flash.events"
+xmlns:lime-utils-_Float32Array="lime.utils._Float32Array"
 xmlns:haxe-crypto="haxe.crypto"
 xmlns:lime-graphics-cairo-_CairoContent="lime.graphics.cairo._CairoContent"
+xmlns:flash-accessibility="flash.accessibility"
+xmlns:flash-ui="flash.ui"
+xmlns:jive-plaf-flat-border="jive.plaf.flat.border"
+xmlns:jive-plaf-flat-tabbedpane="jive.plaf.flat.tabbedpane"
+xmlns:lime="lime"
+xmlns:jive="jive"
+xmlns:lime-ui="lime.ui"
+xmlns:org-aswing-table="org.aswing.table"
+xmlns:jive-plaf-flat-accordion="jive.plaf.flat.accordion"
+xmlns:lime-graphics-cairo-_CairoPattern="lime.graphics.cairo._CairoPattern"
+xmlns:lime-math-color-_RGBA="lime.math.color._RGBA"
+xmlns:jive-plaf-flat-icon="jive.plaf.flat.icon"
+xmlns:flash-display3D="flash.display3D"
+xmlns:lime-ui-_GamepadAxis="lime.ui._GamepadAxis"
+xmlns:lime-audio-openal-_ALDevice="lime.audio.openal._ALDevice"
+xmlns:org-aswing-plaf-basic-frame="org.aswing.plaf.basic.frame"
+xmlns:flash-media="flash.media"
+xmlns:motion="motion"
+xmlns:org-aswing-plaf-basic-adjuster="org.aswing.plaf.basic.adjuster"
+xmlns:org-aswing-error="org.aswing.error"
+xmlns:flash-utils="flash.utils"
+xmlns:haxe-ds-_ObjectMap="haxe.ds._ObjectMap"
+xmlns:lime-graphics-cairo="lime.graphics.cairo"
+xmlns:org-aswing-border="org.aswing.border"
+xmlns:lime-audio="lime.audio"
+xmlns:flash-_Boot="flash._Boot"
+xmlns:flash-geom="flash.geom"
+xmlns:lime-math-_ColorMatrix="lime.math._ColorMatrix"
+xmlns:lime-utils-_UInt16Array="lime.utils._UInt16Array"
+xmlns:org-aswing-plaf="org.aswing.plaf"
+xmlns:flash-display="flash.display"
+xmlns:lime-utils="lime.utils"
+xmlns:lime-utils-_Int8Array="lime.utils._Int8Array"
+xmlns:lime-graphics-cairo-_CairoSubpixelOrder="lime.graphics.cairo._CairoSubpixelOrder"
+xmlns:_List="_List"
+xmlns:org-aswing-plaf-basic-background="org.aswing.plaf.basic.background"
+xmlns:lime-utils-_UInt8Array="lime.utils._UInt8Array"
+xmlns:flash-display3D-textures="flash.display3D.textures"
+xmlns:lime-math-color-_ARGB="lime.math.color._ARGB"
+xmlns:lime-graphics-opengl="lime.graphics.opengl"
+xmlns:org-aswing-plaf-basic-border="org.aswing.plaf.basic.border"
+xmlns:lime-graphics-utils-_ImageDataUtil="lime.graphics.utils._ImageDataUtil"
+xmlns:org-aswing-plaf-basic="org.aswing.plaf.basic"
+xmlns:openfl="openfl"
+xmlns:lime-utils-_Int32Array="lime.utils._Int32Array"
+xmlns:flash-system="flash.system"
+xmlns:org-aswing="org.aswing"
+xmlns:motion-_Actuate="motion._Actuate"
+xmlns:org-aswing-plaf-basic-tree="org.aswing.plaf.basic.tree"
+xmlns:lime-ui-_KeyCode="lime.ui._KeyCode"
+xmlns:org-aswing-plaf-basic-icon="org.aswing.plaf.basic.icon"
+xmlns:lime-graphics-cairo-_CairoStatus="lime.graphics.cairo._CairoStatus"
+xmlns:lime-system="lime.system"
+xmlns:lime-graphics-_PixelFormat="lime.graphics._PixelFormat"
+xmlns:lime-audio-openal-_ALContext="lime.audio.openal._ALContext"
+xmlns:org-aswing-graphics="org.aswing.graphics"
+xmlns:jive-events="jive.events"
+xmlns:lime-utils-_ArrayBufferView="lime.utils._ArrayBufferView"
 xmlns:lime-ui-_KeyModifier="lime.ui._KeyModifier"
 xmlns:lime-graphics-cairo-_CairoFillRule="lime.graphics.cairo._CairoFillRule"
 xmlns:lime-system-_System="lime.system._System"
-xmlns:flash-accessibility="flash.accessibility"
 >
 <xs:import namespace="bindx" schemaLocation="bindx.xsd" />
+<xs:import namespace="lime.math.color._BGRA" schemaLocation="lime.math.color._BGRA.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoOperator" schemaLocation="lime.graphics.cairo._CairoOperator.xsd" />
 <xs:import namespace="motion.actuators" schemaLocation="motion.actuators.xsd" />
-<xs:import namespace="flash.ui" schemaLocation="flash.ui.xsd" />
-<xs:import namespace="jive.plaf.flat.border" schemaLocation="jive.plaf.flat.border.xsd" />
-<xs:import namespace="jive.plaf.flat.tabbedpane" schemaLocation="jive.plaf.flat.tabbedpane.xsd" />
 <xs:import namespace="openfl._Assets" schemaLocation="openfl._Assets.xsd" />
 <xs:import namespace="flash" schemaLocation="flash.xsd" />
-<xs:import namespace="lime" schemaLocation="lime.xsd" />
 <xs:import namespace="lime.graphics.utils" schemaLocation="lime.graphics.utils.xsd" />
-<xs:import namespace="jive" schemaLocation="jive.xsd" />
 <xs:import namespace="lime.audio.openal" schemaLocation="lime.audio.openal.xsd" />
-<xs:import namespace="lime.ui" schemaLocation="lime.ui.xsd" />
 <xs:import namespace="org.aswing.resizer" schemaLocation="org.aswing.resizer.xsd" />
-<xs:import namespace="org.aswing.table" schemaLocation="org.aswing.table.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoHintStyle" schemaLocation="lime.graphics.cairo._CairoHintStyle.xsd" />
-<xs:import namespace="jive.plaf.flat.accordion" schemaLocation="jive.plaf.flat.accordion.xsd" />
 <xs:import namespace="org.aswing.plaf.basic.splitpane" schemaLocation="org.aswing.plaf.basic.splitpane.xsd" />
-<xs:import namespace="lime.graphics.cairo._CairoPattern" schemaLocation="lime.graphics.cairo._CairoPattern.xsd" />
 <xs:import namespace="lime.text" schemaLocation="lime.text.xsd" />
-<xs:import namespace="jive.plaf.flat.icon" schemaLocation="jive.plaf.flat.icon.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoLineCap" schemaLocation="lime.graphics.cairo._CairoLineCap.xsd" />
-<xs:import namespace="flash.display3D" schemaLocation="flash.display3D.xsd" />
-<xs:import namespace="lime.ui._GamepadAxis" schemaLocation="lime.ui._GamepadAxis.xsd" />
-<xs:import namespace="lime.audio.openal._ALDevice" schemaLocation="lime.audio.openal._ALDevice.xsd" />
-<xs:import namespace="org.aswing.plaf.basic.frame" schemaLocation="org.aswing.plaf.basic.frame.xsd" />
-<xs:import namespace="flash.media" schemaLocation="flash.media.xsd" />
-<xs:import namespace="motion" schemaLocation="motion.xsd" />
-<xs:import namespace="org.aswing.plaf.basic.adjuster" schemaLocation="org.aswing.plaf.basic.adjuster.xsd" />
+<xs:import namespace="lime.utils._Float64Array" schemaLocation="lime.utils._Float64Array.xsd" />
 <xs:import namespace="jive.formatting" schemaLocation="jive.formatting.xsd" />
 <xs:import namespace="org.aswing.geom" schemaLocation="org.aswing.geom.xsd" />
 <xs:import namespace="flash.net" schemaLocation="flash.net.xsd" />
-<xs:import namespace="org.aswing.error" schemaLocation="org.aswing.error.xsd" />
-<xs:import namespace="flash.utils" schemaLocation="flash.utils.xsd" />
 <xs:import namespace="flash.external" schemaLocation="flash.external.xsd" />
 <xs:import namespace="lime._Assets" schemaLocation="lime._Assets.xsd" />
-<xs:import namespace="haxe.ds._ObjectMap" schemaLocation="haxe.ds._ObjectMap.xsd" />
-<xs:import namespace="lime.graphics.cairo" schemaLocation="lime.graphics.cairo.xsd" />
 <xs:import namespace="jive.plaf.flat" schemaLocation="jive.plaf.flat.xsd" />
+<xs:import namespace="lime.utils._Int16Array" schemaLocation="lime.utils._Int16Array.xsd" />
 <xs:import namespace="flash.filters" schemaLocation="flash.filters.xsd" />
 <xs:import namespace="jive.tools" schemaLocation="jive.tools.xsd" />
 <xs:import namespace="jive.plaf.flat.adjuster" schemaLocation="jive.plaf.flat.adjuster.xsd" />
-<xs:import namespace="org.aswing.border" schemaLocation="org.aswing.border.xsd" />
-<xs:import namespace="lime.audio" schemaLocation="lime.audio.xsd" />
 <xs:import namespace="lime.ui._GamepadButton" schemaLocation="lime.ui._GamepadButton.xsd" />
-<xs:import namespace="flash._Boot" schemaLocation="flash._Boot.xsd" />
-<xs:import namespace="flash.geom" schemaLocation="flash.geom.xsd" />
-<xs:import namespace="lime.math._ColorMatrix" schemaLocation="lime.math._ColorMatrix.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoAntialias" schemaLocation="lime.graphics.cairo._CairoAntialias.xsd" />
-<xs:import namespace="org.aswing.plaf" schemaLocation="org.aswing.plaf.xsd" />
-<xs:import namespace="flash.display" schemaLocation="flash.display.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoSurface" schemaLocation="lime.graphics.cairo._CairoSurface.xsd" />
 <xs:import namespace="org.aswing.colorchooser" schemaLocation="org.aswing.colorchooser.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoFilter" schemaLocation="lime.graphics.cairo._CairoFilter.xsd" />
@@ -168,56 +159,97 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:import namespace="org.aswing.plaf.basic.accordion" schemaLocation="org.aswing.plaf.basic.accordion.xsd" />
 <xs:import namespace="org.aswing.tree" schemaLocation="org.aswing.tree.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoExtend" schemaLocation="lime.graphics.cairo._CairoExtend.xsd" />
-<xs:import namespace="lime.utils" schemaLocation="lime.utils.xsd" />
 <xs:import namespace="org.aswing.plaf.basic.cursor" schemaLocation="org.aswing.plaf.basic.cursor.xsd" />
+<xs:import namespace="lime.utils._UInt8ClampedArray" schemaLocation="lime.utils._UInt8ClampedArray.xsd" />
 <xs:import namespace="lime.app" schemaLocation="lime.app.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoHintMetrics" schemaLocation="lime.graphics.cairo._CairoHintMetrics.xsd" />
-<xs:import namespace="lime.graphics.cairo._CairoSubpixelOrder" schemaLocation="lime.graphics.cairo._CairoSubpixelOrder.xsd" />
 <xs:import namespace="org.aswing.event" schemaLocation="org.aswing.event.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoLineJoin" schemaLocation="lime.graphics.cairo._CairoLineJoin.xsd" />
-<xs:import namespace="org.aswing.plaf.basic.background" schemaLocation="org.aswing.plaf.basic.background.xsd" />
 <xs:import namespace="lime._backend.flash" schemaLocation="lime._backend.flash.xsd" />
-<xs:import namespace="flash.display3D.textures" schemaLocation="flash.display3D.textures.xsd" />
 <xs:import namespace="org.aswing.util" schemaLocation="org.aswing.util.xsd" />
-<xs:import namespace="lime.graphics.opengl" schemaLocation="lime.graphics.opengl.xsd" />
 <xs:import namespace="flash.errors" schemaLocation="flash.errors.xsd" />
-<xs:import namespace="org.aswing.plaf.basic.border" schemaLocation="org.aswing.plaf.basic.border.xsd" />
 <xs:import namespace="jive.chart" schemaLocation="jive.chart.xsd" />
 <xs:import namespace="org.aswing.table.sorter" schemaLocation="org.aswing.table.sorter.xsd" />
 <xs:import namespace="haxe.io" schemaLocation="haxe.io.xsd" />
-<xs:import namespace="org.aswing.plaf.basic" schemaLocation="org.aswing.plaf.basic.xsd" />
-<xs:import namespace="openfl" schemaLocation="openfl.xsd" />
-<xs:import namespace="flash.system" schemaLocation="flash.system.xsd" />
-<xs:import namespace="org.aswing" schemaLocation="org.aswing.xsd" />
+<xs:import namespace="lime.utils._ArrayBuffer" schemaLocation="lime.utils._ArrayBuffer.xsd" />
+<xs:import namespace="lime.utils._UInt32Array" schemaLocation="lime.utils._UInt32Array.xsd" />
 <xs:import namespace="lime.math" schemaLocation="lime.math.xsd" />
 <xs:import namespace="flash.text" schemaLocation="flash.text.xsd" />
-<xs:import namespace="motion._Actuate" schemaLocation="motion._Actuate.xsd" />
 <xs:import namespace="lime.text._Glyph" schemaLocation="lime.text._Glyph.xsd" />
 <xs:import namespace="lime.graphics.format" schemaLocation="lime.graphics.format.xsd" />
 <xs:import namespace="org.aswing.plaf.basic.tabbedpane" schemaLocation="org.aswing.plaf.basic.tabbedpane.xsd" />
 <xs:import namespace="org.aswing.dnd" schemaLocation="org.aswing.dnd.xsd" />
-<xs:import namespace="org.aswing.plaf.basic.tree" schemaLocation="org.aswing.plaf.basic.tree.xsd" />
 <xs:import namespace="lime.graphics" schemaLocation="lime.graphics.xsd" />
 <xs:import namespace="haxe.ds" schemaLocation="haxe.ds.xsd" />
-<xs:import namespace="lime.ui._KeyCode" schemaLocation="lime.ui._KeyCode.xsd" />
-<xs:import namespace="org.aswing.plaf.basic.icon" schemaLocation="org.aswing.plaf.basic.icon.xsd" />
 <xs:import namespace="haxe.ds._StringMap" schemaLocation="haxe.ds._StringMap.xsd" />
-<xs:import namespace="lime.graphics.cairo._CairoStatus" schemaLocation="lime.graphics.cairo._CairoStatus.xsd" />
-<xs:import namespace="lime.graphics.cairo._CairoFormat" schemaLocation="lime.graphics.cairo._CairoFormat.xsd" />
-<xs:import namespace="lime.system" schemaLocation="lime.system.xsd" />
-<xs:import namespace="lime.graphics._PixelFormat" schemaLocation="lime.graphics._PixelFormat.xsd" />
 <xs:import namespace="motion.easing" schemaLocation="motion.easing.xsd" />
-<xs:import namespace="lime.audio.openal._ALContext" schemaLocation="lime.audio.openal._ALContext.xsd" />
 <xs:import namespace="haxe" schemaLocation="haxe.xsd" />
-<xs:import namespace="org.aswing.graphics" schemaLocation="org.aswing.graphics.xsd" />
 <xs:import namespace="flash.xml" schemaLocation="flash.xml.xsd" />
 <xs:import namespace="flash.events" schemaLocation="flash.events.xsd" />
+<xs:import namespace="lime.utils._Float32Array" schemaLocation="lime.utils._Float32Array.xsd" />
 <xs:import namespace="haxe.crypto" schemaLocation="haxe.crypto.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoContent" schemaLocation="lime.graphics.cairo._CairoContent.xsd" />
+<xs:import namespace="flash.accessibility" schemaLocation="flash.accessibility.xsd" />
+<xs:import namespace="flash.ui" schemaLocation="flash.ui.xsd" />
+<xs:import namespace="jive.plaf.flat.border" schemaLocation="jive.plaf.flat.border.xsd" />
+<xs:import namespace="jive.plaf.flat.tabbedpane" schemaLocation="jive.plaf.flat.tabbedpane.xsd" />
+<xs:import namespace="lime" schemaLocation="lime.xsd" />
+<xs:import namespace="jive" schemaLocation="jive.xsd" />
+<xs:import namespace="lime.ui" schemaLocation="lime.ui.xsd" />
+<xs:import namespace="org.aswing.table" schemaLocation="org.aswing.table.xsd" />
+<xs:import namespace="jive.plaf.flat.accordion" schemaLocation="jive.plaf.flat.accordion.xsd" />
+<xs:import namespace="lime.graphics.cairo._CairoPattern" schemaLocation="lime.graphics.cairo._CairoPattern.xsd" />
+<xs:import namespace="lime.math.color._RGBA" schemaLocation="lime.math.color._RGBA.xsd" />
+<xs:import namespace="jive.plaf.flat.icon" schemaLocation="jive.plaf.flat.icon.xsd" />
+<xs:import namespace="flash.display3D" schemaLocation="flash.display3D.xsd" />
+<xs:import namespace="lime.ui._GamepadAxis" schemaLocation="lime.ui._GamepadAxis.xsd" />
+<xs:import namespace="lime.audio.openal._ALDevice" schemaLocation="lime.audio.openal._ALDevice.xsd" />
+<xs:import namespace="org.aswing.plaf.basic.frame" schemaLocation="org.aswing.plaf.basic.frame.xsd" />
+<xs:import namespace="flash.media" schemaLocation="flash.media.xsd" />
+<xs:import namespace="motion" schemaLocation="motion.xsd" />
+<xs:import namespace="org.aswing.plaf.basic.adjuster" schemaLocation="org.aswing.plaf.basic.adjuster.xsd" />
+<xs:import namespace="org.aswing.error" schemaLocation="org.aswing.error.xsd" />
+<xs:import namespace="flash.utils" schemaLocation="flash.utils.xsd" />
+<xs:import namespace="haxe.ds._ObjectMap" schemaLocation="haxe.ds._ObjectMap.xsd" />
+<xs:import namespace="lime.graphics.cairo" schemaLocation="lime.graphics.cairo.xsd" />
+<xs:import namespace="org.aswing.border" schemaLocation="org.aswing.border.xsd" />
+<xs:import namespace="lime.audio" schemaLocation="lime.audio.xsd" />
+<xs:import namespace="flash._Boot" schemaLocation="flash._Boot.xsd" />
+<xs:import namespace="flash.geom" schemaLocation="flash.geom.xsd" />
+<xs:import namespace="lime.math._ColorMatrix" schemaLocation="lime.math._ColorMatrix.xsd" />
+<xs:import namespace="lime.utils._UInt16Array" schemaLocation="lime.utils._UInt16Array.xsd" />
+<xs:import namespace="org.aswing.plaf" schemaLocation="org.aswing.plaf.xsd" />
+<xs:import namespace="flash.display" schemaLocation="flash.display.xsd" />
+<xs:import namespace="lime.utils" schemaLocation="lime.utils.xsd" />
+<xs:import namespace="lime.utils._Int8Array" schemaLocation="lime.utils._Int8Array.xsd" />
+<xs:import namespace="lime.graphics.cairo._CairoSubpixelOrder" schemaLocation="lime.graphics.cairo._CairoSubpixelOrder.xsd" />
+<xs:import namespace="_List" schemaLocation="_List.xsd" />
+<xs:import namespace="org.aswing.plaf.basic.background" schemaLocation="org.aswing.plaf.basic.background.xsd" />
+<xs:import namespace="lime.utils._UInt8Array" schemaLocation="lime.utils._UInt8Array.xsd" />
+<xs:import namespace="flash.display3D.textures" schemaLocation="flash.display3D.textures.xsd" />
+<xs:import namespace="lime.math.color._ARGB" schemaLocation="lime.math.color._ARGB.xsd" />
+<xs:import namespace="lime.graphics.opengl" schemaLocation="lime.graphics.opengl.xsd" />
+<xs:import namespace="org.aswing.plaf.basic.border" schemaLocation="org.aswing.plaf.basic.border.xsd" />
+<xs:import namespace="lime.graphics.utils._ImageDataUtil" schemaLocation="lime.graphics.utils._ImageDataUtil.xsd" />
+<xs:import namespace="org.aswing.plaf.basic" schemaLocation="org.aswing.plaf.basic.xsd" />
+<xs:import namespace="openfl" schemaLocation="openfl.xsd" />
+<xs:import namespace="lime.utils._Int32Array" schemaLocation="lime.utils._Int32Array.xsd" />
+<xs:import namespace="flash.system" schemaLocation="flash.system.xsd" />
+<xs:import namespace="org.aswing" schemaLocation="org.aswing.xsd" />
+<xs:import namespace="motion._Actuate" schemaLocation="motion._Actuate.xsd" />
+<xs:import namespace="org.aswing.plaf.basic.tree" schemaLocation="org.aswing.plaf.basic.tree.xsd" />
+<xs:import namespace="lime.ui._KeyCode" schemaLocation="lime.ui._KeyCode.xsd" />
+<xs:import namespace="org.aswing.plaf.basic.icon" schemaLocation="org.aswing.plaf.basic.icon.xsd" />
+<xs:import namespace="lime.graphics.cairo._CairoStatus" schemaLocation="lime.graphics.cairo._CairoStatus.xsd" />
+<xs:import namespace="lime.system" schemaLocation="lime.system.xsd" />
+<xs:import namespace="lime.graphics._PixelFormat" schemaLocation="lime.graphics._PixelFormat.xsd" />
+<xs:import namespace="lime.audio.openal._ALContext" schemaLocation="lime.audio.openal._ALContext.xsd" />
+<xs:import namespace="org.aswing.graphics" schemaLocation="org.aswing.graphics.xsd" />
+<xs:import namespace="jive.events" schemaLocation="jive.events.xsd" />
+<xs:import namespace="lime.utils._ArrayBufferView" schemaLocation="lime.utils._ArrayBufferView.xsd" />
 <xs:import namespace="lime.ui._KeyModifier" schemaLocation="lime.ui._KeyModifier.xsd" />
 <xs:import namespace="lime.graphics.cairo._CairoFillRule" schemaLocation="lime.graphics.cairo._CairoFillRule.xsd" />
 <xs:import namespace="lime.system._System" schemaLocation="lime.system._System.xsd" />
-<xs:import namespace="flash.accessibility" schemaLocation="flash.accessibility.xsd" />
 <xs:complexType name="ERegSchemaTypeValue">
 <xs:all><xs:element ref="EReg"/></xs:all></xs:complexType>
 
@@ -248,6 +280,9 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:complexType name="IntSchemaTypeValue">
 <xs:all><xs:element ref="Int"/></xs:all></xs:complexType>
 
+<xs:complexType name="ListSchemaTypeValue">
+<xs:all><xs:element ref="List"/></xs:all></xs:complexType>
+
 <xs:complexType name="RootObjectTypeSchemaTypeValue">
 <xs:choice>
 <xs:element ref="org-aswing-plaf:ColorSwatchesUI" />
@@ -264,6 +299,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-colorchooser:NoColorIcon" />
 <xs:element ref="flash-display:Graphics" />
 <xs:element ref="org-aswing:JList" />
+<xs:element ref="jive-events:GestureEvent" />
 <xs:element ref="EReg" />
 <xs:element ref="org-aswing:JAccordion" />
 <xs:element ref="motion-actuators:PropertyPathDetails" />
@@ -281,7 +317,9 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButtonUI" />
 <xs:element ref="flash-ui:Multitouch" />
 <xs:element ref="org-aswing:JTextComponent" />
+<xs:element ref="org-aswing:LabelComboBoxEditor" />
 <xs:element ref="flash-geom:Vector3D" />
+<xs:element ref="jive:MessageBox" />
 <xs:element ref="lime-ui:Gamepad" />
 <xs:element ref="org-aswing-dnd:DropMotion" />
 <xs:element ref="org-aswing-event:InteractiveEvent" />
@@ -294,6 +332,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="jive-plaf-flat-tabbedpane:FlatTabButton" />
 <xs:element ref="lime-math-_ColorMatrix:ColorMatrix_Impl_" />
 <xs:element ref="org-aswing:SoftBoxLayout" />
+<xs:element ref="_List:ListIterator" />
 <xs:element ref="flash-media:SoundLoaderContext" />
 <xs:element ref="jive-plaf-flat-background:FlatScrollBarBackground" />
 <xs:element ref="lime-graphics-cairo:CairoFont" />
@@ -311,6 +350,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-ext:GridList" />
 <xs:element ref="flash-media:Camera" />
 <xs:element ref="flash-display:MovieClip" />
+<xs:element ref="jive-chart:ChartPeriodSelectorUI" />
 <xs:element ref="lime-math:Vector2" />
 <xs:element ref="org-aswing-plaf-basic:BasicProgressBarUI" />
 <xs:element ref="jive-plaf-flat-accordion:AccordionItemBackground" />
@@ -324,8 +364,9 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="motion:LinearPath" />
 <xs:element ref="flash-events:ErrorEvent" />
 <xs:element ref="flash-ui:ContextMenuBuiltInItems" />
-<xs:element ref="jive-chart:Axis" />
+<xs:element ref="motion-easing:QuartEaseOut" />
 <xs:element ref="org-aswing:Cell" />
+<xs:element ref="jive-chart:Axis" />
 <xs:element ref="lime-graphics-cairo-_CairoExtend:CairoExtend_Impl_" />
 <xs:element ref="org-aswing-colorchooser:PreviewColorIcon" />
 <xs:element ref="org-aswing-tree:EmptySelectionModel" />
@@ -350,8 +391,6 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-ext:DateLabel" />
 <xs:element ref="org-aswing-plaf-basic:BasicToggleButtonUI" />
 <xs:element ref="lime-text-_Glyph:Glyph_Impl_" />
-<xs:element ref="lime-utils:Int32Array" />
-<xs:element ref="jive-chart:CalculateValues" />
 <xs:element ref="org-aswing-plaf-basic:BasicCheckBoxUI" />
 <xs:element ref="flash-text:Font" />
 <xs:element ref="org-aswing:ASColor" />
@@ -388,7 +427,6 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-util:DepthManager" />
 <xs:element ref="flash-net:NetStreamPlayOptions" />
 <xs:element ref="org-aswing:ASFont" />
-<xs:element ref="lime-graphics-cairo-_CairoFormat:CairoFormat_Impl_" />
 <xs:element ref="org-aswing-plaf:DefaultsDecorator" />
 <xs:element ref="jive-chart:IntValue" />
 <xs:element ref="lime-graphics-opengl:GLBuffer" />
@@ -412,6 +450,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="flash-ui:ContextMenu" />
 <xs:element ref="lime-graphics-cairo-_CairoContent:CairoContent_Impl_" />
 <xs:element ref="lime-math:Matrix3" />
+<xs:element ref="lime-math-color-_RGBA:RGBA_Impl_" />
 <xs:element ref="org-aswing-tree:NodeDimensions" />
 <xs:element ref="org-aswing:JButton" />
 <xs:element ref="motion-easing:ExpoEaseOut" />
@@ -457,10 +496,12 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing:ASFontAdvProperties" />
 <xs:element ref="ArrayAccess" />
 <xs:element ref="flash-utils:IDataOutput" />
+<xs:element ref="motion-easing:QuartEaseInOut" />
 <xs:element ref="org-aswing-util:List" />
 <xs:element ref="jive-plaf-flat:FlatRadioButtonUI" />
 <xs:element ref="org-aswing-event:TableModelEvent" />
 <xs:element ref="lime-graphics:CanvasRenderContext" />
+<xs:element ref="lime-utils-_UInt8ClampedArray:UInt8ClampedArray_Impl_" />
 <xs:element ref="motion:MotionPath" />
 <xs:element ref="org-aswing:VectorListModel" />
 <xs:element ref="haxe-ds:WeakMap" />
@@ -476,6 +517,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-plaf-basic-background:InputBackground" />
 <xs:element ref="flash-display3D-textures:VideoTexture" />
 <xs:element ref="org-aswing:JPanel" />
+<xs:element ref="lime-utils-_Float32Array:Float32Array_Impl_" />
 <xs:element ref="org-aswing:DefaultNumberTextFieldCellEditor" />
 <xs:element ref="motion-actuators:SimpleActuator" />
 <xs:element ref="org-aswing-border:SimpleTitledBorder" />
@@ -506,6 +548,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="jive-plaf-flat:FlatTextFieldUI" />
 <xs:element ref="org-aswing-plaf-basic-background:PanelBackground" />
 <xs:element ref="flash:Vector" />
+<xs:element ref="motion-easing:QuartEaseIn" />
 <xs:element ref="org-aswing:KeySequence" />
 <xs:element ref="org-aswing-plaf-basic:BasicTextFieldUI" />
 <xs:element ref="org-aswing-colorchooser:DefaultColorSelectionModel" />
@@ -568,6 +611,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="flash-text:StyleSheet" />
 <xs:element ref="jive-formatting:HaxeRegExRules" />
 <xs:element ref="org-aswing-geom:IntRectangle" />
+<xs:element ref="jive-events:TransformGestureEvent" />
 <xs:element ref="jive-plaf-flat-border:TextCellComponentBorder" />
 <xs:element ref="flash-filters:ColorMatrixFilter" />
 <xs:element ref="org-aswing-plaf-basic-icon:CheckBoxIcon" />
@@ -598,8 +642,10 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-tree:GeneralTreeCellFactoryUIResource" />
 <xs:element ref="flash-display3D:VertexBuffer3D" />
 <xs:element ref="org-aswing-plaf-basic:BasicColorMixerUI" />
+<xs:element ref="lime-utils-_Int16Array:Int16Array_Impl_" />
 <xs:element ref="motion-easing:IEasing" />
 <xs:element ref="org-aswing:DefaultListSelectionModel" />
+<xs:element ref="jive:TemplateListCell" />
 <xs:element ref="lime-graphics:GLRenderContext" />
 <xs:element ref="org-aswing-plaf-basic:BasicSliderUI" />
 <xs:element ref="org-aswing-colorchooser:JColorMixer" />
@@ -611,6 +657,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-plaf-basic-icon:SolidArrowIcon" />
 <xs:element ref="motion-_Actuate:EffectsOptions" />
 <xs:element ref="org-aswing-event:ToolTipEvent" />
+<xs:element ref="lime-utils-_UInt32Array:UInt32Array_Impl_" />
 <xs:element ref="flash-utils:Namespace" />
 <xs:element ref="lime:AssetLibrary" />
 <xs:element ref="org-aswing-util:AbstractImpulser" />
@@ -622,6 +669,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="jive:Navigation" />
 <xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element ref="org-aswing:GridLayout" />
+<xs:element ref="lime-utils-_ArrayBufferView:TypedArrayType_Impl_" />
 <xs:element ref="org-aswing-event:AttachEvent" />
 <xs:element ref="flash-display:LoaderInfo" />
 <xs:element ref="jive:Command" />
@@ -638,6 +686,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing:LoadIcon" />
 <xs:element ref="org-aswing-tree:TreeLeafIcon" />
 <xs:element ref="jive:OpenLinkCommand" />
+<xs:element ref="lime-math-color-_BGRA:BGRA_Impl_" />
 <xs:element ref="org-aswing:DefaultSingleSelectionModel" />
 <xs:element ref="org-aswing:KeyStroke" />
 <xs:element ref="org-aswing:AsWingManager" />
@@ -655,6 +704,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-resizer:DefaultResizer" />
 <xs:element ref="org-aswing:ListCell" />
 <xs:element ref="jive-chart:DateValue" />
+<xs:element ref="lime-graphics-utils-_ImageDataUtil:ImageDataView" />
 <xs:element ref="org-aswing-plaf-basic-icon:FrameIconifiedIcon" />
 <xs:element ref="org-aswing-tree:MutableTreeNode" />
 <xs:element ref="org-aswing-table:PoorTextCell" />
@@ -724,6 +774,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="jive-formatting:HmlRegExRules" />
 <xs:element ref="org-aswing:DefaultTextFieldCellEditor" />
 <xs:element ref="org-aswing:JRadioButton" />
+<xs:element ref="motion-easing:Quart" />
 <xs:element ref="org-aswing:JPopupMenu" />
 <xs:element ref="org-aswing:ViewportLayout" />
 <xs:element ref="org-aswing-plaf-basic:BasicStepperUI" />
@@ -738,6 +789,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing:Container" />
 <xs:element ref="org-aswing-plaf-basic-background:ScrollBarBackground" />
 <xs:element ref="org-aswing-plaf:ComboBoxUI" />
+<xs:element ref="lime-utils-_Int8Array:Int8Array_Impl_" />
 <xs:element ref="flash-utils:IDataInput2" />
 <xs:element ref="lime-app:Event" />
 <xs:element ref="lime-ui-_KeyCode:KeyCode_Impl_" />
@@ -751,6 +803,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="motion-actuators:GenericActuator" />
 <xs:element ref="org-aswing:AWTextField" />
 <xs:element ref="org-aswing-plaf:MenuElementUI" />
+<xs:element ref="lime-utils-_ArrayBuffer:ArrayBuffer_Impl_" />
 <xs:element ref="flash-events:TextEvent" />
 <xs:element ref="jive-chart:Chart" />
 <xs:element ref="org-aswing-plaf-basic-border:TextFieldBorder" />
@@ -765,7 +818,6 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="lime-graphics:ImageBuffer" />
 <xs:element ref="org-aswing:WindowOrderFocusTraversalPolicy" />
 <xs:element ref="org-aswing-plaf-basic-background:TableHeaderBackground" />
-<xs:element ref="lime-utils:Float32Array" />
 <xs:element ref="org-aswing-tree:EnumerationInfo" />
 <xs:element ref="jive-plaf-flat-tabbedpane:FlatTabbedPaneTab" />
 <xs:element ref="org-aswing-table:PropertyTranslator" />
@@ -780,6 +832,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-table-sorter:TableSorter" />
 <xs:element ref="haxe:Log" />
 <xs:element ref="haxe-ds:IntMap" />
+<xs:element ref="jive-chart:ChartHelper" />
 <xs:element ref="flash-media:Sound" />
 <xs:element ref="jive-plaf-flat:FlatButtonUI" />
 <xs:element ref="org-aswing:AbstractListModel" />
@@ -794,6 +847,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-plaf:SplitPaneUI" />
 <xs:element ref="org-aswing-plaf-basic:BasicSpacerUI" />
 <xs:element ref="org-aswing:StyleTune" />
+<xs:element ref="lime-math-color-_ARGB:ARGB_Impl_" />
 <xs:element ref="org-aswing-plaf:DefaultsDecoratorBase" />
 <xs:element ref="org-aswing-util:LinkedList" />
 <xs:element ref="org-aswing:FocusTraversalPolicy" />
@@ -807,6 +861,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="flash-events:UncaughtErrorEvents" />
 <xs:element ref="jive-plaf-flat-background:FlatButtonBackground" />
 <xs:element ref="org-aswing-dnd:DragListener" />
+<xs:element ref="List" />
 <xs:element ref="haxe-ds:ObjectMap" />
 <xs:element ref="org-aswing:AWSprite" />
 <xs:element ref="org-aswing-graphics:GradientBrush" />
@@ -836,6 +891,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="lime-app:Module" />
 <xs:element ref="flash-system:ApplicationDomain" />
 <xs:element ref="jive-plaf-flat:FlatTextComponentUI" />
+<xs:element ref="lime-utils-_UInt8Array:UInt8Array_Impl_" />
 <xs:element ref="org-aswing:GradientBackground" />
 <xs:element ref="org-aswing-plaf-basic:ToolBarButtonBgAdapter" />
 <xs:element ref="Array" />
@@ -853,6 +909,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-dnd:SourceData" />
 <xs:element ref="org-aswing-event:ContainerEvent" />
 <xs:element ref="org-aswing-event:AWEvent" />
+<xs:element ref="lime-utils-_UInt16Array:UInt16Array_Impl_" />
 <xs:element ref="openfl:AssetLibrary" />
 <xs:element ref="lime-audio-openal:ALC" />
 <xs:element ref="motion-actuators:MotionPathActuator" />
@@ -867,7 +924,6 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="flash-display3D:IndexBuffer3D" />
 <xs:element ref="org-aswing-tree:FHTreeStateNode" />
 <xs:element ref="lime-graphics-_PixelFormat:PixelFormat_Impl_" />
-<xs:element ref="lime-utils:UInt8Array" />
 <xs:element ref="org-aswing-table:GeneralTableCellFactory" />
 <xs:element ref="lime-graphics-cairo:Cairo" />
 <xs:element ref="org-aswing-plaf-basic:BasicLabelUI" />
@@ -880,6 +936,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="jive-plaf-flat-accordion:AccordionHeaderButtonBackground" />
 <xs:element ref="org-aswing-colorchooser:VerticalLayout" />
 <xs:element ref="org-aswing-plaf-basic:BasicCheckBoxMenuItemUI" />
+<xs:element ref="jive:TemplateListCellFactory" />
 <xs:element ref="org-aswing-plaf-basic-icon:MenuArrowIcon" />
 <xs:element ref="org-aswing-resizer:DefaultResizeBarHandler" />
 <xs:element ref="flash-media:VideoStreamSettings" />
@@ -892,6 +949,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing:BoundedRangeModel" />
 <xs:element ref="org-aswing-event:ListItemEvent" />
 <xs:element ref="lime-graphics-cairo-_CairoStatus:CairoStatus_Impl_" />
+<xs:element ref="lime-utils-_Int32Array:Int32Array_Impl_" />
 <xs:element ref="org-aswing:JSpacer" />
 <xs:element ref="org-aswing-error:Error" />
 <xs:element ref="org-aswing-plaf-basic-icon:RadioButtonIcon" />
@@ -965,6 +1023,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-event:ListDataEvent" />
 <xs:element ref="org-aswing-table:Resizable3Imp2" />
 <xs:element ref="org-aswing-ext:Form" />
+<xs:element ref="haxe-io:Bytes" />
 <xs:element ref="flash-accessibility:AccessibilityProperties" />
 <xs:element ref="flash-text:TextFormat" />
 <xs:element ref="jive-plaf-flat-border:TableHeaderCellBorder" />
@@ -977,6 +1036,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-plaf:DefaultEmptyDecoraterResource" />
 <xs:element ref="org-aswing-plaf-basic-border:ColorChooserBorder" />
 <xs:element ref="flash-utils:Dictionary" />
+<xs:element ref="lime-utils:ArrayBufferIO" />
 <xs:element ref="org-aswing:AssetPane" />
 <xs:element ref="Date" />
 <xs:element ref="org-aswing-ext:GridListCell" />
@@ -993,6 +1053,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="lime-math:Vector4" />
 <xs:element ref="org-aswing:TabInfo" />
 <xs:element ref="org-aswing-table:AbstractTableModel" />
+<xs:element ref="jive-events:GestureManager" />
 <xs:element ref="org-aswing-plaf-basic:BasicMenuUI" />
 <xs:element ref="jive-chart:ChartPeriodSelector" />
 <xs:element ref="motion:ComponentPath" />
@@ -1003,6 +1064,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="flash-xml:XMLList" />
 <xs:element ref="jive-plaf-flat-background:FlatTableHeaderBackground" />
 <xs:element ref="org-aswing-ext:GridCellHolder" />
+<xs:element ref="jive:WaitingPopup" />
 <xs:element ref="org-aswing:MenuSelectionManager" />
 <xs:element ref="flash-accessibility:AccessibilityImplementation" />
 <xs:element ref="org-aswing:MenuElement" />
@@ -1022,6 +1084,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element ref="org-aswing-util:ListNode" />
 <xs:element ref="org-aswing:KeyType" />
 <xs:element ref="lime-graphics-opengl:GLObject" />
+<xs:element ref="lime-utils-_Float64Array:Float64Array_Impl_" />
 <xs:element ref="org-aswing:AsWingConstants" />
 <xs:element ref="org-aswing:JAdjuster" />
 <xs:element ref="org-aswing-plaf-basic-border:ToolTipBorder" />
@@ -1151,6 +1214,19 @@ xmlns:flash-accessibility="flash.accessibility"
 </xs:all>
 </xs:complexType>
 
+<xs:complexType name="ListSchemaType">
+<xs:complexContent>
+<xs:extension base="RootObjectTypeSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="length" type="xs:int"/>
+<xs:element minOccurs="0" name="iterator" type="xs:string"/>
+</xs:all>
+<xs:attribute name="length" type="xs:int"/>
+<xs:attribute name="iterator" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
 <xs:complexType name="RootObjectTypeSchemaType">
 </xs:complexType>
 <xs:complexType name="ReflectSchemaType">
@@ -1227,6 +1303,7 @@ xmlns:flash-accessibility="flash.accessibility"
 <xs:element name="Std" type="StdSchemaType"/>
 <xs:element name="Lambda" type="LambdaSchemaType"/>
 <xs:element name="Int" type="IntSchemaType"/>
+<xs:element name="List" type="ListSchemaType"/>
 <xs:element name="RootObjectType" type="RootObjectTypeSchemaType" />
 <xs:element name="Reflect" type="ReflectSchemaType"/>
 <xs:element name="Array" type="ArraySchemaType"/>

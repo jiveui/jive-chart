@@ -35,6 +35,8 @@ class MainViewModel implements IBindable {
     }
 
     @bindable public var chartData: Array<Point> = [];
+    @bindable public var selectedChartData: Array<Point> = [];
+    @bindable public var chartTitle: String;
 
     public function new() {
         loadUrl(0);
@@ -61,6 +63,7 @@ class MainViewModel implements IBindable {
             points.push(new Point(Date.fromString(v[0]), v[1]));
         }
         chartData = points;
+        chartTitle = result.name;
         loadPopup.hide();
     }
 
@@ -72,6 +75,7 @@ class MainViewModel implements IBindable {
         http.onData = processData;
 
         http.onError = function(msg: String) {
+            trace(msg);
             processData(cache[index]);
         }
 

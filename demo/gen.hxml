@@ -6,7 +6,7 @@
 -lib jive-chart
 -cp src/
 -swf bin/empty.swf
--swf-version 10.1
+-swf-version 11.2
 --no-output
 -main GenHx
 --macro allowPackage('flash')

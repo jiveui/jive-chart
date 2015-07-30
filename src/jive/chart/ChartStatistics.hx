@@ -10,5 +10,8 @@ typedef ChartStatistics = {
     scaleX: Float,
     scaleY: Float,
     xLabelDimension: IntDimension,
-    yLabelDimension: IntDimension
+    yLabelDimension: IntDimension,
+    yLabelsNumber: Int,
+    xLabelsNumber: Int,
+    labelsNumber: Int
 };

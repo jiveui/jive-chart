@@ -2,20 +2,24 @@
 xmlns:org-aswing="org.aswing"
 xmlns:org-aswing-plaf="org.aswing.plaf"
 xmlns:flash-display="flash.display"
+xmlns:org-aswing-geom="org.aswing.geom"
 xmlns:empty="empty"
+xmlns:org-aswing-graphics="org.aswing.graphics"
 >
 <xs:import namespace="org.aswing" schemaLocation="org.aswing.xsd" />
 <xs:import namespace="org.aswing.plaf" schemaLocation="org.aswing.plaf.xsd" />
 <xs:import namespace="flash.display" schemaLocation="flash.display.xsd" />
+<xs:import namespace="org.aswing.geom" schemaLocation="org.aswing.geom.xsd" />
 <xs:import namespace="empty" schemaLocation="empty.xsd" />
+<xs:import namespace="org.aswing.graphics" schemaLocation="org.aswing.graphics.xsd" />
 <xs:complexType name="FloatValueSchemaTypeValue">
 <xs:all><xs:element ref="FloatValue"/></xs:all></xs:complexType>
 
+<xs:complexType name="ChartPeriodSelectorUISchemaTypeValue">
+<xs:all><xs:element ref="ChartPeriodSelectorUI"/></xs:all></xs:complexType>
+
 <xs:complexType name="AxisSchemaTypeValue">
 <xs:all><xs:element ref="Axis"/></xs:all></xs:complexType>
-
-<xs:complexType name="CalculateValuesSchemaTypeValue">
-<xs:all><xs:element ref="CalculateValues"/></xs:all></xs:complexType>
 
 <xs:complexType name="ChartValueSchemaTypeValue">
 <xs:choice>
@@ -30,8 +34,7 @@ xmlns:empty="empty"
 
 <xs:complexType name="ChartUISchemaTypeValue">
 <xs:choice>
-<xs:element ref="ChartPeriodSelector" />
-<xs:element ref="CalculateValues" />
+<xs:element ref="ChartPeriodSelectorUI" />
 <xs:element ref="ChartUI" />
 </xs:choice>
 </xs:complexType>
@@ -43,7 +46,14 @@ xmlns:empty="empty"
 <xs:all><xs:element ref="DateValue"/></xs:all></xs:complexType>
 
 <xs:complexType name="ChartSchemaTypeValue">
-<xs:all><xs:element ref="Chart"/></xs:all></xs:complexType>
+<xs:choice>
+<xs:element ref="ChartPeriodSelector" />
+<xs:element ref="Chart" />
+</xs:choice>
+</xs:complexType>
+
+<xs:complexType name="ChartHelperSchemaTypeValue">
+<xs:all><xs:element ref="ChartHelper"/></xs:all></xs:complexType>
 
 <xs:complexType name="ChartPeriodSelectorSchemaTypeValue">
 <xs:all><xs:element ref="ChartPeriodSelector"/></xs:all></xs:complexType>
@@ -61,6 +71,15 @@ xmlns:empty="empty"
 </xs:complexContent>
 </xs:complexType>
 
+<xs:complexType name="ChartPeriodSelectorUISchemaType">
+<xs:complexContent>
+<xs:extension base="ChartUISchemaType">
+<xs:all minOccurs='0'>
+</xs:all>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
 <xs:complexType name="AxisSchemaType">
 <xs:complexContent>
 <xs:extension base="empty:RootObjectTypeSchemaType">
@@ -68,61 +87,6 @@ xmlns:empty="empty"
 <xs:element minOccurs="0" name="axisName" type="xs:string"/>
 </xs:all>
 <xs:attribute name="axisName" type="xs:string"/>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-
-<xs:complexType name="CalculateValuesSchemaType">
-<xs:complexContent>
-<xs:extension base="ChartUISchemaType">
-<xs:all minOccurs='0'>
-<xs:element minOccurs="0" name="minPointX" type="xs:double"/>
-<xs:element minOccurs="0" name="minPointY" type="xs:double"/>
-<xs:element minOccurs="0" name="maxPointX" type="xs:double"/>
-<xs:element minOccurs="0" name="maxPointY" type="xs:double"/>
-<xs:element minOccurs="0" name="scalePointX" type="xs:double"/>
-<xs:element minOccurs="0" name="scalePointY" type="xs:double"/>
-<xs:element minOccurs="0" name="windowIndentX" type="xs:double"/>
-<xs:element minOccurs="0" name="arrowIndentX" type="xs:double"/>
-<xs:element minOccurs="0" name="windowIndentY" type="xs:double"/>
-<xs:element minOccurs="0" name="arrowIndentY" type="xs:double"/>
-<xs:element minOccurs="0" name="xValueSize" type="xs:double"/>
-<xs:element minOccurs="0" name="yValueSize" type="xs:double"/>
-<xs:element minOccurs="0" name="textMargin" type="xs:int"/>
-<xs:element minOccurs="0" name="textWidthX" type="xs:int"/>
-<xs:element minOccurs="0" name="textWidthY" type="xs:int"/>
-<xs:element minOccurs="0" name="textHeightX" type="xs:int"/>
-<xs:element minOccurs="0" name="textHeightY" type="xs:int"/>
-<xs:element minOccurs="0" name="newPoints" type="empty:ArraySchemaTypeValue"/>
-<xs:element minOccurs="0" name="indexMin" type="xs:int"/>
-<xs:element minOccurs="0" name="circleRadius" type="xs:int"/>
-<xs:element minOccurs="0" name="tf" type="org-aswing:JTextFieldSchemaTypeValue"/>
-<xs:element minOccurs="0" name="calcDisplayX" type="xs:string"/>
-<xs:element minOccurs="0" name="calcDisplayY" type="xs:string"/>
-</xs:all>
-<xs:attribute name="minPointX" type="xs:double"/>
-<xs:attribute name="minPointY" type="xs:double"/>
-<xs:attribute name="maxPointX" type="xs:double"/>
-<xs:attribute name="maxPointY" type="xs:double"/>
-<xs:attribute name="scalePointX" type="xs:double"/>
-<xs:attribute name="scalePointY" type="xs:double"/>
-<xs:attribute name="windowIndentX" type="xs:double"/>
-<xs:attribute name="arrowIndentX" type="xs:double"/>
-<xs:attribute name="windowIndentY" type="xs:double"/>
-<xs:attribute name="arrowIndentY" type="xs:double"/>
-<xs:attribute name="xValueSize" type="xs:double"/>
-<xs:attribute name="yValueSize" type="xs:double"/>
-<xs:attribute name="textMargin" type="xs:int"/>
-<xs:attribute name="textWidthX" type="xs:int"/>
-<xs:attribute name="textWidthY" type="xs:int"/>
-<xs:attribute name="textHeightX" type="xs:int"/>
-<xs:attribute name="textHeightY" type="xs:int"/>
-<xs:attribute name="newPoints" type="xs:string"/>
-<xs:attribute name="indexMin" type="xs:int"/>
-<xs:attribute name="circleRadius" type="xs:int"/>
-<xs:attribute name="tf" type="xs:string"/>
-<xs:attribute name="calcDisplayX" type="xs:string"/>
-<xs:attribute name="calcDisplayY" type="xs:string"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -157,15 +121,15 @@ xmlns:empty="empty"
 <xs:complexContent>
 <xs:extension base="org-aswing-plaf:BaseComponentUISchemaType">
 <xs:all minOccurs='0'>
-<xs:element minOccurs="0" name="TextFields" type="empty:ArraySchemaTypeValue"/>
 <xs:element minOccurs="0" name="textLabel" type="empty:ArraySchemaTypeValue"/>
-<xs:element minOccurs="0" name="bubbleDrawArea" type="flash-display:SpriteSchemaTypeValue"/>
-<xs:element minOccurs="0" name="cv" type="CalculateValuesSchemaTypeValue"/>
+<xs:element minOccurs="0" name="titleLabel" type="org-aswing:JLabelSchemaTypeValue"/>
+<xs:element minOccurs="0" name="xValueSize" type="xs:double"/>
+<xs:element minOccurs="0" name="yValueSize" type="xs:double"/>
 </xs:all>
-<xs:attribute name="TextFields" type="xs:string"/>
 <xs:attribute name="textLabel" type="xs:string"/>
-<xs:attribute name="bubbleDrawArea" type="xs:string"/>
-<xs:attribute name="cv" type="xs:string"/>
+<xs:attribute name="titleLabel" type="xs:string"/>
+<xs:attribute name="xValueSize" type="xs:double"/>
+<xs:attribute name="yValueSize" type="xs:double"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -213,32 +177,106 @@ xmlns:empty="empty"
 <xs:extension base="org-aswing:ContainerSchemaType">
 <xs:all minOccurs='0'>
 <xs:element minOccurs="0" name="title" type="xs:string"/>
+<xs:element minOccurs="0" name="tickSize" type="xs:int"/>
+<xs:element minOccurs="0" name="setTitle" type="org-aswing:JLabelSchemaTypeValue"/>
+<xs:element minOccurs="0" name="axisPen" type="org-aswing-graphics:IPenSchemaTypeValue"/>
+<xs:element minOccurs="0" name="axisLabelColor" type="org-aswing:ASColorSchemaTypeValue"/>
+<xs:element minOccurs="0" name="axisMarginBetweenLabels" type="xs:int"/>
+<xs:element minOccurs="0" name="axisMarginBetweenLabelsAndAxis" type="xs:int"/>
+<xs:element minOccurs="0" name="graphPen" type="org-aswing-graphics:IPenSchemaTypeValue"/>
+<xs:element minOccurs="0" name="selectorPen" type="org-aswing-graphics:IPenSchemaTypeValue"/>
+<xs:element minOccurs="0" name="selectorBrush" type="org-aswing-graphics:IBrushSchemaTypeValue"/>
+<xs:element minOccurs="0" name="selectorBubbleBorder" type="org-aswing-graphics:IPenSchemaTypeValue"/>
+<xs:element minOccurs="0" name="selectorBubbleBackground" type="org-aswing-graphics:IBrushSchemaTypeValue"/>
+<xs:element minOccurs="0" name="selectorBubblePadding" type="xs:int"/>
+<xs:element minOccurs="0" name="selectorBubbleTailSize" type="xs:int"/>
+<xs:element minOccurs="0" name="selectorBubbleCornerRadius" type="xs:int"/>
+<xs:element minOccurs="0" name="selectorSize" type="xs:int"/>
+<xs:element minOccurs="0" name="gridPen" type="org-aswing-graphics:IPenSchemaTypeValue"/>
+<xs:element minOccurs="0" name="areaUnderLineBrush" type="org-aswing-graphics:IBrushSchemaTypeValue"/>
+<xs:element minOccurs="0" name="titleFont" type="org-aswing:ASFontSchemaTypeValue"/>
+<xs:element minOccurs="0" name="markBrush" type="org-aswing-graphics:IBrushSchemaTypeValue"/>
+<xs:element minOccurs="0" name="markPen" type="org-aswing-graphics:IPenSchemaTypeValue"/>
+<xs:element minOccurs="0" name="markSize" type="xs:int"/>
+<xs:element minOccurs="0" name="minPointDistantion" type="xs:int"/>
 <xs:element minOccurs="0" name="data" type="empty:ArraySchemaTypeValue"/>
+<xs:element minOccurs="0" name="labelsLayer" type="org-aswing:ContainerSchemaTypeValue"/>
+<xs:element minOccurs="0" name="interactionLayer" type="org-aswing:ContainerSchemaTypeValue"/>
 </xs:all>
 <xs:attribute name="title" type="xs:string"/>
+<xs:attribute name="tickSize" type="xs:int"/>
+<xs:attribute name="setTitle" type="xs:string"/>
+<xs:attribute name="axisPen" type="xs:string"/>
+<xs:attribute name="axisLabelColor" type="xs:string"/>
+<xs:attribute name="axisMarginBetweenLabels" type="xs:int"/>
+<xs:attribute name="axisMarginBetweenLabelsAndAxis" type="xs:int"/>
+<xs:attribute name="graphPen" type="xs:string"/>
+<xs:attribute name="selectorPen" type="xs:string"/>
+<xs:attribute name="selectorBrush" type="xs:string"/>
+<xs:attribute name="selectorBubbleBorder" type="xs:string"/>
+<xs:attribute name="selectorBubbleBackground" type="xs:string"/>
+<xs:attribute name="selectorBubblePadding" type="xs:int"/>
+<xs:attribute name="selectorBubbleTailSize" type="xs:int"/>
+<xs:attribute name="selectorBubbleCornerRadius" type="xs:int"/>
+<xs:attribute name="selectorSize" type="xs:int"/>
+<xs:attribute name="gridPen" type="xs:string"/>
+<xs:attribute name="areaUnderLineBrush" type="xs:string"/>
+<xs:attribute name="titleFont" type="xs:string"/>
+<xs:attribute name="markBrush" type="xs:string"/>
+<xs:attribute name="markPen" type="xs:string"/>
+<xs:attribute name="markSize" type="xs:int"/>
+<xs:attribute name="minPointDistantion" type="xs:int"/>
 <xs:attribute name="data" type="xs:string"/>
+<xs:attribute name="labelsLayer" type="xs:string"/>
+<xs:attribute name="interactionLayer" type="xs:string"/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="ChartPeriodSelectorSchemaType">
+<xs:complexType name="ChartHelperSchemaType">
 <xs:complexContent>
-<xs:extension base="ChartUISchemaType">
+<xs:extension base="empty:RootObjectTypeSchemaType">
 <xs:all minOccurs='0'>
 </xs:all>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
 
+<xs:complexType name="ChartPeriodSelectorSchemaType">
+<xs:complexContent>
+<xs:extension base="ChartSchemaType">
+<xs:all minOccurs='0'>
+<xs:element minOccurs="0" name="leftIndex" type="xs:int"/>
+<xs:element minOccurs="0" name="rightIndex" type="xs:int"/>
+<xs:element minOccurs="0" name="selectedData" type="empty:ArraySchemaTypeValue"/>
+<xs:element minOccurs="0" name="leftThumb" type="flash-display:SpriteSchemaTypeValue"/>
+<xs:element minOccurs="0" name="rightThumb" type="flash-display:SpriteSchemaTypeValue"/>
+<xs:element minOccurs="0" name="thumbSize" type="org-aswing-geom:IntDimensionSchemaTypeValue"/>
+<xs:element minOccurs="0" name="thumbBrush" type="org-aswing-graphics:IBrushSchemaTypeValue"/>
+<xs:element minOccurs="0" name="unselectedAreaBrush" type="org-aswing-graphics:IBrushSchemaTypeValue"/>
+</xs:all>
+<xs:attribute name="leftIndex" type="xs:int"/>
+<xs:attribute name="rightIndex" type="xs:int"/>
+<xs:attribute name="selectedData" type="xs:string"/>
+<xs:attribute name="leftThumb" type="xs:string"/>
+<xs:attribute name="rightThumb" type="xs:string"/>
+<xs:attribute name="thumbSize" type="xs:string"/>
+<xs:attribute name="thumbBrush" type="xs:string"/>
+<xs:attribute name="unselectedAreaBrush" type="xs:string"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
 
 <xs:element name="FloatValue" type="FloatValueSchemaType"/>
+<xs:element name="ChartPeriodSelectorUI" type="ChartPeriodSelectorUISchemaType"/>
 <xs:element name="Axis" type="AxisSchemaType"/>
-<xs:element name="CalculateValues" type="CalculateValuesSchemaType"/>
 <xs:element name="ChartValue" type="ChartValueSchemaType"/>
 <xs:element name="IntValue" type="IntValueSchemaType"/>
 <xs:element name="ChartUI" type="ChartUISchemaType"/>
 <xs:element name="Point" type="PointSchemaType"/>
 <xs:element name="DateValue" type="DateValueSchemaType"/>
 <xs:element name="Chart" type="ChartSchemaType"/>
+<xs:element name="ChartHelper" type="ChartHelperSchemaType"/>
 <xs:element name="ChartPeriodSelector" type="ChartPeriodSelectorSchemaType"/>
 </xs:schema>

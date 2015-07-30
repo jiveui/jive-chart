@@ -131,6 +131,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-colorchooser:NoColorIcon" />
 <xs:element minOccurs="0" ref="flash-display:Graphics" />
 <xs:element minOccurs="0" ref="org-aswing:JList" />
+<xs:element minOccurs="0" ref="jive-events:GestureEvent" />
 <xs:element minOccurs="0" ref="empty:EReg" />
 <xs:element minOccurs="0" ref="org-aswing:JAccordion" />
 <xs:element minOccurs="0" ref="motion-actuators:PropertyPathDetails" />
@@ -148,7 +149,9 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="jive-plaf-flat-accordion:AccordionHeaderButtonUI" />
 <xs:element minOccurs="0" ref="flash-ui:Multitouch" />
 <xs:element minOccurs="0" ref="org-aswing:JTextComponent" />
+<xs:element minOccurs="0" ref="org-aswing:LabelComboBoxEditor" />
 <xs:element minOccurs="0" ref="flash-geom:Vector3D" />
+<xs:element minOccurs="0" ref="jive:MessageBox" />
 <xs:element minOccurs="0" ref="lime-ui:Gamepad" />
 <xs:element minOccurs="0" ref="org-aswing-dnd:DropMotion" />
 <xs:element minOccurs="0" ref="org-aswing-event:InteractiveEvent" />
@@ -161,6 +164,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="jive-plaf-flat-tabbedpane:FlatTabButton" />
 <xs:element minOccurs="0" ref="lime-math-_ColorMatrix:ColorMatrix_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing:SoftBoxLayout" />
+<xs:element minOccurs="0" ref="_List:ListIterator" />
 <xs:element minOccurs="0" ref="flash-media:SoundLoaderContext" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-background:FlatScrollBarBackground" />
 <xs:element minOccurs="0" ref="lime-graphics-cairo:CairoFont" />
@@ -179,6 +183,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="flash-media:Camera" />
 <xs:element minOccurs="0" ref="empty:UInt" />
 <xs:element minOccurs="0" ref="flash-display:MovieClip" />
+<xs:element minOccurs="0" ref="jive-chart:ChartPeriodSelectorUI" />
 <xs:element minOccurs="0" ref="lime-math:Vector2" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicProgressBarUI" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-accordion:AccordionItemBackground" />
@@ -192,8 +197,9 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="motion:LinearPath" />
 <xs:element minOccurs="0" ref="flash-events:ErrorEvent" />
 <xs:element minOccurs="0" ref="flash-ui:ContextMenuBuiltInItems" />
-<xs:element minOccurs="0" ref="jive-chart:Axis" />
+<xs:element minOccurs="0" ref="motion-easing:QuartEaseOut" />
 <xs:element minOccurs="0" ref="org-aswing:Cell" />
+<xs:element minOccurs="0" ref="jive-chart:Axis" />
 <xs:element minOccurs="0" ref="lime-graphics-cairo-_CairoExtend:CairoExtend_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing-colorchooser:PreviewColorIcon" />
 <xs:element minOccurs="0" ref="org-aswing-tree:EmptySelectionModel" />
@@ -218,8 +224,6 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-ext:DateLabel" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicToggleButtonUI" />
 <xs:element minOccurs="0" ref="lime-text-_Glyph:Glyph_Impl_" />
-<xs:element minOccurs="0" ref="lime-utils:Int32Array" />
-<xs:element minOccurs="0" ref="jive-chart:CalculateValues" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicCheckBoxUI" />
 <xs:element minOccurs="0" ref="flash-text:Font" />
 <xs:element minOccurs="0" ref="org-aswing:ASColor" />
@@ -256,7 +260,6 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="DepthManager" />
 <xs:element minOccurs="0" ref="flash-net:NetStreamPlayOptions" />
 <xs:element minOccurs="0" ref="org-aswing:ASFont" />
-<xs:element minOccurs="0" ref="lime-graphics-cairo-_CairoFormat:CairoFormat_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing-plaf:DefaultsDecorator" />
 <xs:element minOccurs="0" ref="jive-chart:IntValue" />
 <xs:element minOccurs="0" ref="lime-graphics-opengl:GLBuffer" />
@@ -281,6 +284,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="flash-ui:ContextMenu" />
 <xs:element minOccurs="0" ref="lime-graphics-cairo-_CairoContent:CairoContent_Impl_" />
 <xs:element minOccurs="0" ref="lime-math:Matrix3" />
+<xs:element minOccurs="0" ref="lime-math-color-_RGBA:RGBA_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing-tree:NodeDimensions" />
 <xs:element minOccurs="0" ref="org-aswing:JButton" />
 <xs:element minOccurs="0" ref="motion-easing:ExpoEaseOut" />
@@ -326,10 +330,12 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing:ASFontAdvProperties" />
 <xs:element minOccurs="0" ref="empty:ArrayAccess" />
 <xs:element minOccurs="0" ref="flash-utils:IDataOutput" />
+<xs:element minOccurs="0" ref="motion-easing:QuartEaseInOut" />
 <xs:element minOccurs="0" ref="List" />
 <xs:element minOccurs="0" ref="jive-plaf-flat:FlatRadioButtonUI" />
 <xs:element minOccurs="0" ref="org-aswing-event:TableModelEvent" />
 <xs:element minOccurs="0" ref="lime-graphics:CanvasRenderContext" />
+<xs:element minOccurs="0" ref="lime-utils-_UInt8ClampedArray:UInt8ClampedArray_Impl_" />
 <xs:element minOccurs="0" ref="motion:MotionPath" />
 <xs:element minOccurs="0" ref="org-aswing:VectorListModel" />
 <xs:element minOccurs="0" ref="haxe-ds:WeakMap" />
@@ -345,6 +351,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-background:InputBackground" />
 <xs:element minOccurs="0" ref="flash-display3D-textures:VideoTexture" />
 <xs:element minOccurs="0" ref="org-aswing:JPanel" />
+<xs:element minOccurs="0" ref="lime-utils-_Float32Array:Float32Array_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing:DefaultNumberTextFieldCellEditor" />
 <xs:element minOccurs="0" ref="motion-actuators:SimpleActuator" />
 <xs:element minOccurs="0" ref="org-aswing-border:SimpleTitledBorder" />
@@ -375,6 +382,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="jive-plaf-flat:FlatTextFieldUI" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-background:PanelBackground" />
 <xs:element minOccurs="0" ref="flash:Vector" />
+<xs:element minOccurs="0" ref="motion-easing:QuartEaseIn" />
 <xs:element minOccurs="0" ref="org-aswing:KeySequence" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicTextFieldUI" />
 <xs:element minOccurs="0" ref="org-aswing-colorchooser:DefaultColorSelectionModel" />
@@ -437,6 +445,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="flash-text:StyleSheet" />
 <xs:element minOccurs="0" ref="jive-formatting:HaxeRegExRules" />
 <xs:element minOccurs="0" ref="org-aswing-geom:IntRectangle" />
+<xs:element minOccurs="0" ref="jive-events:TransformGestureEvent" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-border:TextCellComponentBorder" />
 <xs:element minOccurs="0" ref="flash-filters:ColorMatrixFilter" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-icon:CheckBoxIcon" />
@@ -467,8 +476,10 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-tree:GeneralTreeCellFactoryUIResource" />
 <xs:element minOccurs="0" ref="flash-display3D:VertexBuffer3D" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicColorMixerUI" />
+<xs:element minOccurs="0" ref="lime-utils-_Int16Array:Int16Array_Impl_" />
 <xs:element minOccurs="0" ref="motion-easing:IEasing" />
 <xs:element minOccurs="0" ref="org-aswing:DefaultListSelectionModel" />
+<xs:element minOccurs="0" ref="jive:TemplateListCell" />
 <xs:element minOccurs="0" ref="lime-graphics:GLRenderContext" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicSliderUI" />
 <xs:element minOccurs="0" ref="org-aswing-colorchooser:JColorMixer" />
@@ -480,6 +491,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-icon:SolidArrowIcon" />
 <xs:element minOccurs="0" ref="motion-_Actuate:EffectsOptions" />
 <xs:element minOccurs="0" ref="org-aswing-event:ToolTipEvent" />
+<xs:element minOccurs="0" ref="lime-utils-_UInt32Array:UInt32Array_Impl_" />
 <xs:element minOccurs="0" ref="flash-utils:Namespace" />
 <xs:element minOccurs="0" ref="lime:AssetLibrary" />
 <xs:element minOccurs="0" ref="AbstractImpulser" />
@@ -491,6 +503,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="jive:Navigation" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-accordion:AccordionHeaderButton" />
 <xs:element minOccurs="0" ref="org-aswing:GridLayout" />
+<xs:element minOccurs="0" ref="lime-utils-_ArrayBufferView:TypedArrayType_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing-event:AttachEvent" />
 <xs:element minOccurs="0" ref="flash-display:LoaderInfo" />
 <xs:element minOccurs="0" ref="jive:Command" />
@@ -507,6 +520,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing:LoadIcon" />
 <xs:element minOccurs="0" ref="org-aswing-tree:TreeLeafIcon" />
 <xs:element minOccurs="0" ref="jive:OpenLinkCommand" />
+<xs:element minOccurs="0" ref="lime-math-color-_BGRA:BGRA_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing:DefaultSingleSelectionModel" />
 <xs:element minOccurs="0" ref="org-aswing:KeyStroke" />
 <xs:element minOccurs="0" ref="org-aswing:AsWingManager" />
@@ -524,6 +538,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-resizer:DefaultResizer" />
 <xs:element minOccurs="0" ref="org-aswing:ListCell" />
 <xs:element minOccurs="0" ref="jive-chart:DateValue" />
+<xs:element minOccurs="0" ref="lime-graphics-utils-_ImageDataUtil:ImageDataView" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-icon:FrameIconifiedIcon" />
 <xs:element minOccurs="0" ref="org-aswing-tree:MutableTreeNode" />
 <xs:element minOccurs="0" ref="org-aswing-table:PoorTextCell" />
@@ -593,6 +608,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="jive-formatting:HmlRegExRules" />
 <xs:element minOccurs="0" ref="org-aswing:DefaultTextFieldCellEditor" />
 <xs:element minOccurs="0" ref="org-aswing:JRadioButton" />
+<xs:element minOccurs="0" ref="motion-easing:Quart" />
 <xs:element minOccurs="0" ref="org-aswing:JPopupMenu" />
 <xs:element minOccurs="0" ref="org-aswing:ViewportLayout" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicStepperUI" />
@@ -607,6 +623,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing:Container" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-background:ScrollBarBackground" />
 <xs:element minOccurs="0" ref="org-aswing-plaf:ComboBoxUI" />
+<xs:element minOccurs="0" ref="lime-utils-_Int8Array:Int8Array_Impl_" />
 <xs:element minOccurs="0" ref="flash-utils:IDataInput2" />
 <xs:element minOccurs="0" ref="lime-app:Event" />
 <xs:element minOccurs="0" ref="lime-ui-_KeyCode:KeyCode_Impl_" />
@@ -620,6 +637,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="motion-actuators:GenericActuator" />
 <xs:element minOccurs="0" ref="org-aswing:AWTextField" />
 <xs:element minOccurs="0" ref="org-aswing-plaf:MenuElementUI" />
+<xs:element minOccurs="0" ref="lime-utils-_ArrayBuffer:ArrayBuffer_Impl_" />
 <xs:element minOccurs="0" ref="flash-events:TextEvent" />
 <xs:element minOccurs="0" ref="jive-chart:Chart" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-border:TextFieldBorder" />
@@ -634,7 +652,6 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="lime-graphics:ImageBuffer" />
 <xs:element minOccurs="0" ref="org-aswing:WindowOrderFocusTraversalPolicy" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-background:TableHeaderBackground" />
-<xs:element minOccurs="0" ref="lime-utils:Float32Array" />
 <xs:element minOccurs="0" ref="org-aswing-tree:EnumerationInfo" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-tabbedpane:FlatTabbedPaneTab" />
 <xs:element minOccurs="0" ref="org-aswing-table:PropertyTranslator" />
@@ -649,6 +666,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-table-sorter:TableSorter" />
 <xs:element minOccurs="0" ref="haxe:Log" />
 <xs:element minOccurs="0" ref="haxe-ds:IntMap" />
+<xs:element minOccurs="0" ref="jive-chart:ChartHelper" />
 <xs:element minOccurs="0" ref="flash-media:Sound" />
 <xs:element minOccurs="0" ref="jive-plaf-flat:FlatButtonUI" />
 <xs:element minOccurs="0" ref="org-aswing:AbstractListModel" />
@@ -664,6 +682,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicSpacerUI" />
 <xs:element minOccurs="0" ref="empty:Int" />
 <xs:element minOccurs="0" ref="org-aswing:StyleTune" />
+<xs:element minOccurs="0" ref="lime-math-color-_ARGB:ARGB_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing-plaf:DefaultsDecoratorBase" />
 <xs:element minOccurs="0" ref="LinkedList" />
 <xs:element minOccurs="0" ref="org-aswing:FocusTraversalPolicy" />
@@ -677,6 +696,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="flash-events:UncaughtErrorEvents" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-background:FlatButtonBackground" />
 <xs:element minOccurs="0" ref="org-aswing-dnd:DragListener" />
+<xs:element minOccurs="0" ref="empty:List" />
 <xs:element minOccurs="0" ref="haxe-ds:ObjectMap" />
 <xs:element minOccurs="0" ref="org-aswing:AWSprite" />
 <xs:element minOccurs="0" ref="org-aswing-graphics:GradientBrush" />
@@ -707,6 +727,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="lime-app:Module" />
 <xs:element minOccurs="0" ref="flash-system:ApplicationDomain" />
 <xs:element minOccurs="0" ref="jive-plaf-flat:FlatTextComponentUI" />
+<xs:element minOccurs="0" ref="lime-utils-_UInt8Array:UInt8Array_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing:GradientBackground" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:ToolBarButtonBgAdapter" />
 <xs:element minOccurs="0" ref="empty:Array" />
@@ -724,6 +745,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-dnd:SourceData" />
 <xs:element minOccurs="0" ref="org-aswing-event:ContainerEvent" />
 <xs:element minOccurs="0" ref="org-aswing-event:AWEvent" />
+<xs:element minOccurs="0" ref="lime-utils-_UInt16Array:UInt16Array_Impl_" />
 <xs:element minOccurs="0" ref="openfl:AssetLibrary" />
 <xs:element minOccurs="0" ref="lime-audio-openal:ALC" />
 <xs:element minOccurs="0" ref="motion-actuators:MotionPathActuator" />
@@ -738,7 +760,6 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="flash-display3D:IndexBuffer3D" />
 <xs:element minOccurs="0" ref="org-aswing-tree:FHTreeStateNode" />
 <xs:element minOccurs="0" ref="lime-graphics-_PixelFormat:PixelFormat_Impl_" />
-<xs:element minOccurs="0" ref="lime-utils:UInt8Array" />
 <xs:element minOccurs="0" ref="org-aswing-table:GeneralTableCellFactory" />
 <xs:element minOccurs="0" ref="lime-graphics-cairo:Cairo" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicLabelUI" />
@@ -751,6 +772,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="jive-plaf-flat-accordion:AccordionHeaderButtonBackground" />
 <xs:element minOccurs="0" ref="org-aswing-colorchooser:VerticalLayout" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicCheckBoxMenuItemUI" />
+<xs:element minOccurs="0" ref="jive:TemplateListCellFactory" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-icon:MenuArrowIcon" />
 <xs:element minOccurs="0" ref="org-aswing-resizer:DefaultResizeBarHandler" />
 <xs:element minOccurs="0" ref="flash-media:VideoStreamSettings" />
@@ -763,6 +785,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing:BoundedRangeModel" />
 <xs:element minOccurs="0" ref="org-aswing-event:ListItemEvent" />
 <xs:element minOccurs="0" ref="lime-graphics-cairo-_CairoStatus:CairoStatus_Impl_" />
+<xs:element minOccurs="0" ref="lime-utils-_Int32Array:Int32Array_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing:JSpacer" />
 <xs:element minOccurs="0" ref="org-aswing-error:Error" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-icon:RadioButtonIcon" />
@@ -837,6 +860,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-table:Resizable3Imp2" />
 <xs:element minOccurs="0" ref="empty:Float" />
 <xs:element minOccurs="0" ref="org-aswing-ext:Form" />
+<xs:element minOccurs="0" ref="haxe-io:Bytes" />
 <xs:element minOccurs="0" ref="flash-accessibility:AccessibilityProperties" />
 <xs:element minOccurs="0" ref="flash-text:TextFormat" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-border:TableHeaderCellBorder" />
@@ -849,6 +873,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="org-aswing-plaf:DefaultEmptyDecoraterResource" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-border:ColorChooserBorder" />
 <xs:element minOccurs="0" ref="flash-utils:Dictionary" />
+<xs:element minOccurs="0" ref="lime-utils:ArrayBufferIO" />
 <xs:element minOccurs="0" ref="org-aswing:AssetPane" />
 <xs:element minOccurs="0" ref="empty:Date" />
 <xs:element minOccurs="0" ref="org-aswing-ext:GridListCell" />
@@ -865,6 +890,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="lime-math:Vector4" />
 <xs:element minOccurs="0" ref="org-aswing:TabInfo" />
 <xs:element minOccurs="0" ref="org-aswing-table:AbstractTableModel" />
+<xs:element minOccurs="0" ref="jive-events:GestureManager" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic:BasicMenuUI" />
 <xs:element minOccurs="0" ref="jive-chart:ChartPeriodSelector" />
 <xs:element minOccurs="0" ref="motion:ComponentPath" />
@@ -875,6 +901,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="flash-xml:XMLList" />
 <xs:element minOccurs="0" ref="jive-plaf-flat-background:FlatTableHeaderBackground" />
 <xs:element minOccurs="0" ref="org-aswing-ext:GridCellHolder" />
+<xs:element minOccurs="0" ref="jive:WaitingPopup" />
 <xs:element minOccurs="0" ref="org-aswing:MenuSelectionManager" />
 <xs:element minOccurs="0" ref="flash-accessibility:AccessibilityImplementation" />
 <xs:element minOccurs="0" ref="org-aswing:MenuElement" />
@@ -894,6 +921,7 @@ xmlns:flash-events="flash.events"
 <xs:element minOccurs="0" ref="ListNode" />
 <xs:element minOccurs="0" ref="org-aswing:KeyType" />
 <xs:element minOccurs="0" ref="lime-graphics-opengl:GLObject" />
+<xs:element minOccurs="0" ref="lime-utils-_Float64Array:Float64Array_Impl_" />
 <xs:element minOccurs="0" ref="org-aswing:AsWingConstants" />
 <xs:element minOccurs="0" ref="org-aswing:JAdjuster" />
 <xs:element minOccurs="0" ref="org-aswing-plaf-basic-border:ToolTipBorder" />

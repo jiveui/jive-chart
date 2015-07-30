@@ -37,11 +37,12 @@ class ChartUI extends BaseComponentUI {
     private var stats: ChartStatistics;
     private var graphBounds: IntRectangle;
 
-    public var textLabel:Array<JTextField>;
+    public var labels:Array<JLabel>;
     public var titleLabel:JLabel;
 
     public function new() {
         super();
+        labels = [];
     }
 
     private function getPropertyPrefix():String{
@@ -50,27 +51,23 @@ class ChartUI extends BaseComponentUI {
 
     override public function paint(c:Component, g:Graphics2D, b:IntRectangle):Void {
         super.paint(c, g, b);
-        chart = AsWingUtils.as(c, Chart);
 
-        if (null == chart) return;
-        if (null == chart.data || chart.data.length <= 0) return;
+        if (null == chart || null == chart.data || chart.data.length <= 0 || null == titleLabel) return;
+        titleLabel.text = chart.title;
+        titleLabel.font = chart.titleFont;
+        titleLabel.pack();
 
         calcStatisticsAndGraphBounds(b);
 
+        createLabels(stats.labelsNumber);
+
         drawAxises(g);
         drawGraph(g);
+        clearBubble();
     }
 
     private inline function calcStatisticsAndGraphBounds(b: IntRectangle) {
         stats = ChartHelper.calcStatistics(chart.data, b, chart);
-
-        titleLabel = chart.setTitle;
-        if (titleLabel.text == ""){
-            titleLabel.setText(chart.title);
-        }
-        titleLabel.location = new IntPoint(0,0);
-        titleLabel.pack();
-
         var verticalMarginForTopMostLabel = Std.int(stats.yLabelDimension.height/2)+1;
         var horizontalMarginForRightMostLabel = Std.int(stats.xLabelDimension.width/2)+1;
         graphBounds = b.clone();
@@ -80,13 +77,18 @@ class ChartUI extends BaseComponentUI {
         stats = ChartHelper.calcStatistics(chart.data, graphBounds, chart);
     }
 
-    override public function installUI(c:Component):Void { }
-    override public function uninstallUI(c:Component):Void { }
+    override public function installUI(c:Component):Void {
+        chart = AsWingUtils.as(c, Chart);
+        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+        titleLabel = new JLabel();
+        titleLabel.location = new IntPoint(0,0);
+        chart.append(titleLabel);
+    }
 
+    override public function uninstallUI(c:Component):Void {
+        chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+    }
 
-
-    public var xValueSize:Float = 0;
-    public var yValueSize:Float = 0;
 
     /**
     * Draw axises x and y;
@@ -112,7 +114,8 @@ class ChartUI extends BaseComponentUI {
         for (i in 0...ticksAmount) {
             var x = x0 + i * captionWidthWithMargin;
 
-            var t = createLabelForInterpolatedValue(chart.data[0].xValue, i, graphBounds.width/captionWidthWithMargin, stats.minX, stats.maxX);
+            var t = labels[i];
+            updateLabelForInterpolatedValue(t, chart.data[0].xValue, i, graphBounds.width/captionWidthWithMargin, stats.minX, stats.maxX);
             var insets = t.getInsets();
             t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + chart.tickSize) + insets.top);
             chart.labelsLayer.append(t);
@@ -122,11 +125,22 @@ class ChartUI extends BaseComponentUI {
         }
     }
 
-    private function createLabelForInterpolatedValue(valueTranslator: ChartValue, index: Int, amount: Float, min: Float, max: Float): JLabel {
-        var label = new JLabel(valueTranslator.getCaptionByFloatValue(interpolateValue(index, amount, min, max)));
+    private function createLabels(n: Int) {
+        if (n > labels.length) {
+            for (i in 0...n-labels.length) {
+                labels.push(new JLabel());
+            }
+        } else {
+            for (i in 0...labels.length-n) {
+                chart.labelsLayer.remove(labels.pop());
+            }
+        }
+    }
+
+    private function updateLabelForInterpolatedValue(label: JLabel, valueTranslator: ChartValue, index: Int, amount: Float, min: Float, max: Float) {
+        label.text = valueTranslator.getCaptionByFloatValue(interpolateValue(index, amount, min, max));
         label.foreground = chart.axisLabelColor;
         label.pack();
-        return label;
     }
 
     private function drawGridHorizontalLinesAndCaptions(g: Graphics2D) {
@@ -137,7 +151,8 @@ class ChartUI extends BaseComponentUI {
         for (i in 0...ticksAmount) {
             var y = y0 - i * captionHeightWithMargin;
 
-            var t = createLabelForInterpolatedValue(chart.data[0].yValue, i, graphBounds.height/captionHeightWithMargin, stats.minY, stats.maxY);
+            var t = labels[i + stats.xLabelsNumber];
+            updateLabelForInterpolatedValue(t, chart.data[0].yValue, i, graphBounds.height/captionHeightWithMargin, stats.minY, stats.maxY);
             var insets = t.getInsets();
             t.location = new IntPoint(insets.left, Std.int(y - t.preferredSize.height/2) + insets.top);
             chart.labelsLayer.append(t);
@@ -162,6 +177,11 @@ class ChartUI extends BaseComponentUI {
     public function onMouseMove(e:MouseEvent):Void {
         var index = calculateNearesPointIndex(e.localX);
         drawBubble(index);
+    }
+
+    private function clearBubble() {
+        chart.interactionLayer.removeAll();
+        chart.interactionLayer.graphics.clear();
     }
 
     public function drawBubble(index: Int) {
@@ -262,9 +282,6 @@ class ChartUI extends BaseComponentUI {
     **/
     public function drawGraph(g: Graphics2D):Void{
         var data = chart.data;
-
-        chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 
         g.fillRectangle(new SolidBrush(ASColor.WHITE.changeAlpha(0.0)), graphBounds.x, graphBounds.y, graphBounds.width, graphBounds.height);
 

@@ -18,13 +18,20 @@ import Array;
 
 class Chart extends Container {
 
-    public var title: String;
+    public var title(get, set): String;
+    private var _title: String;
+    private function get_title(): String { return _title; }
+    private function set_title(v: String): String {
+        _title = v;
+        repaint();
+        return v;
+    }
+
     public var tickSize: Int = 5;
-    public var setTitle:JLabel;
 
     public var axisPen: IPen;
     public var axisLabelColor: ASColor;
-    public var axisMarginBetweenLabels: Int = 20;
+    public var axisMarginBetweenLabels: Int = 50;
     public var axisMarginBetweenLabelsAndAxis: Int = 10;
     public var graphPen: IPen;
     public var selectorPen: IPen;
@@ -45,7 +52,7 @@ class Chart extends Container {
     public var markPen: IPen;
     public var markSize: Int = 3;
 
-    public var minPointDistantion: Int = 10;
+    public var minPointDistantion: Int = 7;
 
     public var data(get, set):Array<Point>;
     private var _data: Array<Point>;
@@ -76,11 +83,10 @@ class Chart extends Container {
         labelsLayer = new Container();
         interactionLayer = new Container();
         axisLabelColor = ASColor.GRAY;
+        areaUnderLineBrush = new SolidBrush(ASColor.RED.changeAlpha(0.3));
 
-        setTitle = new JLabel();
-        titleFont = new ASFont("Tahoma", 14);
+        titleFont = new ASFont("Tahoma", 20);
 
-        append(setTitle);
         append(labelsLayer);
         append(interactionLayer);
 

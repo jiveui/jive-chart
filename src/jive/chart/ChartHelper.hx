@@ -34,6 +34,11 @@ class ChartHelper {
             }
         }
 
+        // Always add last point
+        if (result[result.length-1].displayX != points[points.length-1].displayX) {
+            result.push(points[points.length-1]);
+        }
+
         return result;
     }
 
@@ -52,8 +57,21 @@ class ChartHelper {
         g.endDraw();
     }
 
-    public static function fillSpaceUnderPolyline(graphics: Graphics2D, points: Array<Point>, brush: IBrush) {
-
+    public static function fillSpaceUnderPolyline(g: Graphics2D, points: Array<Point>, brush: IBrush, bounds: IntRectangle) {
+        g.beginFill(brush);
+        var first = true;
+        for (point in points){
+            if (first) {
+                g.moveTo(point.displayX, point.displayY);
+                first = false;
+            } else {
+                g.lineTo(point.displayX, point.displayY);
+            }
+        }
+        g.lineTo(points[points.length-1].displayX, bounds.y + bounds.height);
+        g.lineTo(points[0].displayX, bounds.y + bounds.height);
+        g.lineTo(points[0].displayX, points[0].displayY);
+        g.endFill();
     }
 
     public static function calcStatistics(points: Array<Point>, bounds: IntRectangle, chart: Chart): ChartStatistics {
@@ -65,7 +83,10 @@ class ChartHelper {
             scaleX: 0,
             scaleY: 0,
             xLabelDimension: null,
-            yLabelDimension: null
+            yLabelDimension: null,
+            xLabelsNumber: 0,
+            yLabelsNumber: 0,
+            labelsNumber: 0
         };
 
         if (null == points || points.length <= 0) return r;
@@ -92,6 +113,10 @@ class ChartHelper {
 
         r.xLabelDimension = calcMaxLabelsDimesionForX(points, r, chart);
         r.yLabelDimension = calcMaxLabelsDimesionForY(points, r, chart);
+
+        r.xLabelsNumber = Std.int(bounds.width/r.xLabelDimension.width) + 1;
+        r.yLabelsNumber = Std.int(bounds.height/r.yLabelDimension.height) + 1;
+        r.labelsNumber = r.xLabelsNumber + r.yLabelsNumber;
 
         return r;
     }
