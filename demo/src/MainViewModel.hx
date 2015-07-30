@@ -75,7 +75,6 @@ class MainViewModel implements IBindable {
         http.onData = processData;
 
         http.onError = function(msg: String) {
-            trace(msg);
             processData(cache[index]);
         }
 

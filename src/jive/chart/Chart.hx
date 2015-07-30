@@ -52,7 +52,7 @@ class Chart extends Container {
     public var markPen: IPen;
     public var markSize: Int = 3;
 
-    public var minPointDistantion: Int = 7;
+    public var minPointDistantion: Int = 15;
 
     public var data(get, set):Array<Point>;
     private var _data: Array<Point>;

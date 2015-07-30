@@ -14,8 +14,7 @@
                     <ASColor rgb="0x34495e"/>
                 </selectionBackground>
                 <preferredSize>
-                    <geom:IntDimension width="150" height="-1"/>
-
+                    <geom:IntDimension width="210" height="-1"/>
                 </preferredSize>
                 <model>
                     <VectorListModel>

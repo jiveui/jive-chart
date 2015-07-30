@@ -107,13 +107,7 @@ class ChartPeriodSelectorUI extends ChartUI {
     }
 
     override public function drawGraph(g: Graphics2D):Void{
-        var data = chart.data;
-
         g.fillRectangle(new SolidBrush(ASColor.WHITE.changeAlpha(0.0)), graphBounds.x, graphBounds.y, graphBounds.width, graphBounds.height);
-
-        ChartHelper.calculateDisplayCoordinates(chart.data, graphBounds, stats);
-        pointsToDraw = ChartHelper.getPointsNeededToDraw(chart.data, graphBounds, chart.minPointDistantion);
-
         ChartHelper.fillSpaceUnderPolyline(g, pointsToDraw, chart.areaUnderLineBrush, graphBounds);
         ChartHelper.drawPolyline(g, pointsToDraw, chart.graphPen);
     }

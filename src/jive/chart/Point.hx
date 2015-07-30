@@ -2,9 +2,6 @@ package jive.chart;
 
 class Point {
 
-    public var displayX:Float;
-    public var displayY:Float;
-
     public var x(get, null): Float;
     private function get_x(): Float { return xValue.floatValue; }
 
@@ -21,10 +18,7 @@ class Point {
     public var yValue: ChartValue;
 
     public function clone():Point {
-        var p = new Point(xValue, yValue);
-        p.displayX = displayX;
-        p.displayY = displayY;
-        return p;
+        return new Point(xValue, yValue);
     }
 
     public function new(x: Dynamic, y: Dynamic) {

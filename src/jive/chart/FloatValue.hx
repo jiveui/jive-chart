@@ -32,4 +32,9 @@ class FloatValue implements ChartValue {
             return str.substr(0, str.length-prec) + '.'+str.substr(str.length-prec);
         }
     }
+
+    public function getChartValueByFloatValue(v: Float): ChartValue {
+        return new FloatValue(v);
+    }
+
 }

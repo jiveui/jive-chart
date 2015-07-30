@@ -1,6 +1,7 @@
 package jive.chart;
 
 
+import org.aswing.JPanel;
 import org.aswing.VectorListModel;
 import org.aswing.Insets;
 import org.aswing.border.EmptyBorder;
@@ -33,7 +34,7 @@ class ChartUI extends BaseComponentUI {
 
     private var chart: Chart;
 
-    private var pointsToDraw: Array<Point>;
+    private var pointsToDraw: Array<DisplayPoint>;
     private var stats: ChartStatistics;
     private var graphBounds: IntRectangle;
 
@@ -58,6 +59,7 @@ class ChartUI extends BaseComponentUI {
         titleLabel.pack();
 
         calcStatisticsAndGraphBounds(b);
+        ChartHelper.calculateDisplayCoordinates(pointsToDraw, graphBounds, stats);
 
         createLabels(stats.labelsNumber);
 
@@ -74,7 +76,8 @@ class ChartUI extends BaseComponentUI {
         graphBounds.move(stats.yLabelDimension.width + chart.tickSize, verticalMarginForTopMostLabel + Std.int(titleLabel.preferredSize.height));
         graphBounds.resize(-stats.yLabelDimension.width - chart.tickSize - horizontalMarginForRightMostLabel,
                             -stats.xLabelDimension.height - chart.tickSize - verticalMarginForTopMostLabel - Std.int(titleLabel.preferredSize.height));
-        stats = ChartHelper.calcStatistics(chart.data, graphBounds, chart);
+        pointsToDraw = ChartHelper.getPointsNeededToDraw(chart.data, graphBounds, chart.minPointDistantion);
+        stats = ChartHelper.calcStatistics(Lambda.array(Lambda.map(pointsToDraw, function(p) { return cast(p, Point);})), graphBounds, chart);
     }
 
     override public function installUI(c:Component):Void {
@@ -185,11 +188,24 @@ class ChartUI extends BaseComponentUI {
     }
 
     public function drawBubble(index: Int) {
-
+        var p = pointsToDraw[index];
         var g: Graphics2D = new Graphics2D(chart.interactionLayer.graphics);
         g.clear();
 
-        var label = new JLabel(pointsToDraw[index].xCaption + "\n" + pointsToDraw[index].yCaption);
+        var text = "";
+        if (p.minX == p.maxX) {
+            text += pointsToDraw[index].minX.xCaption;
+        } else {
+            text += pointsToDraw[index].minX.xCaption + " - " + pointsToDraw[index].maxX.xCaption;
+        }
+        text += "\n";
+        if (p.minY == p.maxY) {
+            text += pointsToDraw[index].minY.yCaption;
+        } else {
+            text += pointsToDraw[index].minY.yCaption + " - " + pointsToDraw[index].maxY.yCaption;
+        }
+
+        var label = new JLabel(text);
         label.border = new EmptyBorder(null, Insets.createIdentic(chart.selectorBubblePadding));
 
         var pX: Float = pointsToDraw[index].displayX;
@@ -281,14 +297,14 @@ class ChartUI extends BaseComponentUI {
     * If points x and y have negative value, then axis x and y is negative.
     **/
     public function drawGraph(g: Graphics2D):Void{
-        var data = chart.data;
-
         g.fillRectangle(new SolidBrush(ASColor.WHITE.changeAlpha(0.0)), graphBounds.x, graphBounds.y, graphBounds.width, graphBounds.height);
 
-        ChartHelper.calculateDisplayCoordinates(chart.data, graphBounds, stats);
-        pointsToDraw = ChartHelper.getPointsNeededToDraw(chart.data, graphBounds, chart.minPointDistantion);
-
-        ChartHelper.drawPolyline(g, pointsToDraw, chart.graphPen);
+//        if (pointsToDraw.length >= 3) {
+//            ChartHelper.drawPolycurve(g, pointsToDraw, chart.graphPen);
+//        } else {
+            ChartHelper.drawPolyline(g, pointsToDraw, chart.graphPen);
+//
+//        }
 
         for (point in pointsToDraw){
             g.fillCircle(chart.markBrush, point.displayX, point.displayY, chart.markSize);

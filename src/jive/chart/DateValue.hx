@@ -16,4 +16,7 @@ class DateValue implements ChartValue {
 
     public function getCaptionByFloatValue(v: Float): String { return DateTools.format(Date.fromTime(v),"%m.%Y" ) ;}
 
+    public function getChartValueByFloatValue(v: Float): ChartValue {
+        return new DateValue(Date.fromTime(v));
+    }
 }

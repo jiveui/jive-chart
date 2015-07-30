@@ -15,4 +15,9 @@ class IntValue implements ChartValue {
     private function get_caption(): String { return Std.string(value); }
 
     public function getCaptionByFloatValue(v: Float): String { return Std.string(Std.int(v));}
+
+    public function getChartValueByFloatValue(v: Float): ChartValue {
+        return new IntValue(Std.int(v));
+    }
+
 }
