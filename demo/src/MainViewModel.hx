@@ -72,7 +72,15 @@ class MainViewModel implements IBindable {
 
         var http: Http = new Http(urls[index]);
 
-        http.onData = processData;
+        http.onData = function(data) {
+            trace(data);
+            try {
+                processData(data);
+            } catch(e: Dynamic) {
+                trace(e);
+                processData(cache[index]);
+            }
+        }
 
         http.onError = function(msg: String) {
             processData(cache[index]);
