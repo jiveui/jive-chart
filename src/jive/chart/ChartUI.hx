@@ -178,7 +178,8 @@ class ChartUI extends BaseComponentUI {
     * Mouse coordinats.
     **/
     public function onMouseMove(e:MouseEvent):Void {
-        var index = calculateNearesPointIndex(e.localX);
+
+        var index = calculateNearesPointIndex(chart.globalToComponent(new IntPoint(Std.int(e.stageX), 0)).x);
         drawBubble(index);
     }
 
