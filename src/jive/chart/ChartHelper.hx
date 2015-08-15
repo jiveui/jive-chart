@@ -254,18 +254,19 @@ class ChartHelper {
         if (null == points || points.length <= 0) return new IntDimension(0,0);
 
         return calcMaxLabelDimensionForValue(points[0].xValue, stats.minX, stats.maxX,
-            new Insets(chart.axisMarginBetweenLabelsAndAxis, Std.int(chart.axisMarginBetweenLabels/2), 0, Std.int(chart.axisMarginBetweenLabels/2)));
+            new Insets(chart.axisMarginBetweenLabelsAndAxis, Std.int(chart.axisMarginBetweenLabels/2), 0, Std.int(chart.axisMarginBetweenLabels/2)), chart);
     }
 
     public static function calcMaxLabelsDimesionForY(points: Array<Point>, stats: ChartStatistics, chart: Chart): IntDimension {
         if (null == points || points.length <= 0) return new IntDimension(0,0);
 
         return calcMaxLabelDimensionForValue(points[0].yValue, stats.minY, stats.maxY,
-            new Insets(Std.int(chart.axisMarginBetweenLabels/2), 0, Std.int(chart.axisMarginBetweenLabels/2), chart.axisMarginBetweenLabelsAndAxis));
+            new Insets(Std.int(chart.axisMarginBetweenLabels/2), 0, Std.int(chart.axisMarginBetweenLabels/2), chart.axisMarginBetweenLabelsAndAxis), chart);
     }
 
-    private static inline function calcMaxLabelDimensionForValue(value: ChartValue, min: Float, max: Float, insets: Insets): IntDimension {
+    private static inline function calcMaxLabelDimensionForValue(value: ChartValue, min: Float, max: Float, insets: Insets, chart: Chart): IntDimension {
         var label = new JLabel(value.getCaptionByFloatValue( if (min < 0) min else max));
+        label.font = chart.font;
         label.border = new EmptyBorder(null, insets);
         return label.preferredSize;
     }

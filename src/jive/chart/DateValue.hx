@@ -2,7 +2,7 @@ package jive.chart;
 
 class DateValue implements ChartValue {
 
-    var value(default, null): Date;
+    public var value(default, null): Date;
 
     public function new(v: Date) {
         value = v;

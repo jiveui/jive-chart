@@ -40,6 +40,8 @@ class ChartUI extends BaseComponentUI {
 
     public var labels:Array<JLabel>;
     public var titleLabel:JLabel;
+    public var xAxisLabel: JLabel;
+    public var yAxisLabel: JLabel;
 
     public function new() {
         super();
@@ -54,12 +56,17 @@ class ChartUI extends BaseComponentUI {
         super.paint(c, g, b);
 
         if (null == chart || null == chart.data || chart.data.length <= 0 || null == titleLabel) return;
+
         titleLabel.text = chart.title;
         titleLabel.font = chart.titleFont;
         titleLabel.pack();
 
+        updateAxisTitlesTextAndVisibility();
+
         calcStatisticsAndGraphBounds(b);
         ChartHelper.calculateDisplayCoordinates(pointsToDraw, graphBounds, stats);
+
+        updateAxisTitlesPositions();
 
         createLabels(stats.labelsNumber);
 
@@ -68,24 +75,72 @@ class ChartUI extends BaseComponentUI {
         clearBubble();
     }
 
+    private function updateAxisTitlesTextAndVisibility() {
+        xAxisLabel.text = if (null != chart.xAxis && chart.xAxisTitleVisible) chart.xAxis.axisUnit else null;
+        xAxisLabel.font = chart.font;
+        xAxisLabel.pack();
+
+        yAxisLabel.text = if (null != chart.yAxis && chart.yAxisTitleVisible) chart.yAxis.axisUnit else null;
+        yAxisLabel.font = chart.font;
+        yAxisLabel.rotation = -90;
+        yAxisLabel.pack();
+    }
+
+    private function updateAxisTitlesPositions() {
+        xAxisLabel.location = new IntPoint(
+            Std.int(graphBounds.x + (graphBounds.width-xAxisLabel.preferredSize.width)/2),
+            Std.int(graphBounds.leftBottom().y + stats.xLabelDimension.height + chart.axisMarginBetweenLabelsAndAxis));
+        yAxisLabel.location = new IntPoint(
+            graphBounds.x - getYAxisTitleMargin() - stats.yLabelDimension.width,
+            Std.int(graphBounds.y + graphBounds.height/2 + yAxisLabel.preferredSize.width));
+    }
+
     private inline function calcStatisticsAndGraphBounds(b: IntRectangle) {
         stats = ChartHelper.calcStatistics(chart.data, b, chart);
-        var verticalMarginForTopMostLabel = Std.int(stats.yLabelDimension.height/2)+1;
-        var horizontalMarginForRightMostLabel = Std.int(stats.xLabelDimension.width/2)+1;
-        graphBounds = b.clone();
-        graphBounds.move(stats.yLabelDimension.width + chart.tickSize, verticalMarginForTopMostLabel + Std.int(titleLabel.preferredSize.height));
-        graphBounds.resize(-stats.yLabelDimension.width - chart.tickSize - horizontalMarginForRightMostLabel,
-                            -stats.xLabelDimension.height - chart.tickSize - verticalMarginForTopMostLabel - Std.int(titleLabel.preferredSize.height));
+        calcGraphBounds(b);
         pointsToDraw = ChartHelper.getPointsNeededToDraw(chart.data, graphBounds, chart.minPointDistantion);
         stats = ChartHelper.calcStatistics(Lambda.array(Lambda.map(pointsToDraw, function(p) { return cast(p, Point);})), graphBounds, chart);
+    }
+
+    private inline function getXAxisTitleMargin(): Int {
+        return if (chart.xAxisTitleVisible && xAxisLabel.text != null && xAxisLabel.text != "") {
+            xAxisLabel.preferredSize.height + chart.axisMarginBetweenLabelsAndAxis;
+        } else 0;
+    }
+
+    private inline function getYAxisTitleMargin(): Int {
+        return if (chart.yAxisTitleVisible && yAxisLabel.text != null && yAxisLabel.text != "") {
+            yAxisLabel.preferredSize.height + chart.axisMarginBetweenLabelsAndAxis;
+        } else 0;
+    }
+
+    private inline function calcGraphBounds(b: IntRectangle) {
+
+        var xAxisTitleMargin = getXAxisTitleMargin();
+        var yAxisTitleMargin = getYAxisTitleMargin();
+
+        graphBounds = b.clone();
+        graphBounds.move(
+            stats.yLabelDimension.width + chart.tickSize + yAxisTitleMargin,
+            Std.int(chart.selectorSize+1) + Std.int(titleLabel.preferredSize.height));
+        graphBounds.resize(
+            -stats.yLabelDimension.width - chart.tickSize - Std.int(chart.selectorSize+1) - yAxisTitleMargin,
+            -stats.xLabelDimension.height - chart.tickSize - Std.int(chart.selectorSize+1) - Std.int(titleLabel.preferredSize.height) - xAxisTitleMargin);
     }
 
     override public function installUI(c:Component):Void {
         chart = AsWingUtils.as(c, Chart);
         chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+
         titleLabel = new JLabel();
         titleLabel.location = new IntPoint(0,0);
+
+        xAxisLabel = new JLabel();
+        yAxisLabel = new JLabel();
+
         chart.append(titleLabel);
+        chart.append(xAxisLabel);
+        chart.append(yAxisLabel);
     }
 
     override public function uninstallUI(c:Component):Void {
@@ -120,18 +175,21 @@ class ChartUI extends BaseComponentUI {
             var t = labels[i];
             updateLabelForInterpolatedValue(t, chart.data[0].xValue, i, graphBounds.width/captionWidthWithMargin, stats.minX, stats.maxX);
             var insets = t.getInsets();
-            t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + chart.tickSize) + insets.top);
-            chart.labelsLayer.append(t);
-
-            g.drawLine(chart.axisPen, x, y, x, y + chart.tickSize);
-            g.drawLine(chart.gridPen, x, y, x, graphBounds.y);
+            t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + chart.tickSize) + insets.top + chart.axisMarginBetweenLabelsAndAxis);
+            if (t.location.x + t.preferredSize.width <= graphBounds.rightBottom().x) {
+                chart.labelsLayer.append(t);
+                g.drawLine(chart.axisPen, x, y, x, y + chart.tickSize);
+                g.drawLine(chart.gridPen, x, y, x, graphBounds.y);
+            }
         }
     }
 
     private function createLabels(n: Int) {
         if (n > labels.length) {
             for (i in 0...n-labels.length) {
-                labels.push(new JLabel());
+                var l = new JLabel();
+                l.font = chart.font;
+                labels.push(l);
             }
         } else {
             for (i in 0...labels.length-n) {
@@ -157,11 +215,12 @@ class ChartUI extends BaseComponentUI {
             var t = labels[i + stats.xLabelsNumber];
             updateLabelForInterpolatedValue(t, chart.data[0].yValue, i, graphBounds.height/captionHeightWithMargin, stats.minY, stats.maxY);
             var insets = t.getInsets();
-            t.location = new IntPoint(insets.left, Std.int(y - t.preferredSize.height/2) + insets.top);
-            chart.labelsLayer.append(t);
-
-            g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
-            g.drawLine(chart.gridPen, x, y, graphBounds.x + graphBounds.width, y);
+            t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
+            if (t.location.y >= graphBounds.y) {
+                chart.labelsLayer.append(t);
+                g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
+                g.drawLine(chart.gridPen, x, y, graphBounds.x + graphBounds.width, y);
+            }
         }
     }
 
@@ -193,20 +252,14 @@ class ChartUI extends BaseComponentUI {
         var g: Graphics2D = new Graphics2D(chart.interactionLayer.graphics);
         g.clear();
 
-        var text = "";
-        if (p.minX == p.maxX) {
-            text += pointsToDraw[index].minX.xCaption;
-        } else {
-            text += pointsToDraw[index].minX.xCaption + " - " + pointsToDraw[index].maxX.xCaption;
-        }
-        text += "\n";
-        if (p.minY == p.maxY) {
-            text += pointsToDraw[index].minY.yCaption;
-        } else {
-            text += pointsToDraw[index].minY.yCaption + " - " + pointsToDraw[index].maxY.yCaption;
-        }
+
+        var text =
+            chart.xAxis.getLabelValueString(p.minX.xValue, p.maxX.xValue) +
+            "\n" +
+            chart.yAxis.getLabelValueString(p.minY.yValue, p.maxY.yValue);
 
         var label = new JLabel(text);
+        label.font = chart.font;
         label.border = new EmptyBorder(null, Insets.createIdentic(chart.selectorBubblePadding));
 
         var pX: Float = pointsToDraw[index].displayX;
