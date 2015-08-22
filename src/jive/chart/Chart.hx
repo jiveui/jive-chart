@@ -1,5 +1,9 @@
 package jive.chart;
 
+import org.aswing.geom.IntPoint;
+import jive.events.TransformGestureEvent;
+import org.aswing.Component;
+import org.aswing.JViewport;
 import org.aswing.ASFont;
 import org.aswing.JLabel;
 import org.aswing.border.EmptyBorder;
@@ -64,7 +68,7 @@ class Chart extends Container {
     public var selectorBubbleTailSize: Int = Std.int(UIManager.get("margin")/2);
     public var selectorBubbleCornerRadius: Int = UIManager.get("cornerSize");
 
-    public var selectorSize: Int = Std.int(UIManager.get("margin")/9);
+    public var selectorSize: Int = Std.int(UIManager.get("margin")/10);
     public var gridPen: IPen;
     public var areaUnderLineBrush: IBrush;
 
@@ -72,9 +76,9 @@ class Chart extends Container {
 
     public var markBrush: IBrush;
     public var markPen: IPen;
-    public var markSize: Int = Std.int(UIManager.get("margin")/10);
+    public var markSize: Int = Std.int(UIManager.get("margin")/12);
 
-    public var minPointDistantion: Int = Std.int(UIManager.get("margin")/5);
+    public var minPointDistantion: Int = Std.int(UIManager.get("margin")/4);
 
     public var data(get, set):Array<Point>;
     private var _data: Array<Point>;
@@ -89,6 +93,8 @@ class Chart extends Container {
 
     public var labelsLayer: Container;
     public var interactionLayer: Container;
+    public var graphViewport: JViewport;
+    public var graphComponent: Component;
 
     public function new(title = ""){
         super();
@@ -117,8 +123,18 @@ class Chart extends Container {
         titleFont = UIManager.get("controlHeaderFont");
         font = UIManager.get("minimumFont");
 
+        graphComponent = new Component();
+        graphViewport = new JViewport();
+        {
+            var container = new Container();
+            container.append(graphComponent);
+            container.append(interactionLayer);
+            graphViewport.append(container);
+            graphViewport.setViewPosition(new IntPoint(0,0));
+        }
+
+        append(graphViewport);
         append(labelsLayer);
-        append(interactionLayer);
 
         doLayout();
     }
@@ -137,6 +153,8 @@ class Chart extends Container {
     override public function getUIClassID():String{
         return "ChartUI";
     }
+
+
 }
 
 

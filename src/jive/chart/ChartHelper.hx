@@ -23,8 +23,10 @@ class ChartHelper {
 
     public static function calculateDisplayCoordinates(points: Array<DisplayPoint>, bounds: IntRectangle, stats: ChartStatistics) {
         for (p in points) {
-            p.displayX = bounds.x + (p.x - stats.minX) * stats.scaleX;
-            p.displayY = bounds.height + bounds.y - (p.y - stats.minY) * stats.scaleY;
+//            p.displayX = bounds.x + (p.x - stats.minX) * stats.scaleX;
+//            p.displayY = bounds.height + bounds.y - (p.y - stats.minY) * stats.scaleY;
+            p.displayX = (p.x - stats.minX) * stats.scaleX;
+            p.displayY = bounds.height - (p.y - stats.minY) * stats.scaleY;
         }
     }
 
@@ -40,8 +42,8 @@ class ChartHelper {
         var right = Std.int(Math.min(intervalLength, points.length));
 
         while (left < points.length) {
-            var s = calcPointsStatistics(points.slice(left, right));
-            result.push(new DisplayPoint(s.minX, s.maxX, s.minY, s.maxY, s.average));
+            var s = calcPointsStatistics(points, left, right);
+            result.push(new DisplayPoint(s.minX, s.maxX, s.minY, s.maxY));
             left += intervalLength;
             right += intervalLength;
             right = Std.int(Math.min(right, points.length));
@@ -220,34 +222,41 @@ class ChartHelper {
 
         if (null == points || points.length <= 0) return r;
 
+        r.xLabelDimension = calcMaxLabelsDimesionForX(points, r, chart);
+        r.yLabelDimension = calcMaxLabelsDimesionForY(points, r, chart);
+
+        fillMainStatistics(r, points, bounds, chart);
+        fillLabelsNumber(bounds, r);
+
+        return r;
+    }
+
+    public static function fillMainStatistics(r: ChartStatistics, points: Array<Point>, bounds: IntRectangle, chart: Chart) {
         //***************************************************************//
         // Calculate min and max
         //***************************************************************//
 
-        r.minX = points[0].x;
-        r.maxX = points[0].x;
-        r.minY = points[0].y;
-        r.maxY = points[0].y;
+                r.minX = points[0].x;
+                r.maxX = points[0].x;
+                r.minY = points[0].y;
+                r.maxY = points[0].y;
 
-        for (p in points){
-            if (r.minX > p.x) r.minX = p.x;
-            if (r.maxX < p.x) r.maxX = p.x;
-            if (r.minY > p.y) r.minY = p.y;
-            if (r.maxY < p.y) r.maxY = p.y;
-        }
+                for (p in points){
+                    if (r.minX > p.x) r.minX = p.x;
+                    if (r.maxX < p.x) r.maxX = p.x;
+                    if (r.minY > p.y) r.minY = p.y;
+                    if (r.maxY < p.y) r.maxY = p.y;
+                }
         //***************************************************************//
 
-        r.scaleX = bounds.width / (r.maxX - r.minX);
-        r.scaleY = bounds.height / (r.maxY - r.minY);
+                r.scaleX = bounds.width / (r.maxX - r.minX);
+                r.scaleY = bounds.height / (r.maxY - r.minY);
+    }
 
-        r.xLabelDimension = calcMaxLabelsDimesionForX(points, r, chart);
-        r.yLabelDimension = calcMaxLabelsDimesionForY(points, r, chart);
-
-        r.xLabelsNumber = Std.int(bounds.width/r.xLabelDimension.width) + 1;
-        r.yLabelsNumber = Std.int(bounds.height/r.yLabelDimension.height) + 1;
-        r.labelsNumber = r.xLabelsNumber + r.yLabelsNumber;
-
-        return r;
+    public static function fillLabelsNumber(bounds: IntRectangle, stats: ChartStatistics) {
+        stats.xLabelsNumber = Std.int(bounds.width/stats.xLabelDimension.width) + 1;
+        stats.yLabelsNumber = Std.int(bounds.height/stats.yLabelDimension.height) + 1;
+        stats.labelsNumber = stats.xLabelsNumber + stats.yLabelsNumber;
     }
 
     public static function calcMaxLabelsDimesionForX(points: Array<Point>, stats: ChartStatistics, chart: Chart): IntDimension {
@@ -271,18 +280,18 @@ class ChartHelper {
         return label.preferredSize;
     }
 
-    public static function calcPointsStatistics(points: Array<Point>): PointsStatistics {
+    public static function calcPointsStatistics(points: Array<Point>, left: Int, right: Int): PointsStatistics {
         if (null == points || points.length <= 0) return null;
 
-        var minX: Point = points[0];
-        var maxX: Point = points[0];
-        var minY: Point = points[0];
-        var maxY: Point = points[0];
-        var average: Point = points[0];
+        var minX: Point = points[left];
+        var maxX: Point = points[left];
+        var minY: Point = points[left];
+        var maxY: Point = points[left];
 
         var sumX: Float = 0;
         var sumY: Float = 0;
-        for (p in points) {
+        for (i in left...right) {
+            var p = points[i];
             if (minY.y > p.y) minY = p;
             if (maxY.y < p.y) maxY = p;
             if (minX.x > p.x) minX = p;
@@ -295,8 +304,7 @@ class ChartHelper {
             minX: minX,
             maxX: maxX,
             minY: minY,
-            maxY: maxY,
-            average: new Point(minX.xValue.getChartValueByFloatValue(sumX/points.length), minX.yValue.getChartValueByFloatValue(sumY/points.length))
+            maxY: maxY
         }
     }
 }

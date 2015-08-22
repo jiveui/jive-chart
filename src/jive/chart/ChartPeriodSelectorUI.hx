@@ -45,7 +45,7 @@ class ChartPeriodSelectorUI extends ChartUI {
     override public function paint(c:Component, g:Graphics2D, b:IntRectangle):Void {
         super.paint(c, g, b);
 
-        if (null == chart || null == chart.data || chart.data.length <= 0 || null == titleLabel) return;
+        if (null == chart || null == chart.data || chart.data.length <= 0 || null == titleLabel || null == graphBounds) return;
 
         selectorComponent.leftThumb.x = graphBounds.x - selectorComponent.leftThumb.width/2;
         selectorComponent.leftThumb.y = graphBounds.y + (graphBounds.height-selectorComponent.leftThumb.height)/2;

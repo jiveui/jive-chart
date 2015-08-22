@@ -10,8 +10,8 @@ class DisplayPoint extends Point {
     public var displayX:Float;
     public var displayY:Float;
 
-    public function new(minX: Point, maxX: Point, minY: Point, maxY: Point, average: Point) {
-        super(average.xValue, average.yValue);
+    public function new(minX: Point, maxX: Point, minY: Point, maxY: Point) {
+        super(minX.xValue, minX.yValue);
         this.minX = minX;
         this.maxX = maxX;
         this.minY = minY;
