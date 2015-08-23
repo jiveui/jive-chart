@@ -3,7 +3,7 @@ package jive.chart;
 import StringTools;
 class FloatValue implements ChartValue {
 
-    var value(default, null): Float;
+    public var value(default, null): Float;
 
     public function new(v: Float) {
         value = v;

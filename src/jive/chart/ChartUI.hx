@@ -229,7 +229,7 @@ class ChartUI extends BaseComponentUI {
             var minX = interpolateValue(chart.graphViewport.getViewPosition().x, graphBounds.width, stats.minX, stats.maxX);
             var maxX = interpolateValue(chart.graphViewport.getViewPosition().x + extentBounds.width, graphBounds.width, stats.minX, stats.maxX);
 
-            updateLabelForInterpolatedValue(t, chart.data[0].xValue, i, extentBounds.width/captionWidthWithMargin, minX, maxX);
+            updateLabelForInterpolatedValue(t, chart.data[0].xValue, i, extentBounds.width/captionWidthWithMargin, minX, maxX, chart.xAxis);
 
             var insets = t.getInsets();
             t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + chart.tickSize) + insets.top + chart.axisMarginBetweenLabelsAndAxis);
@@ -255,8 +255,10 @@ class ChartUI extends BaseComponentUI {
         }
     }
 
-    private function updateLabelForInterpolatedValue(label: JLabel, valueTranslator: ChartValue, index: Int, amount: Float, min: Float, max: Float) {
-        label.text = valueTranslator.getCaptionByFloatValue(interpolateValue(index, amount, min, max));
+    private function updateLabelForInterpolatedValue(label: JLabel, valueTranslator: ChartValue, index: Int, amount: Float, min: Float, max: Float, axis: Axis) {
+        var value = interpolateValue(index, amount, min, max);
+        label.text = if (null != axis) axis.getValueString(valueTranslator.getChartValueByFloatValue(value))
+            else valueTranslator.getCaptionByFloatValue(value);
         label.foreground = chart.axisLabelColor;
         label.pack();
     }
@@ -270,7 +272,7 @@ class ChartUI extends BaseComponentUI {
             var y = y0 - i * captionHeightWithMargin;
 
             var t = labels[i + stats.xLabelsNumber];
-            updateLabelForInterpolatedValue(t, chart.data[0].yValue, i, extentBounds.height/captionHeightWithMargin, stats.minY, stats.maxY);
+            updateLabelForInterpolatedValue(t, chart.data[0].yValue, i, extentBounds.height/captionHeightWithMargin, stats.minY, stats.maxY, chart.yAxis);
             var insets = t.getInsets();
             t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
             if (t.location.y >= extentBounds.y) {
