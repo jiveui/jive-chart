@@ -337,10 +337,6 @@ class ChartUI extends BaseComponentUI {
 
         var pointLocationAtExtent = chart.globalToComponent(chart.graphComponent.componentToGlobal(new IntPoint(Std.int(pX), Std.int(pY))));
 
-        trace(chart.graphComponent.componentToGlobal(new IntPoint(Std.int(pX), Std.int(pY))));
-        trace(pointLocationAtExtent);
-        trace(extentBounds);
-
         var cornerRadius = chart.selectorBubbleCornerRadius;
         var tailSize: Float = chart.selectorBubbleTailSize;
         var contentDimension = label.preferredSize;
