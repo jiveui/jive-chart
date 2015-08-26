@@ -34,7 +34,6 @@ class ChartPeriodSelector extends Chart {
     public var thumbSize: IntDimension = new IntDimension(15, 30);
     public var thumbCornerSize: Int = 5;
     public var thumbBrush: IBrush;
-    public var unselectedAreaBrush: IBrush;
 
     override private function set_data(v: Array<Point>): Array<Point> {
         super.set_data(v);
@@ -46,10 +45,12 @@ class ChartPeriodSelector extends Chart {
     public function new(){
         super("");
 
+        fillSpaceUnderPolyline = true;
+        markPoints = false;
+
         graphPen = new Pen(ASColor.RED, 1, true);
 
         thumbBrush = new SolidBrush(ASColor.LIGHT_GRAY);
-        unselectedAreaBrush = new SolidBrush(new ASColor(0xcccccc, 0.6));
 
         leftThumb = new Sprite();
         leftThumb.useHandCursor = true;

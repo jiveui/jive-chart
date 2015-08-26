@@ -178,7 +178,7 @@ class ChartUI extends BaseComponentUI {
         chart.addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
 
         chart.graphViewport.addStateListener(function(e) {
-            drawGridVerticalLinesAndCaptions(new Graphics2D(chart.graphics));
+            drawAxisesWithoutRemovingLabels(new Graphics2D(chart.graphics));
         });
 
         titleLabel = new JLabel();
@@ -199,18 +199,19 @@ class ChartUI extends BaseComponentUI {
         chart.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
     }
 
-
     /**
     * Draw axises x and y;
     * draw text value axises.
     **/
     public function drawAxises(g: Graphics2D) {
+        chart.labelsLayer.removeAll();
+        drawAxisesWithoutRemovingLabels(g);
+    }
 
+    inline private function drawAxisesWithoutRemovingLabels(g: Graphics2D) {
+        g.clear();
         g.drawLine(chart.axisPen, extentBounds.x, extentBounds.y, extentBounds.x, extentBounds.y + extentBounds.height);
         g.drawLine(chart.axisPen, extentBounds.x, extentBounds.y + extentBounds.height, extentBounds.x + extentBounds.width, extentBounds.y + extentBounds.height);
-
-        chart.labelsLayer.removeAll();
-        
         drawGridVerticalLinesAndCaptions(g);
         drawGridHorizontalLinesAndCaptions(g);
         drawGridBorderLines(g);
@@ -430,11 +431,17 @@ class ChartUI extends BaseComponentUI {
 
         g.fillRectangle(new SolidBrush(ASColor.WHITE.changeAlpha(0.0)), 0, 0, graphBounds.width, graphBounds.height);
 
+        if (chart.fillSpaceUnderPolyline) {
+            ChartHelper.fillSpaceUnderPolyline(g, pointsToDraw, chart.areaUnderLineBrush, graphBounds);
+        }
+
         ChartHelper.drawPolyline(g, pointsToDraw, chart.graphPen);
 
-        for (point in pointsToDraw){
-            g.fillCircle(chart.markBrush, point.displayX, point.displayY, chart.markSize);
-            g.drawCircle(chart.markPen, point.displayX, point.displayY, chart.markSize);
+        if (chart.markPoints) {
+            for (point in pointsToDraw){
+                g.fillCircle(chart.markBrush, point.displayX, point.displayY, chart.markSize);
+                g.drawCircle(chart.markPen, point.displayX, point.displayY, chart.markSize);
+            }
         }
     }
 

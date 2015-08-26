@@ -106,12 +106,6 @@ class ChartPeriodSelectorUI extends ChartUI {
         selectorComponent.rightIndex = getFullIndexByX(Std.int(selectorComponent.rightThumb.x + selectorComponent.rightThumb.width/2));
     }
 
-    override public function drawGraph(g: Graphics2D):Void{
-        g.fillRectangle(new SolidBrush(ASColor.WHITE.changeAlpha(0.0)), graphBounds.x, graphBounds.y, graphBounds.width, graphBounds.height);
-        ChartHelper.fillSpaceUnderPolyline(g, pointsToDraw, chart.areaUnderLineBrush, graphBounds);
-        ChartHelper.drawPolyline(g, pointsToDraw, chart.graphPen);
-    }
-
     private function updateUnselectedArea() {
         var g: Graphics2D = new Graphics2D(chart.interactionLayer.graphics);
         g.clear();

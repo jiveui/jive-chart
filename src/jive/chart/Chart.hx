@@ -91,6 +91,10 @@ class Chart extends Container {
         return _data;
     }
 
+    public var fillSpaceUnderPolyline: Bool = false;
+    public var markPoints: Bool = true;
+    public var unselectedAreaBrush: IBrush;
+
     public var labelsLayer: Container;
     public var interactionLayer: Container;
     public var graphViewport: JViewport;
@@ -108,6 +112,7 @@ class Chart extends Container {
 
         axisPen = new Pen(ASColor.BLACK, 1.5 * dpiScale, true);
         graphPen = new Pen(ASColor.RED, 2.5 * dpiScale, true);
+        unselectedAreaBrush = new SolidBrush(ASColor.RED.changeAlpha(0.5));
         gridPen = new Pen(ASColor.GRAY, 0.3 * dpiScale, true);
         selectorPen = new Pen(ASColor.RED, 1 * dpiScale, true);
         selectorBrush = new SolidBrush(ASColor.RED);

@@ -43,4 +43,8 @@ class Axis {
     public dynamic function getValueString(value: ChartValue) {
         return value.caption;
     }
+
+    public dynamic function getShortValueString(value: ChartValue) {
+        return value.caption;
+    }
 }
