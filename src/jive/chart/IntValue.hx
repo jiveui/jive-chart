@@ -1,22 +1,18 @@
 package jive.chart;
 
-class IntValue implements ChartValue {
+class IntValue extends FloatValue {
 
-    var value(default, null): Int;
+    var intValue(default, null): Int;
 
     public function new(v: Int) {
-        value = v;
+        super(v);
+        intValue = v;
     }
 
-    public var floatValue(get, null): Float;
-    private function get_floatValue(): Float { return value; }
-
-    public var caption(get, null): String;
-    private function get_caption(): String { return Std.string(value); }
-
-    public function getCaptionByFloatValue(v: Float): String { return Std.string(Std.int(v));}
-
-    public function getChartValueByFloatValue(v: Float): ChartValue {
+    override private function get_floatValue(): Float { return intValue; }
+    override private function get_caption(): String { return Std.string(intValue); }
+    override public function getCaptionByFloatValue(v: Float): String { return Std.string(Std.int(v));}
+    override public function getChartValueByFloatValue(v: Float): ChartValue {
         return new IntValue(Std.int(v));
     }
 
