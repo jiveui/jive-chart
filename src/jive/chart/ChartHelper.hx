@@ -183,26 +183,28 @@ class ChartHelper {
             result.push({ p1: new flash.geom.Point(controlPointsX.p1[i], controlPointsY.p1[i]), p2: new flash.geom.Point(controlPointsX.p2[i], controlPointsY.p2[i])});
         }
 
-        trace(result.length);
-
         return result;
     }
 
     public static function fillSpaceUnderPolyline(g: Graphics2D, points: Array<DisplayPoint>, brush: IBrush, bounds: IntRectangle) {
-        g.beginFill(brush);
-        var first = true;
-        for (point in points){
-            if (first) {
-                g.moveTo(point.displayX, point.displayY);
-                first = false;
-            } else {
-                g.lineTo(point.displayX, point.displayY);
-            }
+//        g.beginFill(brush);
+//        var first = true;
+//        g.moveTo(points[0].displayX, bounds.y + bounds.height + 2);
+//        for (point in points){
+//            g.lineTo(point.displayX, point.displayY);
+//        }
+//        g.lineTo(points[points.length-1].displayX, bounds.y + bounds.height + 2);
+//        g.lineTo(points[0].displayX, bounds.y + bounds.height + 2);
+//        g.lineTo(points[0].displayX, points[0].displayY);
+//        g.endFill();
+        for (i in 0...points.length-1){
+            g.beginFill(brush);
+            g.moveTo(points[i].displayX, bounds.y + bounds.height + 2);
+            g.lineTo(points[i].displayX, points[i].displayY);
+            g.lineTo(points[i+1].displayX, points[i+1].displayY);
+            g.lineTo(points[i+1].displayX, bounds.y + bounds.height + 2);
+            g.endFill();
         }
-        g.lineTo(points[points.length-1].displayX, bounds.y + bounds.height);
-        g.lineTo(points[0].displayX, bounds.y + bounds.height);
-        g.lineTo(points[0].displayX, points[0].displayY);
-        g.endFill();
     }
 
     public static function calcStatistics(points: Array<Point>, bounds: IntRectangle, chart: Chart): ChartStatistics {
