@@ -34,6 +34,7 @@ class Chart extends Container {
 
     public var xAxisTitleVisible = false;
     public var yAxisTitleVisible = false;
+    public var yAxisTitlePosition = YAxisTitlePosition.left;
 
     public var yAxis(get, set): Axis;
     private var _yAxis: Axis;

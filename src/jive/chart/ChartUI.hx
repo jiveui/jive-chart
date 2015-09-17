@@ -105,7 +105,9 @@ class ChartUI extends BaseComponentUI {
 
         yAxisLabel.text = if (null != chart.yAxis && chart.yAxisTitleVisible) chart.yAxis.axisUnit else null;
         yAxisLabel.font = chart.font;
-        yAxisLabel.rotation = -90;
+        if (chart.yAxisTitlePosition == YAxisTitlePosition.left) {
+            yAxisLabel.rotation = -90;
+        }
         yAxisLabel.pack();
     }
 
@@ -113,9 +115,15 @@ class ChartUI extends BaseComponentUI {
         xAxisLabel.location = new IntPoint(
             Std.int(graphBounds.x + (graphBounds.width-xAxisLabel.preferredSize.width)/2),
             Std.int(graphBounds.leftBottom().y + stats.xLabelDimension.height + chart.axisMarginBetweenLabelsAndAxis));
-        yAxisLabel.location = new IntPoint(
-            graphBounds.x - getYAxisTitleMargin() - stats.yLabelDimension.width,
-            Std.int(graphBounds.y + graphBounds.height/2 + yAxisLabel.preferredSize.width));
+        yAxisLabel.location =
+            if (chart.yAxisTitlePosition == YAxisTitlePosition.left)
+                new IntPoint(
+                    graphBounds.x - getYAxisTitleMargin() - stats.yLabelDimension.width,
+                    Std.int(graphBounds.y + graphBounds.height/2 + yAxisLabel.preferredSize.width))
+            else
+                new IntPoint(
+                    graphBounds.x - stats.yLabelDimension.width,
+                    Std.int(graphBounds.y - getYAxisTitleMargin()));
     }
 
     private function calcStatisticsAndGraphBounds(b: IntRectangle) {
@@ -134,7 +142,7 @@ class ChartUI extends BaseComponentUI {
 
     private function getYAxisTitleMargin(): Int {
         return if (chart.yAxisTitleVisible && yAxisLabel.text != null && yAxisLabel.text != "") {
-            yAxisLabel.preferredSize.height + chart.axisMarginBetweenLabelsAndAxis;
+            yAxisLabel.preferredSize.height  + chart.axisMarginBetweenLabelsAndAxis;
         } else 0;
     }
 
@@ -148,11 +156,11 @@ class ChartUI extends BaseComponentUI {
         var yAxisTitleMargin = getYAxisTitleMargin();
         extentBounds = b.clone();
         extentBounds.move(
-            stats.yLabelDimension.width + chart.tickSize + yAxisTitleMargin,
-            Std.int(chart.selectorSize+1) + Std.int(titleLabel.preferredSize.height));
+            stats.yLabelDimension.width + chart.tickSize + (if (chart.yAxisTitlePosition == YAxisTitlePosition.left) yAxisTitleMargin else 0),
+            Std.int(chart.selectorSize+1) + Std.int(titleLabel.preferredSize.height) + (if (chart.yAxisTitlePosition != YAxisTitlePosition.left) yAxisTitleMargin else 0));
         extentBounds.resize(
-            -stats.yLabelDimension.width - chart.tickSize  - yAxisTitleMargin,
-            -stats.xLabelDimension.height - chart.tickSize - Std.int(titleLabel.preferredSize.height) - xAxisTitleMargin);
+            -stats.yLabelDimension.width - chart.tickSize  - (if (chart.yAxisTitlePosition == YAxisTitlePosition.left) yAxisTitleMargin else 0),
+            -stats.xLabelDimension.height - chart.tickSize - Std.int(titleLabel.preferredSize.height) - xAxisTitleMargin - (if (chart.yAxisTitlePosition != YAxisTitlePosition.left) yAxisTitleMargin else 0));
 
         chart.graphViewport.preferredSize = new IntDimension(extentBounds.width, extentBounds.height);
         chart.graphViewport.setSize(chart.graphViewport.preferredSize);
