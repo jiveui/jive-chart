@@ -225,11 +225,24 @@ class ChartUI extends BaseComponentUI {
         drawGridBorderLines(g);
     }
 
+    private function getGridPoints(n: Int, min: Float, max: Float) {
+        var draftStep = (max-min)/n;
+        var power = Math.log(draftStep)/Math.log(10);
+        var flooredPower = Math.ffloor(power);
+        var low = Math.pow(10, flooredPower) ;
+        var high = 10 * low;
+        var half = high/2;
+        var step = if (draftStep <= half) half else high;
+        var first = Math.ffloor(min/step)*step;
+        return [for (i in 0...n) first + i*step].filter(function(x) { return x - max < step && min <= x; });
+    }
+
     private function drawGridVerticalLinesAndCaptions(g: Graphics2D) {
         var captionWidthWithMargin = stats.xLabelDimension.width;
         var ticksAmount = Std.int(extentBounds.width/captionWidthWithMargin)+1;
         var y = extentBounds.leftBottom().y;
         var x0 = extentBounds.x;
+
         for (i in 0...ticksAmount) {
             var x = x0 + i * captionWidthWithMargin;
 
@@ -266,8 +279,12 @@ class ChartUI extends BaseComponentUI {
 
     private function updateLabelForInterpolatedValue(label: JLabel, valueTranslator: ChartValue, index: Int, amount: Float, min: Float, max: Float, axis: Axis) {
         var value = interpolateValue(index, amount, min, max);
+        updateLabel(label, valueTranslator, value, axis);
+    }
+
+    private function updateLabel(label: JLabel, valueTranslator: ChartValue, value: Float, axis: Axis) {
         label.text = if (null != axis) axis.getValueString(valueTranslator.getChartValueByFloatValue(value))
-            else valueTranslator.getCaptionByFloatValue(value);
+        else valueTranslator.getCaptionByFloatValue(value);
         label.foreground = chart.axisLabelColor;
         label.pack();
     }
@@ -277,11 +294,12 @@ class ChartUI extends BaseComponentUI {
         var ticksAmount = Std.int(extentBounds.height/captionHeightWithMargin)+1;
         var x = extentBounds.x;
         var y0 = extentBounds.height + extentBounds.y;
-        for (i in 0...ticksAmount) {
-            var y = y0 - i * captionHeightWithMargin;
 
+        var i = 0;
+        for (p in getGridPoints(ticksAmount, stats.minY, stats.maxY)) {
+            var y = y0 - extentBounds.height * (p - stats.minY) / (stats.maxY - stats.minY);
             var t = labels[i + stats.xLabelsNumber];
-            updateLabelForInterpolatedValue(t, chart.data[0].yValue, i, extentBounds.height/captionHeightWithMargin, stats.minY, stats.maxY, chart.yAxis);
+            updateLabel(t, chart.data[0].yValue, p, chart.yAxis);
             var insets = t.getInsets();
             t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
             if (t.location.y >= extentBounds.y) {
@@ -289,7 +307,22 @@ class ChartUI extends BaseComponentUI {
                 g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
                 g.drawLine(chart.gridPen, x, y, extentBounds.x + extentBounds.width, y);
             }
+            i += 1;
         }
+
+//        for (i in 0...ticksAmount) {
+//            var y = y0 - i * captionHeightWithMargin;
+//
+//            var t = labels[i + stats.xLabelsNumber];
+//            updateLabelForInterpolatedValue(t, chart.data[0].yValue, i, extentBounds.height/captionHeightWithMargin, stats.minY, stats.maxY, chart.yAxis);
+//            var insets = t.getInsets();
+//            t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
+//            if (t.location.y >= extentBounds.y) {
+//                chart.labelsLayer.append(t);
+//                g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
+//                g.drawLine(chart.gridPen, x, y, extentBounds.x + extentBounds.width, y);
+//            }
+//        }
     }
 
     private function drawGridBorderLines(g: Graphics2D) {
