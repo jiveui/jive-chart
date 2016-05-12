@@ -1,6 +1,6 @@
 package jive.chart;
 
-import org.aswing.geom.IntDimension;
+import jive.geom.IntDimension;
 
 typedef ChartStatistics = {
     minX: Float,

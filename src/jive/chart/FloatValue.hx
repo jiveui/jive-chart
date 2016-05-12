@@ -1,6 +1,7 @@
 package jive.chart;
 
 import StringTools;
+
 class FloatValue implements ChartValue {
 
     public var value(default, null): Float;

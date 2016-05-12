@@ -1,19 +1,7 @@
 package jive.chart;
 
-
+import jive.*;
 import flash.system.Capabilities;
-import jive.chart.ChartHelper;
-import jive.events.TransformGestureEvent;
-import org.aswing.JPanel;
-import org.aswing.VectorListModel;
-import org.aswing.Insets;
-import org.aswing.border.EmptyBorder;
-import org.aswing.graphics.SolidBrush;
-import org.aswing.ASColor;
-import org.aswing.graphics.SolidBrush;
-import org.aswing.plaf.basic.BasicGraphicsUtils;
-import org.aswing.geom.IntDimension;
-import org.aswing.JLabel;
 import flash.Lib;
 import flash.display.Stage;
 import flash.events.EventDispatcher;
@@ -23,14 +11,6 @@ import flash.display.Sprite;
 import flash.display.Graphics;
 import flash.events.MouseEvent;
 import flash.display.Shape;
-import org.aswing.geom.IntPoint;
-import org.aswing.JTextField;
-import org.aswing.ASColor;
-import org.aswing.AsWingUtils;
-import org.aswing.geom.IntRectangle;
-import org.aswing.graphics.Graphics2D;
-import org.aswing.Component;
-import org.aswing.plaf.BaseComponentUI;
 
 class ChartUI extends BaseComponentUI {
     private var chart: Chart;
@@ -71,31 +51,31 @@ class ChartUI extends BaseComponentUI {
         return "Chart.";
     }
 
-    override public function paint(c:Component, g:Graphics2D, b:IntRectangle):Void {
+    // override public function paint(c:Component, g:Graphics2D, b:IntRectangle):Void {
 
-        if (null == chart || null == xAxisLabel || null == yAxisLabel) return; // Not installed yet
+    //     if (null == chart || null == xAxisLabel || null == yAxisLabel) return; // Not installed yet
 
-        super.paint(c, g, b);
+    //     super.paint(c, g, b);
 
-        if (null == chart || null == chart.data || chart.data.length <= 0 || null == titleLabel) return;
+    //     if (null == chart || null == chart.data || chart.data.length <= 0 || null == titleLabel) return;
 
-        titleLabel.text = chart.title;
-        titleLabel.font = chart.titleFont;
-        titleLabel.pack();
+    //     titleLabel.text = chart.title;
+    //     // titleLabel.font = chart.titleFont;
+    //     titleLabel.pack();
 
-        updateAxisTitlesTextAndVisibility();
+    //     updateAxisTitlesTextAndVisibility();
 
-        calcStatisticsAndGraphBounds(b);
-        ChartHelper.calculateDisplayCoordinates(pointsToDraw, graphBounds, stats);
+    //     calcStatisticsAndGraphBounds(b);
+    //     ChartHelper.calculateDisplayCoordinates(pointsToDraw, graphBounds, stats);
 
-        updateAxisTitlesPositions();
+    //     updateAxisTitlesPositions();
 
-        createLabels(stats.labelsNumber);
+    //     createLabels(stats.labelsNumber);
 
-        drawAxises(g);
-        drawGraph(new Graphics2D(chart.graphComponent.graphics));
-        clearBubble();
-    }
+    //     drawAxises(g);
+    //     drawGraph(new Graphics2D(chart.graphComponent.graphics));
+    //     clearBubble();
+    // }
 
     private function updateAxisTitlesTextAndVisibility() {
 
@@ -289,41 +269,41 @@ class ChartUI extends BaseComponentUI {
         label.pack();
     }
 
-    private function drawGridHorizontalLinesAndCaptions(g: Graphics2D) {
-        var captionHeightWithMargin = stats.yLabelDimension.height;
-        var ticksAmount = Std.int(extentBounds.height/captionHeightWithMargin)+1;
-        var x = extentBounds.x;
-        var y0 = extentBounds.height + extentBounds.y;
+//     private function drawGridHorizontalLinesAndCaptions(g: Graphics2D) {
+//         var captionHeightWithMargin = stats.yLabelDimension.height;
+//         var ticksAmount = Std.int(extentBounds.height/captionHeightWithMargin)+1;
+//         var x = extentBounds.x;
+//         var y0 = extentBounds.height + extentBounds.y;
 
-        var i = 0;
-        for (p in getGridPoints(ticksAmount, stats.minY, stats.maxY)) {
-            var y = y0 - extentBounds.height * (p - stats.minY) / (stats.maxY - stats.minY);
-            var t = labels[i + stats.xLabelsNumber];
-            updateLabel(t, chart.data[0].yValue, p, chart.yAxis);
-            var insets = t.getInsets();
-            t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
-            if (t.location.y >= extentBounds.y) {
-                chart.labelsLayer.append(t);
-                g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
-                g.drawLine(chart.gridPen, x, y, extentBounds.x + extentBounds.width, y);
-            }
-            i += 1;
-        }
+//         var i = 0;
+//         for (p in getGridPoints(ticksAmount, stats.minY, stats.maxY)) {
+//             var y = y0 - extentBounds.height * (p - stats.minY) / (stats.maxY - stats.minY);
+//             var t = labels[i + stats.xLabelsNumber];
+//             updateLabel(t, chart.data[0].yValue, p, chart.yAxis);
+//             var insets = t.getInsets();
+//             t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
+//             if (t.location.y >= extentBounds.y) {
+//                 chart.labelsLayer.append(t);
+//                 g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
+//                 g.drawLine(chart.gridPen, x, y, extentBounds.x + extentBounds.width, y);
+//             }
+//             i += 1;
+//         }
 
-//        for (i in 0...ticksAmount) {
-//            var y = y0 - i * captionHeightWithMargin;
-//
-//            var t = labels[i + stats.xLabelsNumber];
-//            updateLabelForInterpolatedValue(t, chart.data[0].yValue, i, extentBounds.height/captionHeightWithMargin, stats.minY, stats.maxY, chart.yAxis);
-//            var insets = t.getInsets();
-//            t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
-//            if (t.location.y >= extentBounds.y) {
-//                chart.labelsLayer.append(t);
-//                g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
-//                g.drawLine(chart.gridPen, x, y, extentBounds.x + extentBounds.width, y);
-//            }
-//        }
-    }
+// //        for (i in 0...ticksAmount) {
+// //            var y = y0 - i * captionHeightWithMargin;
+// //
+// //            var t = labels[i + stats.xLabelsNumber];
+// //            updateLabelForInterpolatedValue(t, chart.data[0].yValue, i, extentBounds.height/captionHeightWithMargin, stats.minY, stats.maxY, chart.yAxis);
+// //            var insets = t.getInsets();
+// //            t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
+// //            if (t.location.y >= extentBounds.y) {
+// //                chart.labelsLayer.append(t);
+// //                g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
+// //                g.drawLine(chart.gridPen, x, y, extentBounds.x + extentBounds.width, y);
+// //            }
+// //        }
+//     }
 
     private function drawGridBorderLines(g: Graphics2D) {
         g.drawLine(chart.gridPen, extentBounds.x, extentBounds.y, extentBounds.x + extentBounds.width, extentBounds.y);
@@ -334,27 +314,27 @@ class ChartUI extends BaseComponentUI {
         return index * ((max - min) / length) + min;
     }
 
-    private var shouldBubbleBeShowed: Bool;
-    private var mouseDownPoint: IntPoint;
+    // private var shouldBubbleBeShowed: Bool;
+    // private var mouseDownPoint: IntPoint;
 
-    public function onMouseDown(e:MouseEvent):Void {
-        shouldBubbleBeShowed = true;
-        mouseDownPoint = new IntPoint(Std.int(e.stageX), Std.int(e.stageY));
-    }
+    // public function onMouseDown(e:MouseEvent):Void {
+    //     shouldBubbleBeShowed = true;
+    //     mouseDownPoint = new IntPoint(Std.int(e.stageX), Std.int(e.stageY));
+    // }
 
-    public function onMouseMove(e:MouseEvent):Void {
-        if (shouldBubbleBeShowed == true && mouseDownPoint.distance(new IntPoint(Std.int(e.stageX), Std.int(e.stageY))) > Capabilities.screenDPI/10) {
-            shouldBubbleBeShowed = false;
-            clearBubble();
-        }
-    }
+    // public function onMouseMove(e:MouseEvent):Void {
+    //     if (shouldBubbleBeShowed == true && mouseDownPoint.distance(new IntPoint(Std.int(e.stageX), Std.int(e.stageY))) > Capabilities.screenDPI/10) {
+    //         shouldBubbleBeShowed = false;
+    //         clearBubble();
+    //     }
+    // }
 
-    public function onMouseUp(e:MouseEvent):Void {
-        if (shouldBubbleBeShowed) {
-            var index = calculateNearesPointIndex(chart.graphComponent.globalToComponent(new IntPoint(Std.int(e.stageX), 0)).x);
-            drawBubble(index);
-        }
-    }
+    // public function onMouseUp(e:MouseEvent):Void {
+    //     if (shouldBubbleBeShowed) {
+    //         var index = calculateNearesPointIndex(chart.graphComponent.globalToComponent(new IntPoint(Std.int(e.stageX), 0)).x);
+    //         drawBubble(index);
+    //     }
+    // }
 
     private function clearBubble() {
         chart.interactionLayer.removeAll();

@@ -1,17 +1,16 @@
 package jive.chart;
 
-import org.aswing.ASColor;
+import jive.Color;
 import jive.chart.Point;
-import org.aswing.border.EmptyBorder;
-import org.aswing.Insets;
-import org.aswing.Insets;
-import org.aswing.graphics.IPen;
-import org.aswing.JLabel;
-import org.aswing.geom.IntDimension;
-import org.aswing.graphics.IBrush;
-import org.aswing.graphics.Graphics2D;
-import org.aswing.graphics.Pen;
-import org.aswing.geom.IntRectangle;
+import jive.EmptyLayout;
+import jive.geom.Insets;
+import jive.graphics.IPen;
+// import jive.JLabel;
+import jive.geom.IntDimension;
+import jive.graphics.IBrush;
+import jive.graphics.Graphics2D;
+import jive.graphics.Pen;
+import jive.geom.IntRectangle;
 
 using Lambda;
 using Math;
@@ -276,10 +275,13 @@ class ChartHelper {
     }
 
     private static inline function calcMaxLabelDimensionForValue(value: ChartValue, min: Float, max: Float, insets: Insets, chart: Chart): IntDimension {
-        var label = new JLabel(value.getCaptionByFloatValue( if (min < 0) min else max));
-        label.font = chart.font;
-        label.border = new EmptyBorder(null, insets);
-        return label.preferredSize;
+        // JLabel not implemented
+        // var label = new JLabel(value.getCaptionByFloatValue( if (min < 0) min else max));
+        // label.font = chart.font;
+        // label.border = new EmptyBorder(null, insets);
+        // return label.preferredSize;
+
+        return new IntDimension(100, 20);
     }
 
     public static function calcPointsStatistics(points: Array<Point>, left: Int, right: Int): PointsStatistics {

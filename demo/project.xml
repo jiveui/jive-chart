@@ -10,14 +10,15 @@
 
     <!-- classpath, haxe libs -->
     <source path="src" />
-    <source path="gen" />
 
     <haxelib name="openfl" />
     <haxelib name="jive"/>
     <haxelib name="jive-chart"/>
-    <haxelib name="bindx"/>
 
     <template path="templates" />
+    
+    <haxelib name="debugger" if="debug" />
+    <haxedef name="HXCPP_DEBUGGER" if="debug"/>
 
     <assets path="assets" rename=""/>
 

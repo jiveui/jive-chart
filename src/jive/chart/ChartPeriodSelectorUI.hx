@@ -1,18 +1,10 @@
 package jive.chart;
 
-import org.aswing.JLabel;
 import haxe.Timer;
-import org.aswing.graphics.Graphics2D;
-import org.aswing.geom.IntPoint;
-import org.aswing.ASColor;
-import org.aswing.graphics.SolidBrush;
 import flash.Lib;
 import flash.events.MouseEvent;
 import flash.display.Sprite;
 import flash.display.Graphics;
-import org.aswing.AsWingUtils;
-import org.aswing.geom.IntRectangle;
-import org.aswing.Component;
 
 class ChartPeriodSelectorUI extends ChartUI {
 

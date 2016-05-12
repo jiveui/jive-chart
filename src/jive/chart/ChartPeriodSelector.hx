@@ -1,10 +1,8 @@
 package jive.chart;
 
-import org.aswing.graphics.Pen;
-import org.aswing.ASColor;
-import org.aswing.graphics.SolidBrush;
-import org.aswing.graphics.IBrush;
-import org.aswing.geom.IntDimension;
+import jive.*;
+import jive.geom.*;
+import jive.graphics.*;
 import flash.display.Sprite;
 
 class ChartPeriodSelector extends Chart {
@@ -48,9 +46,9 @@ class ChartPeriodSelector extends Chart {
         fillSpaceUnderPolyline = true;
         markPoints = false;
 
-        graphPen = new Pen(ASColor.RED, 1, true);
+        graphPen = new Pen(Color.RED, 1, true);
 
-        thumbBrush = new SolidBrush(ASColor.LIGHT_GRAY);
+        thumbBrush = new SolidBrush(Color.LIGHT_GRAY);
 
         leftThumb = new Sprite();
         leftThumb.useHandCursor = true;
@@ -59,24 +57,11 @@ class ChartPeriodSelector extends Chart {
         rightThumb.useHandCursor = true;
         rightThumb.buttonMode = true;
 
-        addChild(leftThumb);
-        addChild(rightThumb);
+        displayObjectContainer.addChild(leftThumb);
+        displayObjectContainer.addChild(rightThumb);
     }
 
-    @:dox(hide)
-    override public function getDefaultBasicUIClass():Class<Dynamic> {
-        return jive.chart.ChartPeriodSelectorUI;
-    }
-
-    @:dox(hide)
-    override public function getUIClassID():String{
-        return "ChartPeriodSelectorUI";
-    }
-
-    private function updateSelectedData() {
-        selectedData = data.slice(leftIndex, rightIndex + 1);
-    }
-
+    private function updateSelectedData() { 
+        selectedData = data.slice(leftIndex, rightIndex + 1); 
+    } 
 }
-
-

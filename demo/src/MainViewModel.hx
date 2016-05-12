@@ -5,13 +5,6 @@ import openfl.Assets;
 import haxe.ds.StringMap;
 import flash.events.Event;
 import flash.Lib;
-import org.aswing.CenterLayout;
-import org.aswing.BorderLayout;
-import org.aswing.CenterLayout;
-import org.aswing.border.TitledBorder;
-import org.aswing.FlowLayout;
-import org.aswing.JPopup;
-import org.aswing.JProgressBar;
 import haxe.Http;
 import jive.chart.Point;
 import bindx.IBindable;
@@ -43,18 +36,18 @@ class MainViewModel implements IBindable {
     }
 
 
-    private var loadPopup(get, null):JPopup;
-    private function get_loadPopup(): JPopup {
-        if (null == _loadPopup) {
-            _loadPopup = new LoadingView();
-            _loadPopup.setSizeWH(Lib.current.stage.stageWidth, Lib.current.stage.stageHeight);
-            Lib.current.stage.addEventListener(Event.RESIZE, function(e) {
-                _loadPopup.setSizeWH(Lib.current.stage.stageWidth, Lib.current.stage.stageHeight);
-            });
-        }
-        return _loadPopup;
-    }
-    private var _loadPopup: JPopup;
+    // private var loadPopup(get, null):JPopup;
+    // private function get_loadPopup(): JPopup {
+    //     if (null == _loadPopup) {
+    //         _loadPopup = new LoadingView();
+    //         _loadPopup.setSizeWH(Lib.current.stage.stageWidth, Lib.current.stage.stageHeight);
+    //         Lib.current.stage.addEventListener(Event.RESIZE, function(e) {
+    //             _loadPopup.setSizeWH(Lib.current.stage.stageWidth, Lib.current.stage.stageHeight);
+    //         });
+    //     }
+    //     return _loadPopup;
+    // }
+    // private var _loadPopup: JPopup;
 
     private function processData(data: String) {
         var result: Dynamic = Json.parse(data);
