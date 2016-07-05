@@ -1,0 +1,32 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"compilePath=${workspaceRoot}",
+				"compileCommand=haxelib run jive build cpp -debug -DHXCPP_DEBUGGER",
+				"runPath=${workspaceRoot}/bin/linux64/cpp/bin/",
+				"runCommand=chart",
+				"runInTerminal=false"
+			],
+			"name": "Build and debug",
+			"type": "hxcpp",
+			"request": "launch",
+			"stopOnEntry": true
+		},
+		{
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"runPath=${workspaceRoot}/bin/linux64/cpp/bin/",
+				"runCommand=chart",
+				"runInTerminal=false"
+			],
+			"name": "Debug",
+			"type": "hxcpp",
+			"request": "launch",
+			"program": "${workspaceRoot}",
+			"stopOnEntry": true
+		}
+	]
+}

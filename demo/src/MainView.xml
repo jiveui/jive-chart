@@ -1,20 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Window xmlns="jive" xmlns:chart="jive.chart" xmlns:geom="org.aswing.geom" xmlns:e="empty" xmlns:haxe="http://haxe.org/">
-    <haxe:Implements><![CDATA[jive.DataContextControllable<MainViewModel>]]></haxe:Implements>
+<?xml version="1.0" encoding="UTF-8"?> 
+<Window xmlns="jive" xmlns:chart="jive.chart" xmlns:geom="jive.geom" xmlns:e="empty" xmlns:haxe="http://haxe.org/"
+    width="Metric.absolute(Std.int(Lib.current.stage.stageWidth))" height="Metric.absolute(Std.int(Lib.current.stage.stageHeight))"> 
+    <haxe:Implements><![CDATA[jive.DataContextControllable<MainViewModel>]]></haxe:Implements> 
     
-    <chart:Chart id="chart1" data="{Binding selectedChartData mode=oneway}" title="{Binding chartTitle}">
-        <!-- <foreground>
-            <Color rgb="0x000000"/>
-        </foreground> -->
-        <!-- <ui><chart:ChartUI/></ui> -->
-    </chart:Chart>
-    
-    <chart:ChartPeriodSelector id="chart2"
-                               data="{Binding chartData mode=oneway}"
-                               selectedData="{Binding selectedChartData mode=twoway}">
-        <!-- <preferredSize>
-            <geom:IntDimension width="-1" height="120"/>
-        </preferredSize> -->
-        <!-- <ui><chart:ChartPeriodSelectorUI/></ui> -->
-    </chart:ChartPeriodSelector>
+    <Container
+        width="Metric.percent(80)"
+        height="Metric.percent(80)">
+
+        <chart:Chart id="chart1" 
+            data="{Binding chartData mode=oneway}" 
+            title="{Binding chartTitle}"
+            width="Metric.percent(80)"
+            height="Metric.percent(80)">
+
+            <xAxis><chart:Axis axisName="time" axisUnit="t"/></xAxis>
+            <yAxis><chart:Axis axisName="value" axisUnit="v"/></yAxis>
+        </chart:Chart> 
+         
+        <!-- <chart:ChartPeriodSelector id="chart2" 
+            data="{Binding chartData mode=oneway}" 
+            selectedData="{Binding selectedChartData mode=twoway}" 
+            width="Metric.percent(100)"
+            height="Metric.percent(100)"> 
+        </chart:ChartPeriodSelector> -->
+    </Container>
+
 </Window>

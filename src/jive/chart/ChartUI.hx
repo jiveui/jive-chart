@@ -1,18 +1,35 @@
 package jive.chart;
 
-import jive.*;
-import flash.system.Capabilities;
+
 import flash.Lib;
 import flash.display.Stage;
+import flash.display.Sprite;
+import flash.display.Graphics;
+import flash.display.Shape;
 import flash.events.EventDispatcher;
 import flash.events.Event;
 import flash.events.MouseEvent;
-import flash.display.Sprite;
-import flash.display.Graphics;
-import flash.events.MouseEvent;
-import flash.display.Shape;
+import flash.system.Capabilities;
 
-class ChartUI extends BaseComponentUI {
+import jive.Color;
+import jive.Component;
+// import jive.geom.Metric;
+// import jive.geom.MetricInsets;
+// import jive.geom.Insets;
+// import jive.geom.IntDimension;
+// import jive.geom.IntPoint;
+// import jive.geom.IntRectangle;
+// import jive.geom.MetricHelper;
+import jive.geom.*;
+import jive.graphics.Graphics2D;
+import jive.graphics.SolidBrush;
+import jive.events.TransformGestureEvent;
+import jive.tools.*;
+
+import jive.chart.ChartHelper;
+
+
+class ChartUI {
     private var chart: Chart;
 
     private var pointsToDraw: Array<DisplayPoint>;
@@ -20,10 +37,10 @@ class ChartUI extends BaseComponentUI {
     private var graphBounds: IntRectangle;
     private var extentBounds: IntRectangle;
 
-    public var labels:Array<JLabel>;
-    public var titleLabel:JLabel;
-    public var xAxisLabel: JLabel;
-    public var yAxisLabel: JLabel;
+    public var labels: Array<Label>;
+    public var titleLabel: Label;
+    public var xAxisLabel: Label;
+    public var yAxisLabel: Label;
 
     public var graphScaleX(get, set): Float;
     private var _graphScaleX: Float = 1.0;
@@ -34,6 +51,7 @@ class ChartUI extends BaseComponentUI {
 
         calcGraphBounds();
         pointsToDraw = ChartHelper.getPointsNeededToDraw(chart.data, graphBounds, chart.minPointDistantion);
+
         ChartHelper.fillMainStatistics(stats, Lambda.array(Lambda.map(pointsToDraw, function(p) { return cast(p, Point);})), graphBounds, chart);
         ChartHelper.fillLabelsNumber(extentBounds, stats);
         ChartHelper.calculateDisplayCoordinates(pointsToDraw, graphBounds, stats);
@@ -42,87 +60,132 @@ class ChartUI extends BaseComponentUI {
         return v;
     }
 
-    public function new() {
-        super();
+    public function new(c: Chart) {
         labels = [];
+
+        chart = TypeTools.as(c, Chart);
+        chart.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+        chart.graphComponent.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+        chart.addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
+
+        // TODO
+        // chart.graphScroll.addStateListener(function(e) {
+        //     drawAxisesWithoutRemovingLabels(new Graphics2D(chart.sprite.graphics));
+        // });
+
+        titleLabel = new Label("titleLabel");
+        xAxisLabel = new Label("xAxisLabel");
+        yAxisLabel = new Label("yAxisLabel");
+
+        titleLabel.name = "titleLabel";
+        xAxisLabel.name = "xAxisLabel";
+        yAxisLabel.name = "yAxisLabel";
+
+        chart.labelsLayer.append(titleLabel);
+        chart.labelsLayer.append(xAxisLabel);
+        chart.labelsLayer.append(yAxisLabel);
     }
 
     private function getPropertyPrefix():String{
         return "Chart.";
     }
 
-    // override public function paint(c:Component, g:Graphics2D, b:IntRectangle):Void {
+    public function paint(b: IntDimension):Void {
+        // trace("paint");
+        // trace(haxe.CallStack.toString(haxe.CallStack.callStack()));
 
-    //     if (null == chart || null == xAxisLabel || null == yAxisLabel) return; // Not installed yet
+        // if (null == chart || null == xAxisLabel || null == yAxisLabel) return; // Not installed yet
 
-    //     super.paint(c, g, b);
+        if (null == chart || null == chart.data || chart.data.length <= 0 || null == titleLabel) return;
 
-    //     if (null == chart || null == chart.data || chart.data.length <= 0 || null == titleLabel) return;
-
-    //     titleLabel.text = chart.title;
-    //     // titleLabel.font = chart.titleFont;
-    //     titleLabel.pack();
+        titleLabel.text = chart.title;
+        titleLabel.font = chart.titleFont;
+        // titleLabel.pack();
 
     //     updateAxisTitlesTextAndVisibility();
 
-    //     calcStatisticsAndGraphBounds(b);
-    //     ChartHelper.calculateDisplayCoordinates(pointsToDraw, graphBounds, stats);
+        calcStatisticsAndGraphBounds(new IntRectangle(0, 0, b.width, b.height));
+        ChartHelper.calculateDisplayCoordinates(pointsToDraw, graphBounds, stats);
 
-    //     updateAxisTitlesPositions();
+        updateAxisTitlesPositions();
+        createLabels(stats.labelsNumber);
 
-    //     createLabels(stats.labelsNumber);
+        drawAxises(new Graphics2D(chart.sprite.graphics));
+        drawGraph(new Graphics2D(chart.graphComponent.graphics));
+        clearBubble();
 
-    //     drawAxises(g);
-    //     drawGraph(new Graphics2D(chart.graphComponent.graphics));
-    //     clearBubble();
-    // }
+        // trace(chart.graphScroll.x + " " + chart.graphScroll.y);
+        // trace(chart.graphScroll.displayObject.x + " " + chart.graphScroll.displayObject.y);
+        // trace(chart.graphComponent.x + " " + chart.graphComponent.y);
+    }
 
+    // TODO
     private function updateAxisTitlesTextAndVisibility() {
 
         xAxisLabel.text = if (null != chart.xAxis && chart.xAxisTitleVisible) chart.xAxis.axisUnit else null;
         xAxisLabel.font = chart.font;
-        xAxisLabel.pack();
+        // xAxisLabel.pack();
 
         yAxisLabel.text = if (null != chart.yAxis && chart.yAxisTitleVisible) chart.yAxis.axisUnit else null;
         yAxisLabel.font = chart.font;
         if (chart.yAxisTitlePosition == YAxisTitlePosition.left) {
-            yAxisLabel.rotation = -90;
+            yAxisLabel.rotationAngle = -90;
         }
-        yAxisLabel.pack();
+        // yAxisLabel.pack();
     }
 
+    // TODO
     private function updateAxisTitlesPositions() {
-        xAxisLabel.location = new IntPoint(
-            Std.int(graphBounds.x + (graphBounds.width-xAxisLabel.preferredSize.width)/2),
-            Std.int(graphBounds.leftBottom().y + stats.xLabelDimension.height + chart.axisMarginBetweenLabelsAndAxis));
-        yAxisLabel.location =
-            if (chart.yAxisTitlePosition == YAxisTitlePosition.left)
-                new IntPoint(
-                    graphBounds.x - getYAxisTitleMargin() - stats.yLabelDimension.width,
-                    Std.int(graphBounds.y + graphBounds.height/2 + yAxisLabel.preferredSize.width))
-            else
-                new IntPoint(
-                    graphBounds.x - stats.yLabelDimension.width,
-                    Std.int(graphBounds.y - getYAxisTitleMargin()));
+        // xAxisLabel.location = new IntPoint(
+        //     Std.int(graphBounds.x + (graphBounds.width-xAxisLabel.preferredSize.width)/2),
+        //     Std.int(graphBounds.leftBottom().y + stats.xLabelDimension.height + chart.axisMarginBetweenLabelsAndAxis));
+        xAxisLabel.margin = new MetricInsets(
+            Metric.absolute(Std.int(graphBounds.x + (graphBounds.width - xAxisLabel.getPreferredSize().width) / 2)),
+            Metric.absolute(Std.int(graphBounds.leftBottom().y + stats.xLabelDimension.height + chart.axisMarginBetweenLabelsAndAxis))
+        );
+
+        // yAxisLabel.location =
+        //     if (chart.yAxisTitlePosition == YAxisTitlePosition.left)
+        //         new IntPoint(
+        //             graphBounds.x - getYAxisTitleMargin() - stats.yLabelDimension.width,
+        //             Std.int(graphBounds.y + graphBounds.height/2 + yAxisLabel.preferredSize.width))
+        //     else
+        //         new IntPoint(
+        //             graphBounds.x - stats.yLabelDimension.width,
+        //             Std.int(graphBounds.y - getYAxisTitleMargin()));
+        if (chart.yAxisTitlePosition == YAxisTitlePosition.left) {
+            yAxisLabel.margin = new MetricInsets(
+                Metric.absolute(Std.int(graphBounds.y + graphBounds.height / 2 + yAxisLabel.getPreferredSize().width)), // y
+                Metric.absolute(graphBounds.x - getYAxisTitleMargin() - stats.yLabelDimension.width) // x
+            );
+        } else {
+            yAxisLabel.margin = new MetricInsets(
+                Metric.absolute(Std.int(graphBounds.y - getYAxisTitleMargin())),
+                Metric.absolute(graphBounds.x - stats.yLabelDimension.width)
+            );
+        }
     }
 
     private function calcStatisticsAndGraphBounds(b: IntRectangle) {
         stats = ChartHelper.calcStatistics(chart.data, b, chart);
+        trace(stats);
         calcBounds(b);
         pointsToDraw = ChartHelper.getPointsNeededToDraw(chart.data, graphBounds, chart.minPointDistantion);
         stats = ChartHelper.calcStatistics(Lambda.array(Lambda.map(pointsToDraw, function(p) { return cast(p, Point);})), graphBounds, chart);
+        trace(stats);
         ChartHelper.fillLabelsNumber(extentBounds, stats);
     }
 
     private function getXAxisTitleMargin(): Int {
         return if (chart.xAxisTitleVisible && xAxisLabel.text != null && xAxisLabel.text != "") {
-            xAxisLabel.preferredSize.height + chart.axisMarginBetweenLabelsAndAxis;
+            xAxisLabel.getPreferredSize().height + chart.axisMarginBetweenLabelsAndAxis;
         } else 0;
     }
 
     private function getYAxisTitleMargin(): Int {
         return if (chart.yAxisTitleVisible && yAxisLabel.text != null && yAxisLabel.text != "") {
-            yAxisLabel.preferredSize.height  + chart.axisMarginBetweenLabelsAndAxis;
+            yAxisLabel.getPreferredSize().height  + chart.axisMarginBetweenLabelsAndAxis;
         } else 0;
     }
 
@@ -132,59 +195,60 @@ class ChartUI extends BaseComponentUI {
     }
 
     private function calcExtentBounds(b: IntRectangle) {
+        // trace(titleLabel.text);
+        // trace(titleLabel.getPreferredSize().width);
+        // trace(titleLabel.getPreferredSize().height);
+
         var xAxisTitleMargin = getXAxisTitleMargin();
         var yAxisTitleMargin = getYAxisTitleMargin();
         extentBounds = b.clone();
-        extentBounds.move(
-            stats.yLabelDimension.width + chart.tickSize + (if (chart.yAxisTitlePosition == YAxisTitlePosition.left) yAxisTitleMargin else 0),
-            Std.int(chart.selectorSize+1) + Std.int(titleLabel.preferredSize.height) + (if (chart.yAxisTitlePosition != YAxisTitlePosition.left) yAxisTitleMargin else 0));
-        extentBounds.resize(
-            -stats.yLabelDimension.width - chart.tickSize  - (if (chart.yAxisTitlePosition == YAxisTitlePosition.left) yAxisTitleMargin else 0),
-            -stats.xLabelDimension.height - chart.tickSize - Std.int(titleLabel.preferredSize.height) - xAxisTitleMargin - (if (chart.yAxisTitlePosition != YAxisTitlePosition.left) yAxisTitleMargin else 0));
 
-        chart.graphViewport.preferredSize = new IntDimension(extentBounds.width, extentBounds.height);
-        chart.graphViewport.setSize(chart.graphViewport.preferredSize);
-        chart.graphViewport.location = new IntPoint(extentBounds.x, extentBounds.y);
+        var dx = stats.yLabelDimension.width + chart.tickSize + (if (chart.yAxisTitlePosition == YAxisTitlePosition.left) yAxisTitleMargin else 0);
+        var dy = Std.int(chart.selectorSize + 1) + titleLabel.getPreferredSize().height + (if (chart.yAxisTitlePosition != YAxisTitlePosition.left) yAxisTitleMargin else 0);
+        extentBounds.move(dx, dy);
+        
+        var dw = -stats.yLabelDimension.width - chart.tickSize  - (if (chart.yAxisTitlePosition == YAxisTitlePosition.left) yAxisTitleMargin else 0);
+        var dh = -stats.xLabelDimension.height - chart.tickSize - titleLabel.getPreferredSize().height - xAxisTitleMargin - (if (chart.yAxisTitlePosition != YAxisTitlePosition.left) yAxisTitleMargin else 0);
+        extentBounds.resize(dw, dh);
+
+        // trace(-stats.xLabelDimension.height);
+        // trace(chart.tickSize);
+        // trace(titleLabel.getPreferredSize().height);
+        // trace(xAxisTitleMargin);
+        // trace(if (chart.yAxisTitlePosition != YAxisTitlePosition.left) yAxisTitleMargin else 0);
+        // trace(extentBounds);
+                
+        chart.graphScroll.width = Metric.absolute(extentBounds.width);
+        chart.graphScroll.height = Metric.absolute(extentBounds.height);
+        chart.graphScroll.margin = new MetricInsets(Metric.absolute(extentBounds.y), Metric.absolute(extentBounds.x));
+
+        chart.labelsLayer.width = chart.width;
+        chart.labelsLayer.height = chart.height;
     }
 
     private function calcGraphBounds() {
         graphBounds = extentBounds.clone();
         graphBounds.width = Std.int(graphScaleX * graphBounds.width);
 
-        chart.graphViewport.view.preferredSize = new IntDimension(graphBounds.width, graphBounds.height);
-        chart.graphViewport.view.setSize(chart.graphComponent.preferredSize);
-//
-//        graphBounds.move(Std.int(chart.selectorSize/2+1), Std.int(chart.selectorSize/2+1));
-//        graphBounds.resize(-Std.int(chart.selectorSize+2), -Std.int(chart.selectorSize+2));
+        chart.graphContainer.width = Metric.absolute(graphBounds.width);
+        chart.graphContainer.height = Metric.absolute(graphBounds.height);
     }
 
-    override public function installUI(c:Component):Void {
-        chart = AsWingUtils.as(c, Chart);
-        chart.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-        chart.graphComponent.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-        chart.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-        chart.addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
+    // TODO do we need it? and where?
+    // override public function uninstallUI(c:Component):Void {
+    //     chart.graphComponent.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    //     chart.graphComponent.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+    //     chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+    //     chart.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
+    // }
+    public function clear() {
+        labels = [];
+        chart.labelsLayer.removeAll();
+        chart.graphComponent.graphics.clear();
+        chart.graphics.clear();
 
-        chart.graphViewport.addStateListener(function(e) {
-            drawAxisesWithoutRemovingLabels(new Graphics2D(chart.graphics));
-        });
-
-        titleLabel = new JLabel();
-        titleLabel.location = new IntPoint(0,0);
-
-        xAxisLabel = new JLabel();
-        yAxisLabel = new JLabel();
-
-        chart.append(titleLabel);
-        chart.append(xAxisLabel);
-        chart.append(yAxisLabel);
-    }
-
-    override public function uninstallUI(c:Component):Void {
-        chart.graphComponent.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-        chart.graphComponent.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-        chart.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-        chart.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
+        trace(labels);
+        trace(chart.labelsLayer.sprite.numChildren);
     }
 
     /**
@@ -196,7 +260,7 @@ class ChartUI extends BaseComponentUI {
         drawAxisesWithoutRemovingLabels(g);
     }
 
-    inline private function drawAxisesWithoutRemovingLabels(g: Graphics2D) {
+    private function drawAxisesWithoutRemovingLabels(g: Graphics2D) {
         g.clear();
         g.drawLine(chart.axisPen, extentBounds.x, extentBounds.y, extentBounds.x, extentBounds.y + extentBounds.height);
         g.drawLine(chart.axisPen, extentBounds.x, extentBounds.y + extentBounds.height, extentBounds.x + extentBounds.width, extentBounds.y + extentBounds.height);
@@ -217,6 +281,7 @@ class ChartUI extends BaseComponentUI {
         return [for (i in 0...n) first + i*step].filter(function(x) { return x - max < step && min <= x; });
     }
 
+    // Draw vertical lines and labels on axis X
     private function drawGridVerticalLinesAndCaptions(g: Graphics2D) {
         var captionWidthWithMargin = stats.xLabelDimension.width;
         var ticksAmount = Std.int(extentBounds.width/captionWidthWithMargin)+1;
@@ -228,14 +293,28 @@ class ChartUI extends BaseComponentUI {
 
             var t = labels[i];
 
-            var minX = interpolateValue(chart.graphViewport.getViewPosition().x, graphBounds.width, stats.minX, stats.maxX);
-            var maxX = interpolateValue(chart.graphViewport.getViewPosition().x + extentBounds.width, graphBounds.width, stats.minX, stats.maxX);
+            var minX = interpolateValue(/*chart.graphScroll.getViewPosition().x*/ MetricHelper.toAbsolute(chart.graphScroll.x), graphBounds.width, stats.minX, stats.maxX);
+            var maxX = interpolateValue(/*chart.graphScroll.getViewPosition().x*/ MetricHelper.toAbsolute(chart.graphScroll.x) + extentBounds.width, graphBounds.width, stats.minX, stats.maxX);
 
             updateLabelForInterpolatedValue(t, chart.data[0].xValue, i, extentBounds.width/captionWidthWithMargin, minX, maxX, chart.xAxis);
 
-            var insets = t.getInsets();
-            t.location = new IntPoint(Std.int(x - t.preferredSize.width/2) + insets.left, Std.int(y + chart.tickSize) + insets.top + chart.axisMarginBetweenLabelsAndAxis);
-            if (t.location.x + t.preferredSize.width <= extentBounds.rightBottom().x) {
+            var margin = t.margin;
+            
+            trace(y);
+            trace(margin);
+            trace(chart.axisMarginBetweenLabelsAndAxis);
+            trace(stats.xLabelDimension.width);
+            trace(t.getPreferredSize().width);
+
+            t.margin = new MetricInsets(
+                Metric.absolute(Std.int(y + chart.tickSize) + MetricHelper.getAbsolute(margin.top) + chart.axisMarginBetweenLabelsAndAxis),
+                Metric.absolute(Std.int(x - t.getPreferredSize().width / 2) + MetricHelper.getAbsolute(margin.left))
+            );
+
+            trace(t.text);
+            trace(t.margin);
+
+            if (MetricHelper.getAbsolute(t.margin.left) + t.getPreferredSize().width <= extentBounds.rightBottom().x) {
                 chart.labelsLayer.append(t);
                 g.drawLine(chart.axisPen, x, y, x, y + chart.tickSize);
                 g.drawLine(chart.gridPen, x, y, x, extentBounds.y);
@@ -243,10 +322,42 @@ class ChartUI extends BaseComponentUI {
         }
     }
 
+    // Draw horizontal lines and labels on axis Y
+    private function drawGridHorizontalLinesAndCaptions(g: Graphics2D) {
+        var captionHeightWithMargin = stats.yLabelDimension.height;
+        var ticksAmount = Std.int(extentBounds.height/captionHeightWithMargin)+1;
+        var x = extentBounds.x;
+        var y0 = extentBounds.height + extentBounds.y;
+
+        var i = 0;
+
+        // TODO
+        for (p in getGridPoints(ticksAmount, stats.minY, stats.maxY)) {
+            var y = y0 - extentBounds.height * (p - stats.minY) / (stats.maxY - stats.minY);
+            var t = labels[i + stats.xLabelsNumber];
+            updateLabel(t, chart.data[0].yValue, p, chart.yAxis);
+
+            var margin = t.margin;
+            t.margin = new MetricInsets(
+                Metric.absolute(Std.int(y - t.getPreferredSize().height/2) + MetricHelper.getAbsolute(margin.top)),
+                Metric.absolute(x - stats.yLabelDimension.width)
+            );
+          
+            if (MetricHelper.getAbsolute(t.margin.top) >= extentBounds.y) {
+                t.name = t.text;
+                
+                chart.labelsLayer.append(t);
+                g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
+                g.drawLine(chart.gridPen, x, y, extentBounds.x + extentBounds.width, y);
+            }
+            i += 1;
+        }
+    }
+
     private function createLabels(n: Int) {
         if (n > labels.length) {
             for (i in 0...n-labels.length) {
-                var l = new JLabel();
+                var l = new Label();
                 l.font = chart.font;
                 labels.push(l);
             }
@@ -257,53 +368,18 @@ class ChartUI extends BaseComponentUI {
         }
     }
 
-    private function updateLabelForInterpolatedValue(label: JLabel, valueTranslator: ChartValue, index: Int, amount: Float, min: Float, max: Float, axis: Axis) {
+    // TODO
+    private function updateLabelForInterpolatedValue(label: Label, valueTranslator: ChartValue, index: Int, amount: Float, min: Float, max: Float, axis: Axis) {
         var value = interpolateValue(index, amount, min, max);
         updateLabel(label, valueTranslator, value, axis);
     }
 
-    private function updateLabel(label: JLabel, valueTranslator: ChartValue, value: Float, axis: Axis) {
+    private function updateLabel(label: Label, valueTranslator: ChartValue, value: Float, axis: Axis) {
         label.text = if (null != axis) axis.getValueString(valueTranslator.getChartValueByFloatValue(value))
         else valueTranslator.getCaptionByFloatValue(value);
-        label.foreground = chart.axisLabelColor;
-        label.pack();
-    }
-
-//     private function drawGridHorizontalLinesAndCaptions(g: Graphics2D) {
-//         var captionHeightWithMargin = stats.yLabelDimension.height;
-//         var ticksAmount = Std.int(extentBounds.height/captionHeightWithMargin)+1;
-//         var x = extentBounds.x;
-//         var y0 = extentBounds.height + extentBounds.y;
-
-//         var i = 0;
-//         for (p in getGridPoints(ticksAmount, stats.minY, stats.maxY)) {
-//             var y = y0 - extentBounds.height * (p - stats.minY) / (stats.maxY - stats.minY);
-//             var t = labels[i + stats.xLabelsNumber];
-//             updateLabel(t, chart.data[0].yValue, p, chart.yAxis);
-//             var insets = t.getInsets();
-//             t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
-//             if (t.location.y >= extentBounds.y) {
-//                 chart.labelsLayer.append(t);
-//                 g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
-//                 g.drawLine(chart.gridPen, x, y, extentBounds.x + extentBounds.width, y);
-//             }
-//             i += 1;
-//         }
-
-// //        for (i in 0...ticksAmount) {
-// //            var y = y0 - i * captionHeightWithMargin;
-// //
-// //            var t = labels[i + stats.xLabelsNumber];
-// //            updateLabelForInterpolatedValue(t, chart.data[0].yValue, i, extentBounds.height/captionHeightWithMargin, stats.minY, stats.maxY, chart.yAxis);
-// //            var insets = t.getInsets();
-// //            t.location = new IntPoint(x - stats.yLabelDimension.width, Std.int(y - t.preferredSize.height/2) + insets.top);
-// //            if (t.location.y >= extentBounds.y) {
-// //                chart.labelsLayer.append(t);
-// //                g.drawLine(chart.axisPen, x, y, x - chart.tickSize, y);
-// //                g.drawLine(chart.gridPen, x, y, extentBounds.x + extentBounds.width, y);
-// //            }
-// //        }
-//     }
+        // label.foreground = chart.axisLabelColor;
+        // label.pack();
+    } 
 
     private function drawGridBorderLines(g: Graphics2D) {
         g.drawLine(chart.gridPen, extentBounds.x, extentBounds.y, extentBounds.x + extentBounds.width, extentBounds.y);
@@ -329,21 +405,22 @@ class ChartUI extends BaseComponentUI {
     //     }
     // }
 
-    // public function onMouseUp(e:MouseEvent):Void {
-    //     if (shouldBubbleBeShowed) {
-    //         var index = calculateNearesPointIndex(chart.graphComponent.globalToComponent(new IntPoint(Std.int(e.stageX), 0)).x);
-    //         drawBubble(index);
-    //     }
-    // }
+    public function onMouseUp(e:MouseEvent):Void {
+        if (shouldBubbleBeShowed) {
+            var index = calculateNearesPointIndex(ComponentTools.globalToLocal(chart.graphComponent, new IntPoint(Std.int(e.stageX), 0)).x);
+            drawBubble(index);
+        }
+    }
 
     private function clearBubble() {
         chart.interactionLayer.removeAll();
-        chart.interactionLayer.graphics.clear();
+        chart.interactionLayer.sprite.graphics.clear();
     }
 
+    // TODO LABEL
     public function drawBubble(index: Int) {
         var p = pointsToDraw[index];
-        var g: Graphics2D = new Graphics2D(chart.interactionLayer.graphics);
+        var g: Graphics2D = new Graphics2D(chart.interactionLayer.sprite.graphics);
         g.clear();
 
 
@@ -352,18 +429,18 @@ class ChartUI extends BaseComponentUI {
             "\n" +
             chart.yAxis.getLabelValueString(p.minY.yValue, p.maxY.yValue);
 
-        var label = new JLabel(text);
+        var label = new Label(text);
         label.font = chart.font;
-        label.border = new EmptyBorder(null, Insets.createIdentic(chart.selectorBubblePadding));
+        // label.border = new EmptyBorder(null, Insets.createIdentic(chart.selectorBubblePadding));
 
         var pX: Float = pointsToDraw[index].displayX;
         var pY: Float = pointsToDraw[index].displayY;
 
-        var pointLocationAtExtent = chart.globalToComponent(chart.graphComponent.componentToGlobal(new IntPoint(Std.int(pX), Std.int(pY))));
+        var pointLocationAtExtent = ComponentTools.globalToLocal(chart, ComponentTools.localToGlobal(chart.graphComponent, new IntPoint(Std.int(pX), Std.int(pY))));
 
         var cornerRadius = chart.selectorBubbleCornerRadius;
         var tailSize: Float = chart.selectorBubbleTailSize;
-        var contentDimension = label.preferredSize;
+        var contentDimension = label.getPreferredSize();
         var incline: Float = tailSize*0.5;
 
         var dx = 1.0;
@@ -407,26 +484,29 @@ class ChartUI extends BaseComponentUI {
 
         g.fillCircle(chart.selectorBrush, pX, pY, chart.selectorSize);
 
-        label.foreground = chart.axisLabelColor;
-        label.pack();
+        // label.foreground = chart.axisLabelColor;
+        // label.pack();
 
         if (dy > 0) {
             if (dx > 0) {
-                label.location = corner2;
+                label.x = Metric.absolute(corner2.x);
+                label.y = Metric.absolute(corner2.y);
             } else {
-                label.location = corner3;
+                label.x = Metric.absolute(corner3.x);
+                label.y = Metric.absolute(corner3.y);
             }
         } else {
             if (dx > 0) {
-                label.location = corner1;
+                label.x = Metric.absolute(corner1.x);
+                label.y = Metric.absolute(corner1.y);
             } else {
-                label.location = corner4;
+                label.x = Metric.absolute(corner4.x);
+                label.y = Metric.absolute(corner4.y);
             }
         }
 
         chart.interactionLayer.removeAll();
         chart.interactionLayer.append(label);
-
     }
 
     public function calculateNearesPointIndex(x:Float):Int {
@@ -450,7 +530,7 @@ class ChartUI extends BaseComponentUI {
     public function drawGraph(g: Graphics2D):Void {
         g.clear();
 
-        g.fillRectangle(new SolidBrush(ASColor.WHITE.changeAlpha(0.0)), 0, 0, graphBounds.width, graphBounds.height);
+        g.fillRectangle(new SolidBrush(Color.WHITE.changeAlpha(0.0)), 0, 0, graphBounds.width, graphBounds.height);
 
         if (chart.fillSpaceUnderPolyline) {
             ChartHelper.fillSpaceUnderPolyline(g, pointsToDraw, chart.areaUnderLineBrush, graphBounds);
@@ -470,7 +550,8 @@ class ChartUI extends BaseComponentUI {
         var width = graphBounds.width;
         graphScaleX *= e.scaleX;
         // graphBounds is changed so scroll to the same place
-        chart.graphViewport.scrollHorizontal(-Std.int((width - graphBounds.width)/2));
+        // TODO
+        // chart.graphScroll.scrollHorizontal(-Std.int((width - graphBounds.width)/2));
     }
 
 }

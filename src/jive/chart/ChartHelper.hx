@@ -2,15 +2,11 @@ package jive.chart;
 
 import jive.Color;
 import jive.chart.Point;
-import jive.EmptyLayout;
-import jive.geom.Insets;
 import jive.graphics.IPen;
-// import jive.JLabel;
-import jive.geom.IntDimension;
+import jive.geom.*;
 import jive.graphics.IBrush;
 import jive.graphics.Graphics2D;
 import jive.graphics.Pen;
-import jive.geom.IntRectangle;
 
 using Lambda;
 using Math;
@@ -22,8 +18,6 @@ class ChartHelper {
 
     public static function calculateDisplayCoordinates(points: Array<DisplayPoint>, bounds: IntRectangle, stats: ChartStatistics) {
         for (p in points) {
-//            p.displayX = bounds.x + (p.x - stats.minX) * stats.scaleX;
-//            p.displayY = bounds.height + bounds.y - (p.y - stats.minY) * stats.scaleY;
             p.displayX = (p.x - stats.minX) * stats.scaleX;
             p.displayY = bounds.height - (p.y - stats.minY) * stats.scaleY;
         }
@@ -50,35 +44,11 @@ class ChartHelper {
 
         return result;
     }
-// *********************************************
-// The previous version of getting points to draw
-
-//    public static function filterPointsNeededToDraw(points: Array<Point>, bounds: IntRectangle, minDistantion: Int): Array<Point> {
-//        var result = [];
-//
-//        if (null == points || points.length <= 0) return result;
-//
-//        var prevX = Math.POSITIVE_INFINITY;
-//        for (p in points){
-//            var curX = p.displayX;
-//            if (Math.abs(prevX - curX) >= minDistantion) {
-//                result.push(p);
-//                prevX = curX;
-//            }
-//        }
-//
-//        // Always add last point
-//        if (result[result.length-1].displayX != points[points.length-1].displayX) {
-//            result.push(points[points.length-1]);
-//        }
-//
-//        return result;
-//    }
 
     public static function drawPolyline(g: Graphics2D, points: Array<DisplayPoint>, pen: IPen) {
         g.beginDraw(pen);
         var first = true;
-        for (point in points){
+        for (point in points) {
             if (first) {
                 g.moveTo(point.displayX, point.displayY);
                 first = false;
@@ -186,16 +156,6 @@ class ChartHelper {
     }
 
     public static function fillSpaceUnderPolyline(g: Graphics2D, points: Array<DisplayPoint>, brush: IBrush, bounds: IntRectangle) {
-//        g.beginFill(brush);
-//        var first = true;
-//        g.moveTo(points[0].displayX, bounds.y + bounds.height + 2);
-//        for (point in points){
-//            g.lineTo(point.displayX, point.displayY);
-//        }
-//        g.lineTo(points[points.length-1].displayX, bounds.y + bounds.height + 2);
-//        g.lineTo(points[0].displayX, bounds.y + bounds.height + 2);
-//        g.lineTo(points[0].displayX, points[0].displayY);
-//        g.endFill();
         for (i in 0...points.length-1){
             g.beginFill(brush);
             g.moveTo(points[i].displayX, bounds.y + bounds.height + 2);
@@ -261,27 +221,50 @@ class ChartHelper {
     }
 
     public static function calcMaxLabelsDimesionForX(points: Array<Point>, stats: ChartStatistics, chart: Chart): IntDimension {
-        if (null == points || points.length <= 0) return new IntDimension(0,0);
+        trace(null == points || points.length <= 0);
+        if (null == points || points.length <= 0) 
+			return new IntDimension(0,0);
 
-        return calcMaxLabelDimensionForValue(points[0].xValue, stats.minX, stats.maxX,
-            new Insets(chart.axisMarginBetweenLabelsAndAxis, Std.int(chart.axisMarginBetweenLabels/2), 0, Std.int(chart.axisMarginBetweenLabels/2)), chart);
+        return calcMaxLabelDimensionForValue(
+            points[0].xValue,
+            stats.minX,
+            stats.maxX,
+            new MetricInsets(
+                Metric.absolute(Std.int(chart.axisMarginBetweenLabelsAndAxis)), 
+                Metric.absolute(Std.int(chart.axisMarginBetweenLabels/2)), 
+                Metric.absolute(0), 
+                Metric.absolute(Std.int(chart.axisMarginBetweenLabels/2))
+            ),
+            chart
+        );
     }
 
     public static function calcMaxLabelsDimesionForY(points: Array<Point>, stats: ChartStatistics, chart: Chart): IntDimension {
-        if (null == points || points.length <= 0) return new IntDimension(0,0);
+        trace(null == points || points.length <= 0);
+        if (null == points || points.length <= 0) 
+			return new IntDimension(0,0);
 
-        return calcMaxLabelDimensionForValue(points[0].yValue, stats.minY, stats.maxY,
-            new Insets(Std.int(chart.axisMarginBetweenLabels/2), 0, Std.int(chart.axisMarginBetweenLabels/2), chart.axisMarginBetweenLabelsAndAxis), chart);
+        return calcMaxLabelDimensionForValue(
+			points[0].yValue,
+			stats.minY,
+			stats.maxY,
+            new MetricInsets(
+                Metric.absolute(Std.int(chart.axisMarginBetweenLabels/2)), 
+                Metric.absolute(0), 
+                Metric.absolute(Std.int(chart.axisMarginBetweenLabels/2)), 
+                Metric.absolute(chart.axisMarginBetweenLabelsAndAxis)
+            ),
+			chart
+		);
     }
 
-    private static inline function calcMaxLabelDimensionForValue(value: ChartValue, min: Float, max: Float, insets: Insets, chart: Chart): IntDimension {
-        // JLabel not implemented
-        // var label = new JLabel(value.getCaptionByFloatValue( if (min < 0) min else max));
-        // label.font = chart.font;
-        // label.border = new EmptyBorder(null, insets);
-        // return label.preferredSize;
-
-        return new IntDimension(100, 20);
+    // TODO
+    private static inline function calcMaxLabelDimensionForValue(value: ChartValue, min: Float, max: Float, insets: MetricInsets, chart: Chart): IntDimension {
+        var label = new Label(value.getCaptionByFloatValue( if (min < 0) min else max));
+        trace(label.text);
+        label.font = chart.font;
+        label.margin = insets;
+        return label.getPreferredSize();
     }
 
     public static function calcPointsStatistics(points: Array<Point>, left: Int, right: Int): PointsStatistics {

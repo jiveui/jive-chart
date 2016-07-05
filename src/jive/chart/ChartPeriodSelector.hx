@@ -1,8 +1,10 @@
 package jive.chart;
 
-import jive.*;
-import jive.geom.*;
-import jive.graphics.*;
+import jive.graphics.Pen;
+import jive.Color;
+import jive.graphics.SolidBrush;
+import jive.graphics.IBrush;
+import jive.geom.IntDimension;
 import flash.display.Sprite;
 
 class ChartPeriodSelector extends Chart {
@@ -25,7 +27,7 @@ class ChartPeriodSelector extends Chart {
         return v;
     }
 
-    @bindable public var selectedData: Array<Point>;
+    @:bindable public var selectedData: Array<Point>;
 
     public var leftThumb: Sprite;
     public var rightThumb: Sprite;
@@ -57,11 +59,13 @@ class ChartPeriodSelector extends Chart {
         rightThumb.useHandCursor = true;
         rightThumb.buttonMode = true;
 
-        displayObjectContainer.addChild(leftThumb);
-        displayObjectContainer.addChild(rightThumb);
+        // TODO
+        // sprite.addChild(leftThumb);
+        // sprite.addChild(rightThumb);
     }
 
-    private function updateSelectedData() { 
-        selectedData = data.slice(leftIndex, rightIndex + 1); 
-    } 
+    private function updateSelectedData() {
+        selectedData = data.slice(leftIndex, rightIndex + 1);
+    }
+
 }

@@ -1,10 +1,18 @@
 package jive.chart;
 
+import jive.JLabel;
 import haxe.Timer;
+import jive.graphics.Graphics2D;
+import jive.geom.IntPoint;
+import jive.ASColor;
+import jive.graphics.SolidBrush;
 import flash.Lib;
 import flash.events.MouseEvent;
 import flash.display.Sprite;
 import flash.display.Graphics;
+import jive.AsWingUtils;
+import jive.geom.IntRectangle;
+import jive.Component;
 
 class ChartPeriodSelectorUI extends ChartUI {
 

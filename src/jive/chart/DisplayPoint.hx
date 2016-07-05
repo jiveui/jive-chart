@@ -18,4 +18,7 @@ class DisplayPoint extends Point {
         this.maxY = maxY;
     }
 
+    public function toString() : String {
+        return "[DisplayPoint displayX=" + displayX + " displayY=" + displayY + "]";
+    }
 }
