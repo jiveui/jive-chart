@@ -20,10 +20,14 @@
     <haxedef name="HXCPP_DEBUGGER" if="debug"/>
 
     <template path="templates" />
+
+    <include path="../../jive-nativetools" if="mobile" />
     
     <haxelib name="debugger" if="debug" />
     <haxedef name="HXCPP_DEBUGGER" if="debug"/>
 
     <assets path="assets" rename=""/>
+
+    <android target-sdk-version="21" />
 
 </project>

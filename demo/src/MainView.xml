@@ -13,8 +13,8 @@
             width="Metric.percent(80)"
             height="Metric.percent(80)">
 
-            <xAxis><chart:Axis axisName="time" axisUnit="t"/></xAxis>
-            <yAxis><chart:Axis axisName="value" axisUnit="v"/></yAxis>
+            <!-- <xAxis><chart:Axis axisName="time" axisUnit="t"/></xAxis>
+            <yAxis><chart:Axis axisName="value" axisUnit="v"/></yAxis> -->
         </chart:Chart> 
          
         <!-- <chart:ChartPeriodSelector id="chart2" 

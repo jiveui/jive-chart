@@ -1,0 +1,10 @@
+-main GenHx 
+-D linux
+-D desktop
+-cp bin/jive
+-cpp bin/jive/bin
+--macro keep("Main")
+--no-output
+--macro allowPackage('flash')
+--macro allowPackage('openfl')
+#-D hml_debug

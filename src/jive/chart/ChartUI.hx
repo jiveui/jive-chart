@@ -145,6 +145,8 @@ class ChartUI {
             Metric.absolute(Std.int(graphBounds.leftBottom().y + stats.xLabelDimension.height + chart.axisMarginBetweenLabelsAndAxis))
         );
 
+        trace(xAxisLabel.margin);
+
         // yAxisLabel.location =
         //     if (chart.yAxisTitlePosition == YAxisTitlePosition.left)
         //         new IntPoint(
@@ -165,15 +167,15 @@ class ChartUI {
                 Metric.absolute(graphBounds.x - stats.yLabelDimension.width)
             );
         }
+
+        trace(yAxisLabel.margin);
     }
 
     private function calcStatisticsAndGraphBounds(b: IntRectangle) {
         stats = ChartHelper.calcStatistics(chart.data, b, chart);
-        trace(stats);
         calcBounds(b);
         pointsToDraw = ChartHelper.getPointsNeededToDraw(chart.data, graphBounds, chart.minPointDistantion);
         stats = ChartHelper.calcStatistics(Lambda.array(Lambda.map(pointsToDraw, function(p) { return cast(p, Point);})), graphBounds, chart);
-        trace(stats);
         ChartHelper.fillLabelsNumber(extentBounds, stats);
     }
 
@@ -246,9 +248,6 @@ class ChartUI {
         chart.labelsLayer.removeAll();
         chart.graphComponent.graphics.clear();
         chart.graphics.clear();
-
-        trace(labels);
-        trace(chart.labelsLayer.sprite.numChildren);
     }
 
     /**
@@ -390,20 +389,20 @@ class ChartUI {
         return index * ((max - min) / length) + min;
     }
 
-    // private var shouldBubbleBeShowed: Bool;
-    // private var mouseDownPoint: IntPoint;
+    private var shouldBubbleBeShowed: Bool;
+    private var mouseDownPoint: IntPoint;
 
-    // public function onMouseDown(e:MouseEvent):Void {
-    //     shouldBubbleBeShowed = true;
-    //     mouseDownPoint = new IntPoint(Std.int(e.stageX), Std.int(e.stageY));
-    // }
+    public function onMouseDown(e:MouseEvent):Void {
+        shouldBubbleBeShowed = true;
+        mouseDownPoint = new IntPoint(Std.int(e.stageX), Std.int(e.stageY));
+    }
 
-    // public function onMouseMove(e:MouseEvent):Void {
-    //     if (shouldBubbleBeShowed == true && mouseDownPoint.distance(new IntPoint(Std.int(e.stageX), Std.int(e.stageY))) > Capabilities.screenDPI/10) {
-    //         shouldBubbleBeShowed = false;
-    //         clearBubble();
-    //     }
-    // }
+    public function onMouseMove(e:MouseEvent):Void {
+        if (shouldBubbleBeShowed == true && mouseDownPoint.distance(new IntPoint(Std.int(e.stageX), Std.int(e.stageY))) > Capabilities.screenDPI/10) {
+            shouldBubbleBeShowed = false;
+            clearBubble();
+        }
+    }
 
     public function onMouseUp(e:MouseEvent):Void {
         if (shouldBubbleBeShowed) {

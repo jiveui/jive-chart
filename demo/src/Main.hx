@@ -2,7 +2,7 @@ package ;
 
 import MainView;
 import MainViewModel;
-import jive.*;
+//import jive.*;
 
 class Main {
     var chartPeriodSelector : jive.chart.ChartPeriodSelector;
@@ -29,3 +29,12 @@ class Main {
         // var chart = new jive.chart.Chart("asdf");
     }
 }
+
+// import openfl.text.TextField;
+// class Main {
+//     public static function main() {
+//         var tf = new TextField();
+//         tf.text = "Some text";
+//         openfl.Lib.current.stage.addChild(tf);
+//     }
+// }
